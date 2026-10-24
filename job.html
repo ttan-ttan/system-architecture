@@ -4,409 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Enterprise Tech Systems & Role Architecture Navigator</title>
-  <style>
-    :root {
-      --bg-dark: #0f172a;
-      --bg-card: #1e293b;
-      --bg-card-hover: #334155;
-      --border-color: #334155;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --accent-blue: #38bdf8;
-      --accent-green: #4ade80;
-      --accent-purple: #c084fc;
-      --accent-amber: #fbbf24;
-      --accent-rose: #fb7185;
-      --accent-cyan: #22d3ee;
-      --active-glow: 0 0 15px rgba(56, 189, 248, 0.4);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      padding: 20px;
-      line-height: 1.5;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border-color);
-    }
-    header h1 {
-      font-size: 1.8rem;
-      color: var(--accent-blue);
-      margin-bottom: 8px;
-    }
-    header p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .controls-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .control-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .control-group label {
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--accent-blue);
-      min-width: 140px;
-    }
-
-    .btn {
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-    }
-    .btn:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--accent-blue);
-    }
-    .btn.active {
-      background: var(--accent-blue);
-      color: #000;
-      font-weight: 600;
-      border-color: var(--accent-blue);
-      box-shadow: var(--active-glow);
-    }
-
-    .btn-scenario.active {
-      background: var(--accent-amber);
-      border-color: var(--accent-amber);
-      color: #000;
-    }
-
-    .industry-info-banner {
-      background: rgba(56, 189, 248, 0.08);
-      border-left: 4px solid var(--accent-blue);
-      padding: 12px 16px;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      display: none;
-    }
-    .industry-info-banner.active {
-      display: block;
-    }
-    .industry-info-banner strong {
-      color: var(--accent-blue);
-    }
-
-    /* System Layout */
-    .system-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-bottom: 30px;
-      position: relative;
-    }
-
-    .tier-block {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 14px;
-      transition: all 0.3s ease;
-    }
-    .tier-header {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .tier-governance { border-color: var(--accent-purple); }
-    .tier-governance .tier-header { color: var(--accent-purple); }
-
-    .tier-runtime { border-color: var(--accent-blue); }
-    .tier-runtime .tier-header { color: var(--accent-blue); }
-
-    .tier-support { border-color: var(--accent-green); }
-    .tier-support .tier-header { color: var(--accent-green); }
-
-    .nodes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-    }
-
-    .node {
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 12px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      position: relative;
-    }
-    .node:hover {
-      border-color: var(--accent-blue);
-      transform: translateY(-2px);
-    }
-    .node.dimmed {
-      opacity: 0.3;
-      filter: grayscale(80%);
-    }
-    .node.highlighted {
-      border-color: var(--accent-green);
-      box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
-      opacity: 1 !important;
-      filter: none !important;
-    }
-    .node.scenario-active {
-      border-color: var(--accent-amber);
-      box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
-      animation: pulse 1.5s infinite alternate;
-      opacity: 1 !important;
-      filter: none !important;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.02); }
-    }
-
-    .node-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .node-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    .node-roles-tag {
-      margin-top: 8px;
-      font-size: 0.7rem;
-      color: var(--accent-blue);
-      font-weight: 500;
-    }
-
-    /* Roles Section */
-    .roles-section {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 20px;
-    }
-    .roles-header {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--accent-blue);
-      margin-bottom: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .roles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 16px;
-    }
-
-    .role-card {
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 16px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .role-card:hover {
-      border-color: var(--accent-blue);
-    }
-    .role-card.dimmed {
-      opacity: 0.3;
-      filter: grayscale(80%);
-    }
-    .role-card.active {
-      border-color: var(--accent-green);
-      box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
-      opacity: 1 !important;
-      filter: none !important;
-    }
-
-    .role-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--accent-blue);
-      margin-bottom: 4px;
-    }
-    .role-team {
-      font-size: 0.75rem;
-      color: var(--accent-purple);
-      font-weight: 600;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .role-resp {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    /* Progression Ladder Component */
-    .progression-summary {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 8px 10px;
-      margin-top: 10px;
-    }
-    .progression-title {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--accent-green);
-      margin-bottom: 4px;
-    }
-    .progression-steps {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.75rem;
-      color: var(--text-main);
-      flex-wrap: wrap;
-    }
-    .prog-step {
-      background: rgba(56, 189, 248, 0.1);
-      color: var(--accent-cyan);
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-size: 0.7rem;
-    }
-    .prog-arrow {
-      color: var(--text-muted);
-      font-size: 0.65rem;
-    }
-
-    .role-sg-context {
-      font-size: 0.75rem;
-      background: rgba(251, 191, 36, 0.1);
-      border-left: 3px solid var(--accent-amber);
-      padding: 4px 8px;
-      border-radius: 2px;
-      color: #fef08a;
-      margin-top: 10px;
-    }
-
-    /* Drawer View */
-    .drawer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #1e293b;
-      border-top: 2px solid var(--accent-blue);
-      box-shadow: 0 -10px 25px rgba(0,0,0,0.6);
-      padding: 20px;
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
-      z-index: 100;
-      max-height: 50vh;
-      overflow-y: auto;
-    }
-    .drawer.open {
-      transform: translateY(0);
-    }
-    .drawer-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .drawer-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--accent-blue);
-    }
-    .close-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-    .drawer-body {
-      font-size: 0.85rem;
-      color: var(--text-main);
-    }
-
-    .path-timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .path-node {
-      background: #0f172a;
-      border-left: 3px solid var(--accent-blue);
-      padding: 10px 12px;
-      border-radius: 0 4px 4px 0;
-    }
-    .path-node-title {
-      font-weight: 700;
-      color: var(--accent-green);
-      font-size: 0.85rem;
-    }
-    .path-node-desc {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    @media (max-width: 768px) {
-      .control-group { flex-direction: column; align-items: flex-start; }
-      .control-group label { min-width: auto; }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stylejob.css">
 </head>
 <body>
 
+  <!-- Top Navigation Bar -->
   <header>
-    <h1>Enterprise Tech Systems & Role Architecture Navigator</h1>
-    <p>Explore how modern IT infrastructure, runtime software, governance controls, tech roles, and career progression paths operate across Singapore's enterprise tech landscape.</p>
+    <div class="brand">
+      <div class="brand-icon">SG</div>
+      <div>
+        <div class="brand-title">Enterprise Tech Systems & Role Architecture</div>
+        <div class="brand-subtitle">Singapore Tech Industry System Roles, Compliance & Career Ladder</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn back-link">&leftarrow; Back to Flow Visualizer</a>
+    </div>
   </header>
 
   <div class="controls-panel">
     <div class="control-group">
-      <label>1. Select Sector Structure:</label>
+      <label>1. Sector Structure:</label>
       <button class="btn btn-ind active" onclick="setIndustry('all')">Master View (All)</button>
       <button class="btn btn-ind" onclick="setIndustry('banking')">Banking & Financial Services (MAS TRM)</button>
       <button class="btn btn-ind" onclick="setIndustry('tech')">Tech Scale-Up / E-Commerce</button>
@@ -428,11 +49,11 @@
   <!-- System Architecture Blueprint -->
   <div class="system-container">
 
-    <!-- Governance & Strategy Layer -->
+    <!-- Layer 0: Governance -->
     <div class="tier-block tier-governance" id="tier-gov">
       <div class="tier-header">
         <span>Strategic Governance & Compliance Overhead (Layer 0)</span>
-        <span style="font-size: 0.7rem; color: var(--text-muted);">Policies • Audits • Architectural Directives</span>
+        <span style="font-size: 0.725rem; color: var(--text-muted); font-weight: normal;">Policies • Audits • Architectural Directives</span>
       </div>
       <div class="nodes-grid">
         <div class="node" id="node-ea" onclick="inspectNode('ea')">
@@ -458,11 +79,11 @@
       </div>
     </div>
 
-    <!-- Runtime System Execution Layer -->
+    <!-- Layer 1: Runtime System Execution -->
     <div class="tier-block tier-runtime" id="tier-runtime">
       <div class="tier-header">
         <span>Runtime System Architecture & Operations (Layer 1)</span>
-        <span style="font-size: 0.7rem; color: var(--text-muted);">Traffic Flow • Microservices • Storage • AI/ML</span>
+        <span style="font-size: 0.725rem; color: var(--text-muted); font-weight: normal;">Traffic Flow • Microservices • Storage • AI/ML</span>
       </div>
       <div class="nodes-grid">
         <div class="node" id="node-edge" onclick="inspectNode('edge')">
@@ -503,16 +124,16 @@
         <div class="node" id="node-soc" onclick="inspectNode('soc')">
           <div class="node-title">🚨 SOC / SIEM Security</div>
           <div class="node-desc">24/7 continuous log monitoring, intrusion detection, and incident response.</div>
-          <div class="node-roles-tag">Roles: SOC L1/L2 Analyst, Blue Team Eng</div>
+          <div class="node-roles-tag">Roles: SOC L1/L2 Analyst, Blue Team Eng, Red Team / Pentester</div>
         </div>
       </div>
     </div>
 
-    <!-- Core Operations & Service Desk Support Layer -->
+    <!-- Layer 2: Core Infrastructure -->
     <div class="tier-block tier-support" id="tier-support">
       <div class="tier-header">
         <span>Core Infrastructure, Admin & Operational Support (Layer 2)</span>
-        <span style="font-size: 0.7rem; color: var(--text-muted);">OS Hardening • End-User Computing • Network Fabric</span>
+        <span style="font-size: 0.725rem; color: var(--text-muted); font-weight: normal;">OS Hardening • End-User Computing • Network Fabric</span>
       </div>
       <div class="nodes-grid">
         <div class="node" id="node-infra" onclick="inspectNode('infra')">
@@ -533,26 +154,26 @@
         <div class="node" id="node-euc" onclick="inspectNode('euc')">
           <div class="node-title">💻 Helpdesk & Admin Support</div>
           <div class="node-desc">Provides staff device onboarding, hardware troubleshooting, and ticket resolution.</div>
-          <div class="node-roles-tag">Roles: IT Admin Support, Helpdesk Specialist</div>
+          <div class="node-roles-tag">Roles: IT Support / Admin, Helpdesk Specialist</div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- Roles & Progression Directory -->
+  <!-- Roles Directory -->
   <div class="roles-section">
     <div class="roles-header">
       <span>Singapore Enterprise Role & Progression Path Directory</span>
-      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Click any role card to view system mapping & career ladder breakdown</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Click any role card to view branching IC vs Management tracks & required/optional certifications</span>
     </div>
 
     <div class="roles-grid" id="roles-grid">
-      <!-- Generated via JS -->
+      <!-- Rendered via JS -->
     </div>
   </div>
 
-  <!-- Drawer for Detail Views -->
+  <!-- Detail Drawer -->
   <div class="drawer" id="drawer">
     <div class="drawer-header">
       <div class="drawer-title" id="drawer-title">Component & Career Ladder Detail</div>
@@ -564,155 +185,233 @@
   </div>
 
   <script>
+    const nodeDeepSpecs = {
+      app: {
+        title: "⚙️ Microservices / APIs",
+        techStack: "Java (Spring Boot), Go (Gin), Node.js (NestJS), Docker, Kubernetes, gRPC, REST",
+        regulations: "MAS TRM Sec 10.1 (System Availability SLAs), GovTech IM8 Domain 4 (Secure Coding Standards)",
+        failureModes: "Thread pool exhaustion during peak flash sales, unhandled 5xx response cascades, memory leaks in long-running pods.",
+        handoffs: "Receives routed requests from Load Balancer; authenticates JWT with IAM; writes to ACID DBs; publishes background events to Kafka."
+      },
+      ea: {
+        title: "📐 Enterprise Architecture",
+        techStack: "TOGAF 10, ArchiMate, LeanIX, AWS Well-Architected Framework",
+        regulations: "MAS TRM Section 3 (Technology Risk Governance), IM8 Core System Blueprinting",
+        failureModes: "Architectural drift leading to unmonitored shadow IT, legacy technology debt causing delayed compliance renewals.",
+        handoffs: "Issues target state architecture blueprints to Development teams; collaborates with GRC on tech risk mitigation."
+      },
+      grc: {
+        title: "📋 Tech Risk & GRC",
+        techStack: "MetricStream, ServiceNow GRC, RSA Archer, ISO 27001 Risk Matrices",
+        regulations: "MAS TRM Guidelines (6-hour critical system recovery), IM8 Cyber Risk Directives, PDPA",
+        failureModes: "Failing to report high-severity security incidents to MAS within required 1-hour notification window.",
+        handoffs: "Performs vendor risk assessments; provides audit compliance evidence to Internal/External Auditors."
+      },
+      audit: {
+        title: "🔍 IT Security Audit",
+        techStack: "ACL, AuditBoard, Splunk Log Analyzer, Active Directory Access Reviewers",
+        regulations: "MAS TRM Independent Audit Mandate, Statutory Financial Audits (SOX/ITGC)",
+        failureModes: "Unmapped admin access accounts ('Ghost Accounts'), unapproved emergency code deployments bypassing CI/CD change management.",
+        handoffs: "Independently reviews access logs from IAM, change tickets from SysAdmins, and incident logs from SOC."
+      },
+      dpo: {
+        title: "🛡️ DPO / Privacy Office",
+        techStack: "OneTrust, BigID, Data Masking Utilities, PII Scanning Tools",
+        regulations: "Singapore Personal Data Protection Act (PDPA 2012 / 2020 Amendments), EU GDPR",
+        failureModes: "Unencrypted PII leak leading to statutory PDPC fines up to 10% of annual Singapore turnover.",
+        handoffs: "Mandates data classification tags for Data Engineers; inspects database schemas with DBAs."
+      },
+      edge: {
+        title: "🌐 Edge / WAF / CDN",
+        techStack: "Cloudflare Enterprise, Akamai Kona, AWS CloudFront, Imperva WAF",
+        regulations: "MAS TRM Section 11 (Perimeter Defense & DDoS Resilience), IM8 Perimeter Security",
+        failureModes: "Volumetric Layer 7 DDoS attacks bypassing basic rate limits; expired TLS certificates taking down domain access.",
+        handoffs: "Filters malicious web traffic before forwarding clean HTTP requests to Load Balancers."
+      },
+      lb: {
+        title: "⚖️ Ingress / Load Balancer",
+        techStack: "AWS ALB/NLB, HAProxy, Nginx Ingress Controller, Envoy Proxy",
+        regulations: "MAS TRM High Availability & Disaster Recovery Redundancy Mandates",
+        failureModes: "Misconfigured health check endpoints marking healthy backend pods as dead during high load.",
+        handoffs: "Terminates HTTPS requests and balances traffic across microservice pod clusters."
+      },
+      db: {
+        title: "🗄️ Relational & NoSQL DBs",
+        techStack: "PostgreSQL, Oracle DB, MySQL, MongoDB, DynamoDB, Redis Enterprise",
+        regulations: "MAS TRM Data Integrity & Storage Encryption at Rest Standards",
+        failureModes: "Unindexed query locks crashing main database CPU; replication lag causing inconsistent read data.",
+        handoffs: "Provides persistent ACID state storage for Microservices; streams write-ahead logs (WAL) to Data Lakehouse."
+      },
+      ai: {
+        title: "🤖 AI / Vector DB / LLM",
+        techStack: "Pinecone, Qdrant, OpenAI GPT-4 API, LangChain, Python (FastAPI)",
+        regulations: "Singapore Model AI Governance Framework, MAS FEAT Principles (Fairness, Ethics, Accountability, Transparency)",
+        failureModes: "Hallucinated financial advice; data leakage of confidential customer data into public LLM training sets.",
+        handoffs: "Retrieves context embeddings from Vector DB; serves AI agent inferences to frontend interfaces."
+      },
+      queue: {
+        title: "📬 Async Event Queues",
+        techStack: "Apache Kafka, RabbitMQ, AWS SQS/SNS, Confluent Cloud",
+        regulations: "MAS TRM Event Message Integrity & Transaction Logging Requirements",
+        failureModes: "Consumer group lag buildup causing delayed notification processing during peak traffic.",
+        handoffs: "Buffers events produced by Microservices; feeds streaming data downstream to Data Engineers."
+      },
+      dw: {
+        title: "📊 Data Lakehouse & BI",
+        techStack: "Snowflake, Databricks, AWS Redshift, Power BI, dbt, Apache Spark",
+        regulations: "PDPA PII Data Masking Mandates, MAS Regulatory Reporting Framework",
+        failureModes: "Unmasked NRIC / credit card numbers stored in analytics staging tables.",
+        handoffs: "Consumes Kafka streams and DB snapshots; provides executive KPI dashboards for business leaders."
+      },
+      soc: {
+        title: "🚨 SOC / SIEM Security",
+        techStack: "Splunk Enterprise Security, Microsoft Sentinel, CrowdStrike EDR, Palo Alto Cortex",
+        regulations: "MAS TRM Section 12 (Cyber Threat Monitoring & 24/7 Operations)",
+        failureModes: "Alert fatigue causing analysts to miss stealthy lateral movement attacks.",
+        handoffs: "Ingests logs from Edge WAF, IAM, and Systems; escalates containment procedures to Incident Responders."
+      },
+      infra: {
+        title: "🖥️ Compute & Storage (SAN/NAS)",
+        techStack: "VMware vSphere, AWS EC2, Pure Storage SAN, NetApp NAS, Nutanix",
+        regulations: "MAS TRM Physical & Infrastructure Resilience, Data Center Security",
+        failureModes: "Physical SAN controller disk failure causing storage volume unmount across VM cluster.",
+        handoffs: "Provides raw hypervisor compute and block storage arrays to Systems Engineers."
+      },
+      net: {
+        title: "🔌 Network Infrastructure",
+        techStack: "Cisco Catalyst, Palo Alto NGFW, Fortinet FortiGate, AWS DirectConnect",
+        regulations: "MAS TRM Network Segmentation & Firewall Policy Review Mandates",
+        failureModes: "Misconfigured BGP route flapping taking down hybrid cloud site-to-site connectivity.",
+        handoffs: "Maintains network VLAN segments connecting on-prem data centers with public cloud VPCs."
+      },
+      iam: {
+        title: "🔑 Identity & Access (IAM/PAM)",
+        techStack: "Okta Enterprise, CyberArk PAM, Azure Active Directory, SailPoint",
+        regulations: "MAS TRM Section 8 (Privileged Access Management & Multi-Factor Authentication)",
+        failureModes: "Unrestricted root/admin privileges assigned without time-bound PAM vault checkouts.",
+        handoffs: "Enforces SSO for end-users and authenticates microservice-to-microservice API tokens."
+      },
+      euc: {
+        title: "💻 Helpdesk & Admin Support",
+        techStack: "ServiceNow IT Service Management, Microsoft Intune MDM, Jira Service Desk",
+        regulations: "PDPA Endpoint Hardening Rules, Corporate IT Asset Security Guidelines",
+        failureModes: "Unencrypted lost laptop exposing corporate documents on local drive.",
+        handoffs: "Provisions hardened staff laptops; manages Active Directory password reset requests."
+      }
+    };
+
+    // Full Comprehensive List of Singapore ICT & Tech Jobs
     const rolesData = [
       {
-        id: "ea",
-        title: "Enterprise Architect",
-        team: "Governance & Strategy",
-        nodes: ["node-ea", "node-app", "node-infra"],
+        id: "syseng",
+        title: "Systems Engineer",
+        team: "Systems & Cloud Operations",
+        nodes: ["node-infra", "node-iam", "node-db"],
         industry: ["all", "banking", "gov"],
-        resp: "Defines overall target technology architecture, cloud migration strategies, and ensures alignment with MAS TRM / GovTech IM8 standards.",
-        sgContext: "Key role in SG banks (DBS, UOB) and GovTech to prevent legacy system silos.",
-        progression: [
-          { level: "Mid-Level", role: "Software / Solution Architect", desc: "Designs individual application domains and service blueprints (TOGAF)." },
-          { level: "Senior", role: "Senior Enterprise Architect", desc: "Leads cross-domain cloud migration strategies and tech stack standards." },
-          { level: "Lead", role: "Principal Architect / Head of EA", desc: "Sets multi-year technology roadmaps and evaluates enterprise vendor contracts." },
-          { level: "Executive", role: "Chief Technology Officer (CTO) / VP Architecture", desc: "Owns overall technology vision and C-suite digital strategy." }
+        resp: "Designs, hardens, and maintains Linux/Windows server operating systems, active directory services, and virtualization platforms.",
+        sgContext: "Essential across SG banks, MNCs, and statutory boards to manage core OS baselines and patch management.",
+        tracks: [
+          {
+            name: "Technical Infrastructure Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Junior Systems Engineer", certs: { req: ["CompTIA Server+"], opt: ["Microsoft Certified: Windows Server"] } },
+              { role: "Senior Systems / Cloud Engineer", certs: { req: ["RHCE (Red Hat Certified Engineer)"], opt: ["AWS SysOps Administrator"] } },
+              { role: "Principal Systems Architect", certs: { req: ["VMware VCP / VCAP"], opt: ["AWS Solutions Architect Professional"] } }
+            ]
+          },
+          {
+            name: "Systems Management Track",
+            type: "mgmt",
+            steps: [
+              { role: "Systems Lead / Infrastructure Manager", certs: { req: ["ITIL 4 Managing Professional"], opt: ["PMP"] } },
+              { role: "Head of Infrastructure & Cloud", certs: { req: ["CISSP"], opt: ["CISM"] } }
+            ]
+          }
         ]
       },
       {
-        id: "grc",
-        title: "Tech Risk / GRC Specialist",
-        team: "Governance & Risk",
-        nodes: ["node-grc", "node-audit", "node-soc"],
-        industry: ["all", "banking", "gov"],
-        resp: "Maintains technology risk registers, ensures compliance with MAS TRM guidelines, and manages vendor security risks.",
-        sgContext: "Mandatory function across all MAS-regulated financial institutions in Singapore.",
-        progression: [
-          { level: "Junior", role: "Tech Risk Analyst", desc: "Monitors vendor security questionnaires and collects audit evidence." },
-          { level: "Mid-Level", role: "GRC Specialist", desc: "Performs MAS TRM risk assessments and drafts IT security policies." },
-          { level: "Senior", role: "Senior Tech Risk Manager", desc: "Leads regulatory filings, incident investigations, and CISO reporting (CRISC/CISA)." },
-          { level: "Executive", role: "Head of Tech Risk / Chief Risk Officer (CRO)", desc: "Oversees enterprise operational and technology risk governance." }
-        ]
-      },
-      {
-        id: "auditor",
-        title: "IT Security Auditor",
-        team: "Audit & Assurance",
-        nodes: ["node-audit", "node-grc", "node-iam"],
-        industry: ["all", "banking", "gov"],
-        resp: "Performs independent verification of IT General Controls (ITGC), access logs, and change management procedures.",
-        sgContext: "Third Line of Defense inspecting audit trails for internal and statutory reporting.",
-        progression: [
-          { level: "Junior", role: "Associate IT Auditor", desc: "Executes sampling on Active Directory access logs and change tickets." },
-          { level: "Mid-Level", role: "IT Security Auditor", desc: "Conducts end-to-end ITGC and application security reviews (CISA certified)." },
-          { level: "Senior", role: "Lead IT Audit Manager", desc: "Manages audit engagements and presents findings to the Audit Committee." },
-          { level: "Executive", role: "Chief Audit Executive (CAE) / Head of Internal Audit", desc: "Directly advises the Board on enterprise compliance and security risks." }
-        ]
-      },
-      {
-        id: "dpo",
-        title: "Data Protection Officer (DPO)",
-        team: "Compliance & Legal",
-        nodes: ["node-dpo", "node-db", "node-dw"],
-        industry: ["all", "banking", "tech", "gov"],
-        resp: "Ensures personal data handling complies with Singapore's Personal Data Protection Act (PDPA) and data masking rules.",
-        sgContext: "Statutory requirement under Singapore law for organizations handling citizen/customer PII.",
-        progression: [
-          { level: "Junior", role: "Data Privacy Executive", desc: "Processes subject access requests and logs data processing inventories." },
-          { level: "Mid-Level", role: "Data Protection Specialist", desc: "Executes Data Protection Impact Assessments (DPIA) for new systems." },
-          { level: "Senior", role: "Designated DPO / Legal Counsel", desc: "Oversees enterprise PDPA compliance and handles breach notifications to PDPC." },
-          { level: "Executive", role: "Head of Privacy & Data Governance", desc: "Sets international privacy standards (GDPR/PDPA) across multi-region operations." }
-        ]
-      },
-      {
-        id: "seceng",
-        title: "Cybersecurity Engineer",
-        team: "Cybersecurity",
-        nodes: ["node-edge", "node-iam", "node-soc"],
-        industry: ["all", "banking", "tech", "gov"],
-        resp: "Designs and hardens Web Application Firewalls (WAF), Endpoint Detection & Response (EDR), and encryption controls.",
-        sgContext: "High demand across SG Cyber Security Agency (CSA) critical information infrastructure sectors.",
-        progression: [
-          { level: "Junior", role: "Junior Security Engineer", desc: "Deploys anti-virus agents, patches security appliances, and performs vulnerability scans." },
-          { level: "Mid-Level", role: "Cybersecurity Engineer", desc: "Configures WAF policies, EDR platforms, and Zero-Trust network rules (CISSP)." },
-          { level: "Senior", role: "Senior Security Architect", desc: "Designs secure hybrid-cloud security baselines and DevSecOps pipelines." },
-          { level: "Executive", role: "Chief Information Security Officer (CISO)", desc: "Overall executive responsibility for enterprise cyber defense and strategy." }
-        ]
-      },
-      {
-        id: "soc",
-        title: "SOC Analyst (L1/L2)",
-        team: "Security Operations",
-        nodes: ["node-soc", "node-edge"],
-        industry: ["all", "banking", "tech", "gov"],
-        resp: "Monitors SIEM dashboards (Splunk/Sentinel) 24/7, triages security alerts, and executes incident response playbooks.",
-        sgContext: "Core defense team managing cyber threat monitoring for local enterprise networks.",
-        progression: [
-          { level: "Junior", role: "SOC L1 Analyst", desc: "Initial alert triage, filtering false positives, and basic log analysis." },
-          { level: "Mid-Level", role: "SOC L2 / Incident Responder", desc: "Investigates malware artifacts, host containment, and incident forensic analysis." },
-          { level: "Senior", role: "SOC Lead / Threat Hunter (L3)", desc: "Proactively hunts for stealthy adversaries and engineers SIEM detection rules." },
-          { level: "Executive", role: "SOC Manager / Head of SecOps", desc: "Manages 24/7 SOC operations, vendor MSSPs, and crisis management." }
-        ]
-      },
-      {
-        id: "infra",
+        id: "infraeng",
         title: "Infrastructure Engineer",
         team: "Core Infrastructure",
         nodes: ["node-infra", "node-lb"],
         industry: ["all", "banking", "gov"],
-        resp: "Manages hypervisors (VMware), SAN/NAS storage infrastructure, rack hardware, and private/hybrid cloud compute.",
-        sgContext: "Critical for on-premise data centers managed by SG financial institutions and government agencies.",
-        progression: [
-          { level: "Junior", role: "Junior System Administrator", desc: "Monitors server uptime, replaces failed SAN disks, and manages VM provisioning." },
-          { level: "Mid-Level", role: "Infrastructure Engineer", desc: "Configures VMware vSphere, cloud compute instances, and automated backup jobs." },
-          { level: "Senior", role: "Senior Cloud / Infra Architect", desc: "Designs multi-region disaster recovery and hybrid-cloud infrastructure architectures." },
-          { level: "Executive", role: "Head of Infrastructure & Operations (I&O)", desc: "Directs enterprise data center strategy and cloud infrastructure investments." }
+        resp: "Manages VMware hypervisor clusters, SAN/NAS storage arrays, physical data center racks, and hybrid-cloud VM infrastructure.",
+        sgContext: "Critical for on-premise data centers managed by SG banks (DBS, UOB, OCBC) and government agencies.",
+        tracks: [
+          {
+            name: "Cloud & Virtualization Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Associate Infra Engineer", certs: { req: ["VMware VCP-DCV"], opt: ["AWS Cloud Practitioner"] } },
+              { role: "Senior Infra Engineer", certs: { req: ["AWS Solutions Architect Associate"], opt: ["Nutanix NCP"] } },
+              { role: "Principal Infrastructure Architect", certs: { req: ["CCSP (Cloud Security Specialist)"], opt: ["TOGAF"] } }
+            ]
+          },
+          {
+            name: "Data Center Operations Track (MGMT)",
+            type: "mgmt",
+            steps: [
+              { role: "Data Center Ops Lead", certs: { req: ["CDCP (Certified Data Centre Professional)"], opt: ["ITIL 4"] } },
+              { role: "Director of Enterprise Infrastructure", certs: { req: ["CISM"], opt: ["Executive MBA"] } }
+            ]
+          }
         ]
       },
       {
-        id: "syseng",
-        title: "Systems Engineer",
-        team: "Systems & Operations",
-        nodes: ["node-infra", "node-db", "node-iam"],
+        id: "mleng",
+        title: "Machine Learning (ML) Engineer",
+        team: "AI & Data Science",
+        nodes: ["node-ai", "node-dw"],
+        industry: ["all", "tech", "banking"],
+        resp: "Deploys ML models, LLMs, vector search indexes (Pinecone/Milvus), and real-time AI recommendation APIs into production.",
+        sgContext: "High demand aligned with Singapore's National AI Strategy 2.0 initiative across tech firms and financial labs.",
+        tracks: [
+          {
+            name: "MLOps & GenAI Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Junior ML Engineer", certs: { req: ["TensorFlow / PyTorch Developer"], opt: ["AWS Machine Learning Specialty"] } },
+              { role: "Senior MLOps Specialist", certs: { req: ["AWS Certified Machine Learning - Specialty"], opt: ["CKAD"] } },
+              { role: "Principal AI Architect", certs: { req: ["Databricks Machine Learning Professional"], opt: ["Stanford/MIT AI Exec"] } }
+            ]
+          },
+          {
+            name: "AI Product Management Track",
+            type: "mgmt",
+            steps: [
+              { role: "AI Engineering Lead", certs: { req: ["AWS Machine Learning Specialty"], opt: ["PMP"] } },
+              { role: "Chief AI Officer (CAIO) / Head of AI", certs: { req: ["AI Governance Cert (SCS)"], opt: ["Executive Leadership"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "datascientist",
+        title: "Data Scientist",
+        team: "Advanced Analytics",
+        nodes: ["node-dw", "node-ai"],
         industry: ["all", "banking", "tech", "gov"],
-        resp: "Designs OS build standards (Windows/Linux Server), automates system configurations, and handles OS patching cycles.",
-        sgContext: "Ensures baseline operating systems are hardened against CSA security baselines.",
-        progression: [
-          { level: "Junior", role: "Junior Systems Engineer", desc: "Handles server OS deployments, Active Directory user updates, and basic PowerShell scripts." },
-          { level: "Mid-Level", role: "Systems Engineer", desc: "Automates OS provisioning (Ansible/Terraform) and patch management pipelines." },
-          { level: "Senior", role: "Staff Systems / Platform Engineer", desc: "Engineers container runtime platforms (OpenShift/K8s) and OS kernel tuning." },
-          { level: "Executive", role: "VP of Enterprise Engineering", desc: "Leads systems engineering, platform reliability, and core IT operations." }
-        ]
-      },
-      {
-        id: "neteng",
-        title: "Network Engineer",
-        team: "Core Infrastructure",
-        nodes: ["node-net", "node-edge"],
-        industry: ["all", "banking", "tech", "gov"],
-        resp: "Configures enterprise switches, core routers, BGP routing, corporate VPN gateways, and firewalls.",
-        sgContext: "Maintains network interconnectivity between SG HQ branches and multi-cloud environments.",
-        progression: [
-          { level: "Junior", role: "Network Administrator", desc: "Configures switch ports, VLAN assignments, and troubleshoots LAN drops (CCNA)." },
-          { level: "Mid-Level", role: "Network Engineer", desc: "Manages BGP/OSPF routing, site-to-site IPsec VPNs, and Next-Gen Firewalls (CCNP)." },
-          { level: "Senior", role: "Principal Network Architect", desc: "Designs Software-Defined Networking (SD-WAN) and multi-cloud backbone connectivity (CCIE)." },
-          { level: "Executive", role: "Head of Global Networks", desc: "Oversees enterprise global telecom contracts and network infrastructure strategy." }
-        ]
-      },
-      {
-        id: "devops",
-        title: "DevOps / SRE Engineer",
-        team: "Cloud & Automation",
-        nodes: ["node-lb", "node-app", "node-queue"],
-        industry: ["all", "tech"],
-        resp: "Automates CI/CD deployment pipelines, manages Kubernetes clusters, and guarantees system availability SLAs.",
-        sgContext: "Primary role driving rapid product deployments in SG tech firms (Shopee, Grab, Razer).",
-        progression: [
-          { level: "Junior", role: "Junior DevOps Engineer", desc: "Maintains Docker containers, updates CI/CD YAML scripts, and sets up Grafana alerts." },
-          { level: "Mid-Level", role: "DevOps / SRE Engineer", desc: "Manages production Kubernetes clusters, Infrastructure-as-Code (Terraform), and chaos engineering." },
-          { level: "Senior", role: "Staff Site Reliability Engineer", desc: "Engineers high-availability auto-scaling architecture and latency SLO frameworks." },
-          { level: "Executive", role: "Director of Platform Engineering / Infrastructure", desc: "Leads enterprise developer platform tooling and cloud operations." }
+        resp: "Develops predictive algorithms, statistical models, and customer behavior segmentations to drive business decision-making.",
+        sgContext: "Drives algorithmic trading, credit scoring, and personalization engines in SG banks and tech scale-ups.",
+        tracks: [
+          {
+            name: "Research & Modeling Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Junior Data Scientist", certs: { req: ["Python / R Data Science Cert"], opt: ["Microsoft Certified: Azure Data Scientist"] } },
+              { role: "Senior Data Scientist", certs: { req: ["Open Certified Data Scientist (Open CDS)"], opt: ["AWS Data Analytics"] } },
+              { role: "Principal Data Scientist / Fellow", certs: { req: ["Ph.D. / Advanced Data Analytics"], opt: ["INFORMS CAP"] } }
+            ]
+          },
+          {
+            name: "Analytics Management Track",
+            type: "mgmt",
+            steps: [
+              { role: "Analytics Manager", certs: { req: ["Open CDS"], opt: ["PMP"] } },
+              { role: "Head of Decision Science", certs: { req: ["AI Governance Cert"], opt: ["Executive Leadership"] } }
+            ]
+          }
         ]
       },
       {
@@ -723,85 +422,349 @@
         industry: ["all", "banking", "tech", "gov"],
         resp: "Builds scalable batch/streaming ETL data pipelines using PySpark, Kafka, and Snowflake/Databricks warehouses.",
         sgContext: "Powers enterprise data analytics and business intelligence pipelines across SG enterprises.",
-        progression: [
-          { level: "Junior", role: "Junior Data Engineer", desc: "Writes SQL transformations, maintains basic python ETL scripts, and builds staging tables." },
-          { level: "Mid-Level", role: "Data Engineer", desc: "Builds real-time streaming pipelines (Kafka/Spark) and manages cloud Data Lakehouse data models." },
-          { level: "Senior", role: "Principal Data Architect", desc: "Engineers enterprise Data Mesh architectures, governance catalogs, and data quality frameworks." },
-          { level: "Executive", role: "Chief Data Officer (CDO) / Head of Data", desc: "Drives enterprise data strategy, monetization, and AI analytics enablement." }
+        tracks: [
+          {
+            name: "Data Architecture Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Junior Data Engineer", certs: { req: ["DP-900 / Azure Data Fundamentals"], opt: ["Python Cert"] } },
+              { role: "Senior Data Engineer", certs: { req: ["Databricks Certified Data Engineer"], opt: ["SnowPro Core"] } },
+              { role: "Principal Data Architect", certs: { req: ["SnowPro Advanced Architect"], opt: ["AWS Data Analytics Specialty"] } }
+            ]
+          },
+          {
+            name: "Data Management Track",
+            type: "mgmt",
+            steps: [
+              { role: "Data Engineering Manager", certs: { req: ["Databricks Cert"], opt: ["PMP"] } },
+              { role: "Chief Data Officer (CDO) / Head of Data", certs: { req: ["Data Governance Cert (PDPC)"], opt: ["Executive MBA"] } }
+            ]
+          }
         ]
       },
       {
-        id: "mleng",
-        title: "Machine Learning Engineer",
-        team: "AI & Data Science",
-        nodes: ["node-ai", "node-dw"],
-        industry: ["all", "tech", "banking"],
-        resp: "Deploys LLM models, vector search indexes (Pinecone/Milvus), and real-time AI recommendation APIs into production.",
-        sgContext: "Growing demand aligned with Singapore's National AI Strategy 2.0 initiative.",
-        progression: [
-          { level: "Junior", role: "Junior ML / AI Engineer", desc: "Fine-tunes open-source models, prepares vector embeddings, and builds model serving APIs." },
-          { level: "Mid-Level", role: "MLOps Engineer", desc: "Automates ML pipelines, feature stores, and model monitoring dashboards in production." },
-          { level: "Senior", role: "Staff AI Architect", desc: "Designs enterprise GenAI / RAG agent systems and custom LLM fine-tuning pipelines." },
-          { level: "Executive", role: "Head of Artificial Intelligence / Chief AI Officer", desc: "Sets enterprise AI strategy, ethical AI guidelines, and AI product investments." }
+        id: "dataanalyst",
+        title: "Data Analyst / BI Specialist",
+        team: "Business Intelligence",
+        nodes: ["node-dw"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Translates raw warehouse data into executive Power BI / Tableau dashboards, tracking key operational and revenue KPIs.",
+        sgContext: "High volume demand across all SG sectors to support data-driven decision-making.",
+        tracks: [
+          {
+            name: "BI & Insights Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Junior Data Analyst", certs: { req: ["PL-300: Microsoft Power BI Data Analyst"], opt: ["SQL Associate"] } },
+              { role: "Senior BI Analyst", certs: { req: ["Tableau Certified Data Analyst"], opt: ["dbt Certified Developer"] } },
+              { role: "Principal Analytics Consultant", certs: { req: ["Advanced SQL / Power BI"], opt: ["Alteryx Designer"] } }
+            ]
+          },
+          {
+            name: "BI Leadership Track",
+            type: "mgmt",
+            steps: [
+              { role: "BI Lead / Analytics Manager", certs: { req: ["PL-300"], opt: ["PMP"] } },
+              { role: "Head of Business Intelligence", certs: { req: ["Agile Leadership"], opt: ["MBA"] } }
+            ]
+          }
         ]
       },
       {
-        id: "admin",
-        title: "IT Admin / Helpdesk Support",
-        team: "Service Desk",
+        id: "itsupport",
+        title: "IT Support / Admin Specialist",
+        team: "Service Desk & EUC",
         nodes: ["node-euc", "node-iam"],
         industry: ["all", "banking", "tech", "gov"],
-        resp: "Provides front-line support for employee computing, laptop provisioning, Active Directory account resets, and IT ticketing.",
+        resp: "Provides front-line end-user hardware troubleshooting, laptop MDM onboarding, Active Directory account management, and ticket resolution.",
         sgContext: "Essential operational backbone ensuring daily internal user productivity across companies.",
-        progression: [
-          { level: "Junior", role: "Helpdesk L1 Support Executive", desc: "Resolves desktop hardware issues, printer drops, and basic password reset tickets." },
-          { level: "Mid-Level", role: "IT Systems Administrator", desc: "Manages Active Directory group policies, MDM (Intune) laptop imaging, and office Wi-Fi." },
-          { level: "Senior", role: "IT Service Desk Manager", desc: "Oversees SLA response metrics, IT Asset Management (ITAM), and vendor procurement." },
-          { level: "Executive", role: "Head of Enterprise User Services / IT Operations", desc: "Directs internal digital workplace solutions and IT end-user support strategy." }
+        tracks: [
+          {
+            name: "Systems Admin Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Desktop Support Engineer", certs: { req: ["CompTIA A+"], opt: ["Microsoft 365 Certified"] } },
+              { role: "System Administrator", certs: { req: ["MS-102: Microsoft 365 Administrator"], opt: ["ITIL 4 Foundation"] } },
+              { role: "Senior IT Ops Engineer", certs: { req: ["Jamf Certified Admin / Intune Specialist"], opt: ["AWS Cloud Practitioner"] } }
+            ]
+          },
+          {
+            name: "IT Service Management Track",
+            type: "mgmt",
+            steps: [
+              { role: "Helpdesk Manager", certs: { req: ["ITIL 4 Managing Professional"], opt: ["PMP"] } },
+              { role: "Head of End-User Computing (EUC)", certs: { req: ["COBIT"], opt: ["CISSP"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "auditor",
+        title: "IT Security Auditor",
+        team: "Audit & Assurance",
+        nodes: ["node-audit", "node-grc", "node-iam"],
+        industry: ["all", "banking", "gov"],
+        resp: "Performs independent verification of IT General Controls (ITGC), access logs, and change management procedures.",
+        sgContext: "Third Line of Defense inspecting audit trails for internal and statutory reporting.",
+        tracks: [
+          {
+            name: "Audit Specialist Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Associate IT Auditor", certs: { req: ["CISA (Associate)"], opt: ["ISO 27001 Lead Auditor"] } },
+              { role: "Senior IT Security Auditor", certs: { req: ["CISA"], opt: ["CISSP", "AWS Certified Security"] } },
+              { role: "Lead Forensic / IT Auditor", certs: { req: ["CISA", "GSLC"], opt: ["CDPSE"] } }
+            ]
+          },
+          {
+            name: "Audit Executive Track",
+            type: "mgmt",
+            steps: [
+              { role: "IT Audit Director", certs: { req: ["CISA", "CISM"], opt: ["CIA"] } },
+              { role: "Chief Audit Executive (CAE)", certs: { req: ["CISA", "CISSP"], opt: ["Executive MBA"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "grc",
+        title: "Tech Risk & Governance (GRC)",
+        team: "Governance & Risk",
+        nodes: ["node-grc", "node-audit", "node-soc"],
+        industry: ["all", "banking", "gov"],
+        resp: "Maintains technology risk registers, ensures compliance with MAS TRM guidelines, and manages vendor security risks.",
+        sgContext: "Mandatory function across all MAS-regulated financial institutions in Singapore.",
+        tracks: [
+          {
+            name: "Technical Risk Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Tech Risk Analyst", certs: { req: ["CRISC (In progress)"], opt: ["ISO 27001 Lead Implementer"] } },
+              { role: "Senior Tech Risk Manager", certs: { req: ["CRISC", "CISA"], opt: ["AWS Cloud Practitioner"] } },
+              { role: "Principal Risk Specialist", certs: { req: ["CISSP", "CRISC"], opt: ["CGEIT"] } }
+            ]
+          },
+          {
+            name: "Executive Compliance Track",
+            type: "mgmt",
+            steps: [
+              { role: "Head of Regulatory Compliance", certs: { req: ["CISM", "CRISC"], opt: ["CISA"] } },
+              { role: "Chief Risk Officer (CRO)", certs: { req: ["CISSP", "CGEIT"], opt: ["Executive Leadership"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "redteam",
+        title: "Red Team / Pentester",
+        team: "Offensive Security",
+        nodes: ["node-soc", "node-edge"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Simulates cyber attacks, executes penetration testing, and identifies vulnerabilities across web, network, and cloud environments.",
+        sgContext: "High demand in financial CREST-certified testing firms and GovTech red teaming units.",
+        tracks: [
+          {
+            name: "Offensive Security Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Junior Pentester", certs: { req: ["eJPT / CompTIA PenTest+"], opt: ["OSCP (In progress)"] } },
+              { role: "Senior Red Team Specialist", certs: { req: ["OSCP (Offensive Security Certified Professional)"], opt: ["CRTO", "OSEP"] } },
+              { role: "Principal Exploit Developer", certs: { req: ["OSED / OSWE"], opt: ["CREST Certified Tester"] } }
+            ]
+          },
+          {
+            name: "Offensive Security Leadership",
+            type: "mgmt",
+            steps: [
+              { role: "Red Team Lead", certs: { req: ["OSCP", "CISM"], opt: ["CISSP"] } },
+              { role: "Head of Offensive Cyber Security", certs: { req: ["CISSP", "CREST Fellow"], opt: ["Executive Leadership"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "blueteam",
+        title: "Blue Team / Threat Hunter",
+        team: "Defensive Cyber Security",
+        nodes: ["node-soc", "node-edge", "node-iam"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Proactively searches networks for hidden adversaries, crafts SIEM detection rules, and executes malware reverse engineering.",
+        sgContext: "Key role protecting Critical Information Infrastructure (CII) under Singapore CSA guidelines.",
+        tracks: [
+          {
+            name: "Threat Intelligence Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Junior Cyber Defender", certs: { req: ["CompTIA CySA+"], opt: ["BTL1 (Blue Team Level 1)"] } },
+              { role: "Senior Threat Hunter", certs: { req: ["GIAC Certified Incident Handler (GCIH)"], opt: ["GCFA"] } },
+              { role: "Principal Incident Responder", certs: { req: ["GREM (Reverse Engineering Malware)"], opt: ["CISSP"] } }
+            ]
+          },
+          {
+            name: "Defensive Security Management",
+            type: "mgmt",
+            steps: [
+              { role: "Threat Intel Lead", certs: { req: ["GCIH", "CISM"], opt: ["CISSP"] } },
+              { role: "Head of Cyber Defense", certs: { req: ["CISSP", "CISM"], opt: ["CGEIT"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "soc",
+        title: "SOC Analyst (L1 / L2)",
+        team: "Security Operations",
+        nodes: ["node-soc", "node-edge"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Monitors SIEM dashboards (Splunk/Sentinel) 24/7, triages security alerts, and executes incident response playbooks.",
+        sgContext: "Core defense team managing cyber threat monitoring for local enterprise networks.",
+        tracks: [
+          {
+            name: "SOC Operations Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "SOC L1 Analyst", certs: { req: ["CompTIA Security+"], opt: ["Splunk Core Certified Power User"] } },
+              { role: "SOC L2 / Incident Responder", certs: { req: ["BTL1", "GCIH"], opt: ["GCFA"] } },
+              { role: "SOC L3 Lead / Threat Hunter", certs: { req: ["CISSP", "GCIA"], opt: ["EC-Council ECIH"] } }
+            ]
+          },
+          {
+            name: "SOC Management Track",
+            type: "mgmt",
+            steps: [
+              { role: "SOC Manager", certs: { req: ["CISM"], opt: ["CISSP"] } },
+              { role: "Head of Security Operations", certs: { req: ["CISSP", "CISM"], opt: ["Executive MBA"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "neteng",
+        title: "Network Engineer",
+        team: "Network Fabric",
+        nodes: ["node-net", "node-edge"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Configures enterprise switches, core routers, BGP routing, corporate VPN gateways, and firewalls.",
+        sgContext: "Maintains network interconnectivity between SG HQ branches and multi-cloud environments.",
+        tracks: [
+          {
+            name: "Network Architecture Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Network Administrator", certs: { req: ["CCNA (Cisco Certified Network Associate)"], opt: ["Network+"] } },
+              { role: "Senior Network Engineer", certs: { req: ["CCNP Enterprise"], opt: ["Palo Alto PCNSA"] } },
+              { role: "Principal Network Architect", certs: { req: ["CCIE Enterprise Infrastructure"], opt: ["AWS Certified Advanced Networking"] } }
+            ]
+          },
+          {
+            name: "Global Network Management",
+            type: "mgmt",
+            steps: [
+              { role: "Network Operations Lead", certs: { req: ["CCNP", "ITIL 4"], opt: ["PMP"] } },
+              { role: "Director of Global Networks", certs: { req: ["CISSP"], opt: ["Executive Leadership"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "ea",
+        title: "Enterprise Architect",
+        team: "Governance & Strategy",
+        nodes: ["node-ea", "node-app", "node-infra"],
+        industry: ["all", "banking", "gov"],
+        resp: "Defines overall target technology architecture, cloud migration strategies, and ensures alignment with MAS TRM / GovTech IM8 standards.",
+        sgContext: "Key role in SG banks (DBS, UOB) and GovTech to prevent legacy system silos.",
+        tracks: [
+          {
+            name: "Individual Contributor (IC) Track",
+            type: "ic",
+            steps: [
+              { role: "Solution Architect", certs: { req: ["AWS Solutions Architect Assoc"], opt: ["TOGAF Foundation"] } },
+              { role: "Senior Cloud / Solution Architect", certs: { req: ["AWS Certified Solutions Architect Professional"], opt: ["CKA"] } },
+              { role: "Principal Enterprise Architect", certs: { req: ["TOGAF Enterprise Architecture Practitioner"], opt: ["CCSP"] } }
+            ]
+          },
+          {
+            name: "Management & Governance Track",
+            type: "mgmt",
+            steps: [
+              { role: "Architecture Review Board (ARB) Lead", certs: { req: ["TOGAF Practitioner"], opt: ["CISM"] } },
+              { role: "Head of Enterprise Architecture", certs: { req: ["TOGAF Master"], opt: ["PMP"] } },
+              { role: "Chief Technology Officer (CTO)", certs: { req: ["Executive Leadership / MBA"], opt: ["CISSP"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "devops",
+        title: "DevOps / SRE Engineer",
+        team: "Cloud & Automation",
+        nodes: ["node-lb", "node-app", "node-queue"],
+        industry: ["all", "tech"],
+        resp: "Automates CI/CD deployment pipelines, manages Kubernetes clusters, and guarantees system availability SLAs.",
+        sgContext: "Primary role driving rapid product deployments in SG tech firms (Shopee, Grab, Razer).",
+        tracks: [
+          {
+            name: "Site Reliability (SRE) Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "DevOps Engineer", certs: { req: ["Docker / Kubernetes (CKAD)"], opt: ["AWS SysOps Assoc"] } },
+              { role: "Senior SRE Engineer", certs: { req: ["CKA (Certified Kubernetes Admin)"], opt: ["HashiCorp Terraform Cert"] } },
+              { role: "Principal Infrastructure Architect", certs: { req: ["CKS (Kubernetes Security)"], opt: ["AWS DevOps Pro"] } }
+            ]
+          },
+          {
+            name: "Platform Management Track",
+            type: "mgmt",
+            steps: [
+              { role: "DevOps Team Lead", certs: { req: ["AWS DevOps Pro"], opt: ["PMP"] } },
+              { role: "Head of Platform Engineering", certs: { req: ["CKA", "ITIL 4"], opt: ["Agile Coach"] } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "dpo",
+        title: "Data Protection Officer (DPO)",
+        team: "Compliance & Legal",
+        nodes: ["node-dpo", "node-db", "node-dw"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Ensures personal data handling complies with Singapore's Personal Data Protection Act (PDPA) and data masking rules.",
+        sgContext: "Statutory requirement under Singapore law for organizations handling citizen/customer PII.",
+        tracks: [
+          {
+            name: "Privacy Specialist Track (IC)",
+            type: "ic",
+            steps: [
+              { role: "Data Privacy Executive", certs: { req: ["Practitioner Certificate in Personal Data Protection (SG)"], opt: ["CIPP/A"] } },
+              { role: "Senior Data Privacy Manager", certs: { req: ["CIPP/A (Certified Information Privacy Professional Asia)"], opt: ["CIPM"] } },
+              { role: "Principal Privacy Architect", certs: { req: ["CIPP/A", "CDPSE"], opt: ["CIPT"] } }
+            ]
+          },
+          {
+            name: "Executive DPO Track",
+            type: "mgmt",
+            steps: [
+              { role: "Designated DPO", certs: { req: ["CIPP/A", "CIPM"], opt: ["Legal / Law Degree"] } },
+              { role: "Head of Privacy & Governance", certs: { req: ["CIPM", "CISSP"], opt: ["Executive Leadership"] } }
+            ]
+          }
         ]
       }
     ];
 
     const industryProfiles = {
-      all: {
-        title: "Master View (All Sectors Combined)",
-        desc: "Displays the complete enterprise IT architecture, showing how runtime engineering, security operations, and governance oversight interlock."
-      },
-      banking: {
-        title: "Banking & Financial Services (MAS TRM Framework)",
-        desc: "Focuses heavily on Technology Risk Management (MAS TRM), ITGC Auditability, 24/7 SOC monitoring, strict IAM/PAM access controls, and relational transaction integrity."
-      },
-      tech: {
-        title: "Tech Scale-Up / E-Commerce / SaaS",
-        desc: "Optimized for feature velocity, developer autonomy, microservices scalability, real-time AI/LLM pipelines, automated CI/CD, and FinOps cloud cost engineering."
-      },
-      gov: {
-        title: "Government & Public Sector (GovTech IM8 Standard)",
-        desc: "Structured around GovTech IM8 directives, Zero-Trust access boundaries, PDPA data privacy rules, standardized Enterprise Architecture, and hardened infrastructure."
-      }
+      all: { title: "Master View (All Sectors Combined)", desc: "Displays the complete enterprise IT architecture, showing how runtime engineering, security operations, and governance oversight interlock." },
+      banking: { title: "Banking & Financial Services (MAS TRM Framework)", desc: "Focuses heavily on Technology Risk Management (MAS TRM), ITGC Auditability, 24/7 SOC monitoring, strict IAM/PAM access controls, and relational transaction integrity." },
+      tech: { title: "Tech Scale-Up / E-Commerce / SaaS", desc: "Optimized for feature velocity, developer autonomy, microservices scalability, real-time AI/LLM pipelines, automated CI/CD, and FinOps cloud cost engineering." },
+      gov: { title: "Government & Public Sector (GovTech IM8 Standard)", desc: "Structured around GovTech IM8 directives, Zero-Trust access boundaries, PDPA data privacy rules, standardized Enterprise Architecture, and hardened infrastructure." }
     };
 
     const scenarios = {
-      audit: {
-        title: "Flow A: Change Approval & ITGC Audit Trail",
-        nodes: ["node-ea", "node-grc", "node-app", "node-audit"],
-        desc: "A developer submits a software update -> Enterprise Architect & Tech Risk evaluate compliance -> Update deploys -> IT Auditor inspects change logs for compliance."
-      },
-      ai: {
-        title: "Flow B: AI Vector Search Query Flow",
-        nodes: ["node-edge", "node-lb", "node-app", "node-ai", "node-db"],
-        desc: "User submits query via app -> Edge WAF validates request -> API routes to search microservice -> Vector DB performs similarity search -> Returns AI result."
-      },
-      sec: {
-        title: "Flow C: Cyber Incident & SOC Response",
-        nodes: ["node-edge", "node-soc", "node-iam", "node-grc"],
-        desc: "Suspicious traffic hits Edge Firewall -> SIEM generates high-severity alert -> SOC Analyst isolates compromised credential -> Tech Risk files incident report."
-      },
-      data: {
-        title: "Flow D: Data Lakehouse ETL & BI Analytics",
-        nodes: ["node-db", "node-queue", "node-dw", "node-dpo"],
-        desc: "Production DB logs raw transactions -> Streaming Queue ingests events -> Data Engineer cleanses data into Data Lakehouse -> DPO ensures PII masking."
-      }
+      audit: { title: "Flow A: Change Approval & ITGC Audit Trail", nodes: ["node-ea", "node-grc", "node-app", "node-audit"], desc: "A developer submits a software update -> Enterprise Architect & Tech Risk evaluate compliance -> Update deploys -> IT Auditor inspects change logs for compliance." },
+      ai: { title: "Flow B: AI Vector Search Query Flow", nodes: ["node-edge", "node-lb", "node-app", "node-ai", "node-db"], desc: "User submits query via app -> Edge WAF validates request -> API routes to search microservice -> Vector DB performs similarity search -> Returns AI result." },
+      sec: { title: "Flow C: Cyber Incident & SOC Response", nodes: ["node-edge", "node-soc", "node-iam", "node-grc"], desc: "Suspicious traffic hits Edge Firewall -> SIEM generates high-severity alert -> SOC Analyst isolates compromised credential -> Tech Risk files incident report." },
+      data: { title: "Flow D: Data Lakehouse ETL & BI Analytics", nodes: ["node-db", "node-queue", "node-dw", "node-dpo"], desc: "Production DB logs raw transactions -> Streaming Queue ingests events -> Data Engineer cleanses data into Data Lakehouse -> DPO ensures PII masking." }
     };
 
     let currentIndustry = "all";
@@ -821,19 +784,6 @@
         card.id = `role-${role.id}`;
         card.onclick = () => selectRole(role.id);
 
-        const progSummary = role.progression ? `
-          <div class="progression-summary">
-            <div class="progression-title">Career Progression Path:</div>
-            <div class="progression-steps">
-              <span class="prog-step">${role.progression[0].role}</span>
-              <span class="prog-arrow">➔</span>
-              <span class="prog-step">${role.progression[1].role}</span>
-              <span class="prog-arrow">➔</span>
-              <span class="prog-step">${role.progression[3].role}</span>
-            </div>
-          </div>
-        ` : '';
-
         card.innerHTML = `
           <div>
             <div class="role-title">${role.title}</div>
@@ -841,7 +791,6 @@
             <div class="role-resp">${role.resp}</div>
           </div>
           <div>
-            ${progSummary}
             <div class="role-sg-context"><strong>SG Context:</strong> ${role.sgContext}</div>
           </div>
         `;
@@ -851,7 +800,6 @@
 
     function setIndustry(indKey) {
       currentIndustry = indKey;
-
       document.querySelectorAll(".btn-ind").forEach(btn => btn.classList.remove("active"));
       event.target.classList.add("active");
 
@@ -860,12 +808,8 @@
       banner.innerHTML = `<strong>${profile.title}:</strong> ${profile.desc}`;
       banner.classList.add("active");
 
-      document.querySelectorAll(".node").forEach(node => {
-        node.classList.remove("dimmed", "highlighted", "scenario-active");
-      });
-      document.querySelectorAll(".role-card").forEach(card => {
-        card.classList.remove("dimmed", "active");
-      });
+      document.querySelectorAll(".node").forEach(node => node.classList.remove("dimmed", "highlighted", "scenario-active"));
+      document.querySelectorAll(".role-card").forEach(card => card.classList.remove("dimmed", "active"));
 
       if (indKey === "all") return;
 
@@ -878,13 +822,6 @@
     }
 
     function selectRole(roleId) {
-      if (activeRole === roleId) {
-        activeRole = null;
-        resetHighlighting();
-        closeDrawer();
-        return;
-      }
-
       activeRole = roleId;
       const role = rolesData.find(r => r.id === roleId);
 
@@ -900,45 +837,69 @@
         }
       });
 
-      let progHtml = '<div class="path-timeline">';
-      role.progression.forEach(p => {
-        progHtml += `
-          <div class="path-node">
-            <div class="path-node-title">[${p.level}] ${p.role}</div>
-            <div class="path-node-desc">${p.desc}</div>
-          </div>
+      let tracksHtml = "";
+      role.tracks.forEach(track => {
+        const trackClass = track.type === "ic" ? "track-ic" : "track-mgmt";
+        tracksHtml += `
+          <div class="detail-section">
+            <span class="track-badge ${trackClass}">${track.name}</span>
+            <div class="path-timeline">
         `;
-      });
-      progHtml += '</div>';
+        track.steps.forEach(step => {
+          let reqCertsPills = step.certs.req.map(c => `<span class="cert-pill cert-req">Req: ${c}</span>`).join("");
+          let optCertsPills = step.certs.opt.map(c => `<span class="cert-pill cert-opt">Opt: ${c}</span>`).join("");
 
-      openDrawer(`Career Progression Path: ${role.title}`, `
-        <p><strong>Team Domain:</strong> ${role.team}</p>
-        <p><strong>Core Responsibilities:</strong> ${role.resp}</p>
-        <p><strong>Singapore Regulatory Context:</strong> ${role.sgContext}</p>
-        <div style="margin-top:14px; font-weight:700; color:var(--accent-green);">Career Progression Track:</div>
-        ${progHtml}
+          tracksHtml += `
+            <div class="path-node">
+              <div style="font-weight:700; color:var(--text-main); font-size:0.875rem;">${step.role}</div>
+              <div style="margin-top:4px;">${reqCertsPills} ${optCertsPills}</div>
+            </div>
+          `;
+        });
+        tracksHtml += `</div></div>`;
+      });
+
+      openDrawer(`Branching Progression Tracks: ${role.title}`, `
+        <p><strong>Department Domain:</strong> ${role.team}</p>
+        <p><strong>Primary Role Overview:</strong> ${role.resp}</p>
+        <p style="margin-top:6px; color:var(--accent-amber);"><strong>Singapore Regulatory Context:</strong> ${role.sgContext}</p>
+        ${tracksHtml}
       `);
     }
 
     function inspectNode(nodeKey) {
-      const nodeEl = document.getElementById(`node-${nodeKey}`);
-      const title = nodeEl.querySelector(".node-title").innerText;
-      const desc = nodeEl.querySelector(".node-desc").innerText;
-      const rolesTag = nodeEl.querySelector(".node-roles-tag").innerText;
+      const spec = nodeDeepSpecs[nodeKey] || {
+        title: "Architecture Node",
+        techStack: "Standard Enterprise Stack",
+        regulations: "Standard Operational Controls",
+        failureModes: "Service unavailability during peak traffic",
+        handoffs: "Interacts with neighboring infrastructure nodes."
+      };
 
-      document.querySelectorAll(".role-card").forEach(card => {
-        card.classList.remove("active", "dimmed");
-      });
-
+      document.querySelectorAll(".role-card").forEach(card => card.classList.remove("active", "dimmed"));
       const matchingRoles = rolesData.filter(r => r.nodes.includes(`node-${nodeKey}`));
-      matchingRoles.forEach(r => {
-        document.getElementById(`role-${r.id}`).classList.add("active");
-      });
+      matchingRoles.forEach(r => document.getElementById(`role-${r.id}`).classList.add("active"));
 
-      openDrawer(`Component Inspection: ${title}`, `
-        <p><strong>Overview:</strong> ${desc}</p>
-        <p style="margin-top:8px;"><strong>${rolesTag}</strong></p>
-        <p style="margin-top:8px; font-size:0.8rem; color:var(--text-muted);">Clicking this node highlighted the managing role cards and their associated progression paths below.</p>
+      openDrawer(`Component Architecture Inspection: ${spec.title}`, `
+        <div class="detail-section">
+          <div class="detail-section-title">🛠️ Production Technology Stack</div>
+          <div style="font-size:0.85rem; color:var(--text-main);">${spec.techStack}</div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">📜 Singapore Regulatory & Governance Mandates</div>
+          <div style="font-size:0.85rem; color:var(--accent-amber);">${spec.regulations}</div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">⚠️ Key Operational Failure Modes & SLA Risks</div>
+          <div style="font-size:0.85rem; color:var(--text-muted);">${spec.failureModes}</div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">🔄 Inter-System Data Handoffs</div>
+          <div style="font-size:0.85rem; color:var(--text-muted);">${spec.handoffs}</div>
+        </div>
       `);
     }
 
@@ -961,17 +922,13 @@
 
       openDrawer(`Scenario Walkthrough: ${scen.title}`, `
         <p>${scen.desc}</p>
-        <p style="margin-top:8px; color:var(--accent-amber);"><strong>Highlighted Flow Nodes:</strong> ${scen.nodes.join(" ➔ ")}</p>
+        <p style="margin-top:8px; color:var(--accent-amber);"><strong>Highlighted Flow Nodes:</strong> ${scen.nodes.join(" &rarr; ")}</p>
       `);
     }
 
     function resetHighlighting() {
-      document.querySelectorAll(".node").forEach(node => {
-        node.classList.remove("dimmed", "highlighted", "scenario-active");
-      });
-      document.querySelectorAll(".role-card").forEach(card => {
-        card.classList.remove("dimmed", "active");
-      });
+      document.querySelectorAll(".node").forEach(node => node.classList.remove("dimmed", "highlighted", "scenario-active"));
+      document.querySelectorAll(".role-card").forEach(card => card.classList.remove("dimmed", "active"));
     }
 
     function openDrawer(title, htmlContent) {
@@ -986,5 +943,6 @@
 
     window.onload = init;
   </script>
+<script src="tracker.js"></script>
 </body>
 </html>

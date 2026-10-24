@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SG Tech Career Diagnostics - 12-Factor Selection Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stylecheckjob.css">
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">SG</div>
+      <div>
+        <div class="brand-title">Comprehensive Tech Trait & Skill Diagnostic</div>
+        <div class="brand-subtitle">12-Factor Personal Profiler • SSG Infocomm Tech Framework</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn">&leftarrow; Flow Visualizer</a>
+      <a href="job.html" class="nav-btn job-link">SG Tech Roles Directory &rarr;</a>
+    </div>
+  </header>
+
+  <div class="assessment-container">
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-title">Singapore Tech Career Personal Assessment</div>
+        <div class="quiz-subtitle">Complete all 12 custom criteria below to generate your personalized career proposal across 22 Singapore tech roles.</div>
+      </div>
+
+      <form id="diagnostic-form" onsubmit="submitDiagnostic(event)">
+
+        <!-- SECTION 1 -->
+        <div class="section-divider">Section 1: Personality Traits & Working Style</div>
+
+        <div class="question-block">
+          <label class="question-label">1. Primary Personal Characteristic:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('trait', 'analytical', this)">
+              <span>Deep Analytical & Logician</span>
+              <span class="sub">Loves root-cause analysis, system logs, data patterns, and systematic verification.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('trait', 'creative', this)">
+              <span>Creative Builder & Architect</span>
+              <span class="sub">Enjoys turning blank slates into working apps, user interfaces, or automated flows.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('trait', 'guardian', this)">
+              <span>Vigilant Guardian & Risk-Averse</span>
+              <span class="sub">Naturally cautious, checks for edge cases, security flaws, and compliance mandates.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('trait', 'organizer', this)">
+              <span>Structured Communicator & Organizer</span>
+              <span class="sub">Excels at documentation, process design, cross-team alignment, and status reporting.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">2. Problem-Solving Style Under Pressure:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('problem_solving', 'debug_code', this)">
+              <span>Code Debugging & Hotfix Patching</span>
+              <span class="sub">Dives directly into application code, stack traces, and Git commits to fix issues.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('problem_solving', 'contain_sec', this)">
+              <span>Network Isolation & Threat Containment</span>
+              <span class="sub">Blocks malicious traffic, revokes compromised access keys, and isolates servers.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('problem_solving', 'infra_failover', this)">
+              <span>Infrastructure Failover & OS Recovery</span>
+              <span class="sub">Triggers backup hypervisors, switches SAN storage, and restores server images.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('problem_solving', 'process_gov', this)">
+              <span>Incident Governance & Regulatory Filing</span>
+              <span class="sub">Manages stakeholder communication, files MAS/PDPA reports, and runs post-mortems.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">3. Communication & Team Engagement Preference:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('communication', 'deep_work', this)">
+              <span>Independent Deep Work (Solo Focus)</span>
+              <span class="sub">Thrives with minimal meetings, focusing on writing code, data pipelines, or security rules.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('communication', 'collaborative', this)">
+              <span>Agile Cross-Functional Squads</span>
+              <span class="sub">Enjoys daily standups, pairing with product managers, designers, and testers.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('communication', 'stakeholder', this)">
+              <span>Executive & Business Liaison</span>
+              <span class="sub">Enjoys translating technical concepts to C-level executives, auditors, and clients.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="section-divider">Section 2: Strengths, Weaknesses & Hobbies</div>
+
+        <div class="question-block">
+          <label class="question-label">4. Core Technical Strength:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('strength', 'software_logic', this)">
+              <span>Software Algorithms & Object-Oriented Logic</span>
+              <span class="sub">Grasps complex code syntax, design patterns, and REST/gRPC API structures easily.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('strength', 'infra_hardware', this)">
+              <span>Hardware, OS, Network & Server Intuition</span>
+              <span class="sub">Strong natural feel for Linux, firewalls, active directory, and storage hardware.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('strength', 'data_math', this)">
+              <span>Data Modeling, SQL & Statistical Intuition</span>
+              <span class="sub">Spotted numbers patterns, query optimizations, and data trends effortlessly.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('strength', 'audit_detail', this)">
+              <span>Meticulous Rule Inspection & Audit Detail</span>
+              <span class="sub">Never misses an unmapped permission, compliance gap, or unencrypted data field.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">5. Known Weakness or Work Preference Blindspot:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('weakness', 'no_coding', this)">
+              <span>Dislikes Heavy Programming / Math</span>
+              <span class="sub">Drained by writing thousands of lines of complex OOP or algorithm code daily.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('weakness', 'no_tickets', this)">
+              <span>Dislikes Repetitive Manual Support Tickets</span>
+              <span class="sub">Bored by repetitive helpdesk tickets, user password resets, or routine asset tasks.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('weakness', 'no_ambiguity', this)">
+              <span>Dislikes Vague & Shifting Requirements</span>
+              <span class="sub">Struggles when product scopes change constantly without clear specifications.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('weakness', 'no_outages', this)">
+              <span>Dislikes High-Pressure Live Incident Chaos</span>
+              <span class="sub">Prefers avoiding live outage war-rooms with management pressing for instant fixes.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">6. Off-Duty Hobbies & Personal Interests:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('hobby', 'homelab', this)">
+              <span>DIY Hardware, NAS, Networking & Modding</span>
+              <span class="sub">Enjoys setting up home storage arrays, routers, Raspberry Pis, or custom PCs.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('hobby', 'ai_automation', this)">
+              <span>AI Tools, Automation Scripts & Gaming</span>
+              <span class="sub">Enjoys testing LLM prompts, writing Python automation scripts, or gaming tech setups.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('hobby', 'investing_puzzles', this)">
+              <span>Financial Markets, Logic Puzzles & Strategy</span>
+              <span class="sub">Enjoys evaluating market trends, logic puzzles, chess, or financial analysis.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('hobby', 'writing_organizing', this)">
+              <span>Organizing Projects, Writing & Community Work</span>
+              <span class="sub">Enjoys structured planning, writing blogs/docs, or community volunteering.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="section-divider">Section 3: Work-Life, Environment & Tech Stack Comfort</div>
+
+        <div class="question-block">
+          <label class="question-label">7. Working Hours Expectation & Overtime (OT) Tolerance:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('hours', 'fixed', this)">
+              <span>Strict 9-to-6 / Standard Hours</span>
+              <span class="sub">Prefers predictable schedules, low on-call expectations, and steady balance.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('hours', 'flexible', this)">
+              <span>Flexible Hours / Operational On-Call</span>
+              <span class="sub">Accepts occasional OT during deployment releases, incidents, or sprint milestones.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('hours', 'high_intensity', this)">
+              <span>High Intensity / Accelerated Growth</span>
+              <span class="sub">Willingly spends extra evenings/weekends upskilling, building labs, and tackling hot issues.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">8. On-Call Production Support Comfort Level:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('oncall', 'no_oncall', this)">
+              <span>Zero On-Call (Standard Business Hours Only)</span>
+              <span class="sub">Requires complete disconnection outside official work hours.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('oncall', 'rotation', this)">
+              <span>Scheduled Shift Rotation (Paid Allowance)</span>
+              <span class="sub">Willing to take planned weekend/night standby shifts on a rostered basis.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('oncall', 'incident_lead', this)">
+              <span>High-Urgency Incident Responder</span>
+              <span class="sub">Thrives under adrenaline when critical infrastructure or security alerts trip.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">9. Preferred Technology Stack Domain:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('tech_domain', 'cloud_infra', this)">
+              <span>Cloud, Linux, Networks & Virtualization</span>
+              <span class="sub">AWS, Azure, VMware, Cisco, Docker, Kubernetes, Terraform.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('tech_domain', 'apps_web', this)">
+              <span>Web, Mobile & Microservices Code</span>
+              <span class="sub">Java (Spring Boot), Python (FastAPI), React, Go, Node.js.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('tech_domain', 'data_ai', this)">
+              <span>Data Warehouses, Streaming & AI Models</span>
+              <span class="sub">Snowflake, Databricks, PySpark, Kafka, Power BI, LLMs.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('tech_domain', 'cyber_sec', this)">
+              <span>SIEM, Firewalls, IAM & Penetration Tools</span>
+              <span class="sub">Splunk, Sentinel, Palo Alto, Okta, BurpSuite, CrowdStrike.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">10. Target Corporate Working Environment in Singapore:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('environment', 'banking', this)">
+              <span>Banking & Financial Institutions (MAS TRM)</span>
+              <span class="sub">Strict governance, formal processes, structured progression, strong compensation.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('environment', 'tech_scaleup', this)">
+              <span>Tech Scale-Ups & E-Commerce</span>
+              <span class="sub">Fast deployment cycles, modern tech stack, flexible culture, high autonomy.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('environment', 'govtech', this)">
+              <span>Government & Statutory Boards (GovTech IM8)</span>
+              <span class="sub">Public impact, strong job security, structured SkillsFuture training support.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">11. Daily Task Workload Preference:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('daily_task', 'building_code', this)">
+              <span>Writing Code & Designing Features</span>
+              <span class="sub">Spending 70%+ of the day crafting software APIs, queries, or scripts.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('daily_task', 'maintaining_infra', this)">
+              <span>Configuring & Maintaining Infrastructure</span>
+              <span class="sub">Monitoring server health, patching OS, managing network VLANs and cloud VMs.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('daily_task', 'auditing_risk', this)">
+              <span>Reviewing Compliance & Risk Registers</span>
+              <span class="sub">Checking access logs, reviewing architecture proposals, and filing risk documents.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <label class="question-label">12. Continuous Upskilling & Certification Intent:</label>
+          <div class="options-grid">
+            <div class="option-btn" onclick="selectOpt('upskilling', 'formal_certs', this)">
+              <span>Formal Certified Pathways (AWS / CISSP / CISA)</span>
+              <span class="sub">Prefers structured exam paths sponsored by company SkillsFuture/TeSA budgets.</span>
+            </div>
+            <div class="option-btn" onclick="selectOpt('upskilling', 'self_taught', this)">
+              <span>Self-Taught GitHub Projects & Open-Source</span>
+              <span class="sub">Prefers building personal projects, home labs, or participating in hackathons.</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Evaluate Profile Against 22 SG Roles &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const userAnswers = {};
+
+    function selectOpt(key, val, el) {
+      userAnswers[key] = val;
+      const parent = el.closest('.options-grid');
+      parent.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function submitDiagnostic(e) {
+      e.preventDefault();
+      const requiredKeys = ['trait', 'problem_solving', 'communication', 'strength', 'weakness', 'hobby', 'hours', 'oncall', 'tech_domain', 'environment', 'daily_task', 'upskilling'];
+      
+      const missing = requiredKeys.filter(k => !userAnswers[k]);
+      if (missing.length > 0) {
+        alert(`Please complete all questions before submitting. (${missing.length} remaining)`);
+        return;
+      }
+
+      localStorage.setItem("sg_tech_user_profile", JSON.stringify(userAnswers));
+      window.location.href = "proposal.html";
+    }
+  </script>
+<script src="tracker.js"></script>
+</body>
+</html>

@@ -4,496 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>System Design & Modern AI Architecture Visualizer</title>
-  <style>
-    :root {
-      --bg-dark: #070d19;
-      --bg-card: #0f172a;
-      --bg-card-hover: #1e293b;
-      --border-color: #1e293b;
-      --border-highlight: #334155;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --accent-cyan: #00f3ff;
-      --accent-pink: #ff007f;
-      --accent-green: #00ff66;
-      --accent-amber: #ffaa00;
-      --accent-purple: #a855f7;
-      --accent-blue: #3b82f6;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      padding: 20px;
-      line-height: 1.5;
-    }
-
-    /* Top Navigation Header */
-    header {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px 24px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .brand-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      color: #000;
-      font-size: 1.2rem;
-    }
-    .brand-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-    .brand-subtitle {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .nav-btn {
-      background: #070d19;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .nav-btn:hover {
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
-    }
-    .nav-btn.active {
-      background: rgba(0, 243, 255, 0.1);
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
-    }
-    .nav-btn.job-link {
-      background: linear-gradient(135deg, rgba(0, 255, 102, 0.1), rgba(0, 243, 255, 0.1));
-      border-color: var(--accent-green);
-      color: var(--accent-green);
-    }
-
-    /* Embedded Video Section */
-    .video-container-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .video-header {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .video-wrapper {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--border-highlight);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    }
-    .video-wrapper video {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* Industry Flow Controls */
-    .flow-controls-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .control-label {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 12px;
-      display: block;
-    }
-    .flow-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .flow-btn {
-      background: #070d19;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .flow-btn:hover {
-      border-color: var(--border-highlight);
-      background: var(--bg-card-hover);
-    }
-    .flow-btn.active {
-      border-color: var(--accent-cyan);
-      background: rgba(0, 243, 255, 0.1);
-      color: var(--accent-cyan);
-      font-weight: 600;
-      box-shadow: 0 0 12px rgba(0, 243, 255, 0.25);
-    }
-
-    .flow-meta-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border-color);
-    }
-    .flow-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-    .speed-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .speed-btn {
-      background: #070d19;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      cursor: pointer;
-    }
-    .speed-btn.active {
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
-      font-weight: 600;
-    }
-
-    /* Visualizer Swimlanes & Canvas */
-    .visualizer-wrapper {
-      position: relative;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 24px;
-      overflow-x: auto;
-    }
-
-    .swimlanes-container {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(250px, 1fr));
-      gap: 20px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .lane-column {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .lane-header {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-cyan);
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .lane-header .badge {
-      background: rgba(0, 243, 255, 0.1);
-      color: var(--accent-cyan);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-    }
-
-    .node-card {
-      background: #070d19;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 14px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      position: relative;
-    }
-    .node-card:hover {
-      border-color: var(--accent-cyan);
-      transform: translateY(-2px);
-    }
-    .node-card.dimmed {
-      opacity: 0.25;
-      filter: grayscale(80%);
-    }
-    .node-card.active-node {
-      border-color: var(--accent-green);
-      box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
-      opacity: 1 !important;
-      filter: none !important;
-    }
-
-    .node-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .node-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    .node-tag {
-      font-size: 0.65rem;
-      color: var(--accent-cyan);
-      margin-top: 8px;
-      font-weight: 600;
-    }
-
-    /* Canvas Overlay */
-    #flow-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Packet Journey Hop Tracker */
-    .journey-tracker-card {
-      background: #070d19;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-top: 20px;
-    }
-    .journey-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 8px;
-    }
-    .journey-steps {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .journey-step-badge {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .journey-step-badge.active {
-      border-color: var(--accent-green);
-      color: var(--accent-green);
-      box-shadow: 0 0 8px rgba(0, 255, 102, 0.3);
-    }
-
-    /* 13 Concepts Grid */
-    .concepts-section {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-    .concepts-header {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      margin-bottom: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .concepts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 12px;
-    }
-    .concept-card {
-      background: #070d19;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px 14px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .concept-card:hover {
-      border-color: var(--accent-cyan);
-      transform: translateY(-2px);
-    }
-    .concept-num {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--accent-cyan);
-      margin-bottom: 2px;
-    }
-    .concept-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    /* Drawer Modal */
-    .drawer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #0f172a;
-      border-top: 2px solid var(--accent-cyan);
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
-      padding: 24px;
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
-      z-index: 100;
-      max-height: 60vh;
-      overflow-y: auto;
-    }
-    .drawer.open {
-      transform: translateY(0);
-    }
-    .drawer-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-color);
-    }
-    .drawer-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
-    }
-    .close-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    .drawer-body {
-      font-size: 0.9rem;
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-
-    .detail-section {
-      margin-top: 12px;
-      background: #070d19;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 14px;
-    }
-    .detail-section-title {
-      font-weight: 700;
-      color: var(--accent-green);
-      font-size: 0.85rem;
-      margin-bottom: 6px;
-    }
-
-    @media (max-width: 900px) {
-      .swimlanes-container {
-        grid-template-columns: repeat(2, minmax(200px, 1fr));
-      }
-    }
-    @media (max-width: 600px) {
-      .swimlanes-container {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Top Navigation Header -->
   <header>
     <div class="brand">
       <div class="brand-icon">SD</div>
       <div>
         <div class="brand-title">System Design & Modern AI Architecture</div>
-        <div class="brand-subtitle">Interactive Real-World Workflows & Video Concepts Breakdown</div>
+        <div class="brand-subtitle">Interactive Enterprise Systems & Real-World AI Workflows</div>
       </div>
     </div>
     <div class="nav-actions">
       <button class="nav-btn active" onclick="scrollToSection('visualizer')">Live Flow Visualizer</button>
       <button class="nav-btn" onclick="scrollToSection('concepts')">13 Video Concepts</button>
       <a href="job.html" class="nav-btn job-link">SG Tech Jobs Navigator &rarr;</a>
+      <a href="checkjob.html" class="nav-btn checkjob-link">Check Suitable Path &rarr;</a>
     </div>
   </header>
 
@@ -512,7 +43,7 @@
 
   <!-- Flow Selector Panel -->
   <div class="flow-controls-card" id="visualizer">
-    <span class="control-label">Select Real-World Process Flow:</span>
+    <span class="control-label">Select Real-World Industry Process Flow:</span>
     <div class="flow-buttons">
       <button class="flow-btn active" onclick="setFlow('login')">🔵 HTML Form Login</button>
       <button class="flow-btn" onclick="setFlow('order')">🟢 E-Commerce Click Order</button>
@@ -526,7 +57,7 @@
     <div class="flow-meta-bar">
       <div class="flow-title" id="flow-display-title">HTML Form Login Process</div>
       <div class="speed-controls">
-        <span style="font-size: 0.75rem; color: var(--text-muted);">Flow Speed:</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">Flow Speed:</span>
         <button class="speed-btn" onclick="setSpeed(0.25)">0.25x (Ultra Slow)</button>
         <button class="speed-btn active" onclick="setSpeed(0.5)">0.5x (Slow)</button>
         <button class="speed-btn" onclick="setSpeed(1.0)">1x (Normal)</button>
@@ -534,7 +65,7 @@
     </div>
   </div>
 
-  <!-- Live Visualizer Area -->
+  <!-- Swimlane Visualizer & Canvas Overlay -->
   <div class="visualizer-wrapper">
     <canvas id="flow-canvas"></canvas>
 
@@ -609,7 +140,7 @@
         </div>
       </div>
 
-      <!-- Phase 4: AI Era & Observability -->
+      <!-- Phase 4: AI Era & Operations -->
       <div class="lane-column">
         <div class="lane-header">
           <span>4. AI & Operations</span>
@@ -634,7 +165,7 @@
 
     </div>
 
-    <!-- Packet Hop Tracker -->
+    <!-- Hop Sequence Tracker -->
     <div class="journey-tracker-card">
       <div class="journey-title">Active Process Hop Sequence:</div>
       <div class="journey-steps" id="journey-steps-container">
@@ -643,11 +174,11 @@
     </div>
   </div>
 
-  <!-- 13 Video Core Concepts -->
+  <!-- 13 Video Core Concepts Grid -->
   <div class="concepts-section" id="concepts">
     <div class="concepts-header">
       <span>13 Fundamental System Design Video Concepts</span>
-      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Click any concept card to view whiteboard details</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Click any card to inspect whiteboard details</span>
     </div>
 
     <div class="concepts-grid">
@@ -706,7 +237,7 @@
     </div>
   </div>
 
-  <!-- Detail Drawer -->
+  <!-- Detail Drawer Modal -->
   <div class="drawer" id="drawer">
     <div class="drawer-header">
       <div class="drawer-title" id="drawer-title">Component Inspector</div>
@@ -718,7 +249,6 @@
   </div>
 
   <script>
-    // Process Flow Hop Configurations
     const flowConfigs = {
       login: {
         title: "HTML Form Login Process Flow",
@@ -728,13 +258,13 @@
       },
       order: {
         title: "E-Commerce Click Order Process Flow",
-        color: "#00ff66",
+        color: "#10b981",
         hops: ["node-client", "node-waf", "node-lb", "node-app", "node-cb", "node-db", "node-queue", "node-obs"],
         desc: "User clicks Checkout -> Gateway forwards to Order Microservice -> Circuit Breaker protects inventory API -> Order saved to DB -> Event published to Kafka -> Logs captured in Observability."
       },
       weather: {
         title: "Check Weather Status Process Flow",
-        color: "#ffaa00",
+        color: "#f59e0b",
         hops: ["node-client", "node-waf", "node-cache"],
         desc: "User requests current weather -> Edge WAF routes to Redis Cache -> Sub-millisecond weather cache hit returned immediately without hitting backend DB."
       },
@@ -746,7 +276,7 @@
       },
       stream: {
         title: "Video Streaming Playback Process Flow",
-        color: "#ff007f",
+        color: "#ec4899",
         hops: ["node-client", "node-waf", "node-app", "node-db"],
         desc: "User presses play -> Edge CDN serves video chunks -> Metadata fetched from NoSQL Database -> Playback metrics streamed to analytics."
       },
@@ -764,58 +294,243 @@
       }
     };
 
+    const nodeTechSpecs = {
+      client: {
+        tech: "React, Next.js, iOS (Swift), Android (Kotlin)",
+        tradeoffs: "Client-side rendering (CSR) vs Server-side rendering (SSR); Local Storage vs HttpOnly Secure Cookies for JWT tokens.",
+        rolesInFlows: {
+          login: "Captures username/password inputs, hashes payload on form submit, and sends POST request to Gateway over TLS 1.3.",
+          order: "Disables 'Submit Order' button to prevent double-click charges; manages cart optimistic UI state.",
+          weather: "Sends GET request with geolocation coordinates or IP address.",
+          bank: "Prompts biometrics or OTP MFA challenge before signing transaction payload.",
+          stream: "Initializes HLS/DASH media player with dynamic adaptive bitrate streaming.",
+          llm: "Establishes SSE (Server-Sent Events) or WebSocket connection for live token-by-token streaming.",
+          agent: "Displays real-time step execution progress indicator (Thought -> Action -> Result)."
+        }
+      },
+      waf: {
+        tech: "Cloudflare WAF, AWS CloudFront, Akamai, Nginx ModSecurity",
+        tradeoffs: "Strict rule blocking latency overhead vs Security exposure; False positive rate on legitimate user requests.",
+        rolesInFlows: {
+          login: "Applies Rate Limiting (e.g. max 5 login attempts/min per IP) to prevent brute force; blocks SQL injection patterns.",
+          order: "Mitigates automated checkout scalper bots attempting inventory hoarding during flash sales.",
+          weather: "Serves static edge cache hits for static web frontend assets directly from nearest PoP.",
+          bank: "Enforces Geo-IP fencing, TLS 1.3 encryption, and OWASP Top 10 anomaly inspection.",
+          stream: "Terminates SSL at global edge nodes and serves cached video manifest (.m3u8) files.",
+          llm: "Inspects incoming prompts for Prompt Injection attacks and jailbreak payload strings.",
+          agent: "Blocks rogue automated scraping bots and rate limits high-frequency AI API invocations."
+        }
+      },
+      lb: {
+        tech: "HAProxy, Nginx, AWS ALB/NLB, Envoy Proxy",
+        tradeoffs: "Layer 4 (TCP) throughput speed vs Layer 7 (HTTP) path-based routing capability; Round-robin vs Least-Connections algorithms.",
+        rolesInFlows: {
+          login: "Terminates HTTPS traffic and balances auth requests across stateless API pods using Round-Robin.",
+          order: "Distributes heavy checkout traffic across auto-scaled Kubernetes application pods.",
+          weather: "Fast L4 packet forwarding to upstream edge cache nodes.",
+          bank: "Uses IP Hash affinity or sticky sessions to route user sessions reliably through dedicated banking pods.",
+          stream: "Balances metadata requests separate from heavy media chunk delivery streams.",
+          llm: "Maintains long-lived HTTP/2 streams across stateless prompt pre-processing worker pools.",
+          agent: "Distributes agent orchestration tasks across worker clusters with healthy CPU allocation."
+        }
+      },
+      auth: {
+        tech: "Kong Gateway, AWS API Gateway, Keycloak, OAuth 2.0 / OIDC",
+        tradeoffs: "Centralized API Gateway bottleneck vs Service Mesh decentralization; Access token TTL vs Revocation list lookup latency.",
+        rolesInFlows: {
+          login: "Validates user credentials against password hash, issues short-lived JWT Access Token and HttpOnly Refresh Token.",
+          order: "Decodes JWT bearer token header to verify user identity (`user_id`) and subscription tier.",
+          weather: "Verifies API Key rate limits for third-party weather data consumers.",
+          bank: "Enforces strict Multi-Factor Authentication (MFA/TOTP) validation before granting transaction authorization.",
+          stream: "Validates DRM token authorization signatures before streaming media content.",
+          llm: "Enforces token quotas and API tier access controls before forwarding prompts to LLMs.",
+          agent: "Verifies scope permissions for tools the AI agent is authorized to trigger."
+        }
+      },
+      app: {
+        tech: "Node.js (NestJS), Go (Gin), Java (Spring Boot), Python (FastAPI)",
+        tradeoffs: "Monolith deployment simplicity vs Microservices domain autonomy; Synchronous REST API blocking vs Async event processing.",
+        rolesInFlows: {
+          login: "Executes Argon2/Bcrypt password hashing comparison against stored user credentials.",
+          order: "Coordinates checkout workflow: verifies stock, calculates tax/shipping, and initializes transaction state.",
+          weather: "Fetches regional weather metadata if missing from memory cache.",
+          bank: "Executes double-entry bookkeeping ledger updates in strict ACID isolation.",
+          stream: "Generates signed CDN video URLs matching user subscription levels.",
+          llm: "Formats user prompt into system template with safety rules and history context.",
+          agent: "Runs core business logic routines triggered by autonomous agent tool requests."
+        }
+      },
+      cb: {
+        tech: "Resilience4j, Netflix Hystrix, Envoy Outlier Detection",
+        tradeoffs: "Fail-fast degradation vs Full service availability; Circuit trip threshold sensitivity vs Recovery time window.",
+        rolesInFlows: {
+          login: "Prevents auth service exhaustion if downstream DB response times spike.",
+          order: "If Payment Gateway API fails or times out, opens circuit and falls back to 'Order Pending Payment' status.",
+          weather: "Redirects traffic to stale backup weather cache if primary weather API is unreachable.",
+          bank: "Instantly aborts transaction if core banking ledger service latency exceeds 2000ms SLA.",
+          stream: "Degrades stream resolution (1080p -> 720p) if media server pool is overloaded.",
+          llm: "Falls back to smaller quantized fallback model if primary GPU cluster queue is saturated.",
+          agent: "Halts agent tool execution if an external third-party API returns repeated 5xx errors."
+        }
+      },
+      cache: {
+        tech: "Redis Enterprise, Memcached, Dragonfly",
+        tradeoffs: "In-memory speed (sub-ms) vs Volatile data persistence risks; Cache Eviction strategies (LRU vs LFU); Cache Stampede exposure.",
+        rolesInFlows: {
+          login: "Stores active session tokens and user permission sets for instant validation without DB queries.",
+          order: "Caches hot product inventory counts and flash sale item details in memory.",
+          weather: "Serves pre-aggregated weather readings directly from memory (99% cache hit ratio).",
+          bank: "Caches temporary OTP codes and user rate limit counters.",
+          stream: "Caches trending video catalogue metadata and user playback position checkpoints.",
+          llm: "Caches exact prompt-response pairs (Semantic Caching) to eliminate redundant LLM API costs.",
+          agent: "Stores transient agent step memory and scratchpad planning state."
+        }
+      },
+      db: {
+        tech: "PostgreSQL, MySQL (Relational SQL); MongoDB, DynamoDB (NoSQL)",
+        tradeoffs: "ACID transactional consistency (SQL) vs Horizontal scale-out flexibility (NoSQL); Read Replicas lag vs Master write bottleneck.",
+        rolesInFlows: {
+          login: "Queries user account record by email index to fetch salted password hash.",
+          order: "Executes atomic transaction updating inventory balance and creating order line item records.",
+          weather: "Persists historical climate data records for batch archival analysis.",
+          bank: "Enforces strict row-level locking (`SELECT ... FOR UPDATE`) on bank accounts during balance transfers.",
+          stream: "Queries document database for rich video metadata, comments, and recommendations.",
+          llm: "Logs user conversation history and billing usage metadata.",
+          agent: "Stores permanent audit trail of all actions executed by the AI agent."
+        }
+      },
+      queue: {
+        tech: "Apache Kafka, RabbitMQ, AWS SQS / SNS",
+        tradeoffs: "At-least-once vs Exactly-once message delivery semantics; Log retention disk size vs In-memory queue speed.",
+        rolesInFlows: {
+          login: "Publishes `user_logged_in` event to trigger security analytics and login notification emails.",
+          order: "Dispatches `order_placed` event consumed asynchronously by Payment, Warehouse, and Email notification services.",
+          weather: "Ingests raw IoT weather sensor telemetry streams at massive scale.",
+          bank: "Streams transaction records to anti-fraud AI detection engines asynchronously.",
+          stream: "Streams real-time playback telemetry events for QoE (Quality of Experience) monitoring.",
+          llm: "Queues asynchronous long-running batch LLM generation tasks.",
+          agent: "Buffers asynchronous agent tool execution tasks to avoid blocking the main user interface thread."
+        }
+      },
+      vector: {
+        tech: "Pinecone, Qdrant, Milvus, pgvector",
+        tradeoffs: "Approximate Nearest Neighbor (ANN) recall accuracy vs Query latency; High RAM consumption for high-dimensional indexes.",
+        rolesInFlows: {
+          login: "Not utilized in standard auth flows (N/A).",
+          order: "Powers visual product similarity search based on image embeddings.",
+          weather: "Matches historical weather pattern vector embeddings for forecasting models.",
+          bank: "Detects anomalous financial transaction behavior using embedding vector distance metrics.",
+          stream: "Drives semantic recommendation engines matching user taste profiles.",
+          llm: "Executes HNSW similarity search on user prompt embeddings to retrieve top-k matching document chunks (RAG).",
+          agent: "Acts as long-term episodic memory store for the agent to retrieve past learned experiences."
+        }
+      },
+      rag: {
+        tech: "LangChain, LlamaIndex, OpenAI GPT-4, Anthropic Claude, Ollama",
+        tradeoffs: "Context window size vs LLM inference latency/cost; Hallucination risk vs Strict temperature setting.",
+        rolesInFlows: {
+          login: "Not utilized in standard auth flows (N/A).",
+          order: "Powers customer support AI assistant answering order tracking questions.",
+          weather: "Synthesizes raw weather metrics into natural language forecast summaries.",
+          bank: "Generates personalized wealth management portfolio insights based on customer data.",
+          stream: "Generates automated video key-point summaries and translations.",
+          llm: "Synthesizes retrieved vector documents into a grounded, hallucination-free answer with source citations.",
+          agent: "Executes the primary ReAct (Reasoning + Acting) loop: plans sub-goals, decides tool selection, and evaluates results."
+        }
+      },
+      obs: {
+        tech: "OpenTelemetry, Datadog, Prometheus + Grafana, ELK Stack (Elasticsearch)",
+        tradeoffs: "High logging storage costs vs Observability depth; Sampling rate vs Trace detail loss.",
+        rolesInFlows: {
+          login: "Captures HTTP 200/401 status metrics, latency histograms, and failed attempt audit logs.",
+          order: "Traces distributed request path across Microservices, Kafka, and Database using trace IDs.",
+          weather: "Monitors API endpoint latency, cache hit ratios, and edge server health.",
+          bank: "Records immutable ITGC compliance audit trails and security monitoring logs.",
+          stream: "Tracks video buffering ratios, error rates, and CDN bandwidth utilization.",
+          llm: "Monitors token usage, prompt latency, RAG retrieval accuracy, and guardrail violation rates.",
+          agent: "Tracks full agent execution trajectories, tool call success rates, and token cost attribution."
+        }
+      }
+    };
+
     const conceptDetails = {
       1: {
         title: "01. Client-Server Architecture",
-        body: "The foundational pattern of software architecture. The client (frontend browser or mobile app) requests resources or actions, while the server (backend logic and database) processes those requests and returns responses. Separating clients from servers allows multiple client interfaces to share the same central logic without duplication."
+        videoContent: "The video presents the client-server pattern as the fundamental starting point of system design: a Client (web browser, mobile app) sends HTTP requests across the network, and a Server processes those requests and returns responses (HTML, JSON, XML).",
+        extraKnowledge: "Modern production systems separate clients and servers via API contracts (OpenAPI/GraphQL). Clients manage UI state and optimistic rendering, while stateless servers scale horizontally behind load balancers. Key considerations include CORS security, TLS termination, and choosing between REST, gRPC (for sub-millisecond microservice RPCs), or WebSockets (for full-duplex live updates).",
+        pitfalls: "Tight coupling between frontend state and backend schema; placing business logic inside client applications."
       },
       2: {
         title: "02. Load Balancing",
-        body: "Sits in front of backend servers to distribute incoming traffic evenly. Prevents any single server from becoming a bottleneck, automatically routes traffic away from unhealthy instances, and enables horizontal scaling by allowing new servers to be added seamlessly."
+        videoContent: "The video demonstrates how a Load Balancer sits between clients and server pools to distribute incoming HTTP traffic evenly, eliminating single points of failure and avoiding server overload.",
+        extraKnowledge: "Load balancers operate at Layer 4 (TCP/UDP packet forwarding via AWS NLB or HAProxy) or Layer 7 (HTTP application routing via AWS ALB or Nginx). Advanced algorithms include Least Connections, Weighted Response Time, and Consistent Hashing (essential for sticky caching without breaking when nodes scale). Health checks continually remove failing nodes from the pool.",
+        pitfalls: "Failing to configure sticky sessions when backend applications maintain local state; DNS caching bypassing load balancer distribution."
       },
       3: {
         title: "03. Caching Strategies",
-        body: "Stores frequently requested data in fast, in-memory storage systems like Redis or Memcached. Caching dramatically reduces latency and database read load by serving hot data in sub-milliseconds."
+        videoContent: "The video highlights caching as putting fast, in-memory data stores (like Redis or Memcached) in front of slow databases to serve hot reads with sub-millisecond response times.",
+        extraKnowledge: "Caching patterns include Cache-Aside (Lazy Loading), Write-Through, Write-Behind (Write-Back for extreme throughput), and Read-Through. Eviction policies govern memory management: LRU (Least Recently Used), LFU (Least Frequently Used), and TTL (Time-To-Live). Edge Caching via CDNs handles static media assets geographically close to users.",
+        pitfalls: "Cache Stampede (Thundering Herd) when a key expires and thousands of concurrent requests hit the database at once; Cache Invalidation complexity ('Hardest problem in CS')."
       },
       4: {
         title: "04. Database Design (SQL vs NoSQL)",
-        body: "Relational SQL databases (PostgreSQL, MySQL) excel at structured data requiring strict ACID transactional guarantees (e.g., financial ledger payments). NoSQL databases (MongoDB, DynamoDB) prioritize schema flexibility, horizontal scale, and high-throughput unstructured data handling."
+        videoContent: "The video compares Relational SQL databases (structured tables, strict schemas, foreign keys) against NoSQL databases (flexible key-value, document, column-family, or graph models).",
+        extraKnowledge: "SQL (PostgreSQL, MySQL) provides strict ACID (Atomicity, Consistency, Isolation, Durability) guarantees, ideal for financial ledgers and transactional integrity. NoSQL (MongoDB, DynamoDB, Cassandra) trades rigid schemas for horizontal partitioning and massive write throughput. Polyglot Persistence uses both in the same system based on workload requirements.",
+        pitfalls: "Using NoSQL for complex multi-table JOIN transactions; using SQL without proper indexes causing full table scans under load."
       },
       5: {
         title: "05. Microservices Architecture",
-        body: "Decomposes a large monolithic codebase into small, loosely coupled services organized around specific business capabilities (e.g., Auth, Orders, Payments). Each service can be developed, deployed, and scaled independently by dedicated engineering teams."
+        videoContent: "The video explains breaking a large, tightly coupled Monolith into smaller, independent Microservices organized around specific business domains (User, Order, Payment).",
+        extraKnowledge: "Microservices enable team autonomy and independent deployment pipelines. Communication occurs via synchronous REST/gRPC or asynchronous events (Kafka). Domain-Driven Design (DDD) defines Bounded Contexts. Kubernetes (K8s) manages container orchestration, service discovery, and auto-scaling.",
+        pitfalls: "Distributed Monolith (microservices sharing a single database or making chain-reaction synchronous HTTP calls); massive network latency and operational complexity."
       },
       6: {
         title: "06. System Communication (Async Queues)",
-        body: "Uses asynchronous event streams and message brokers like Apache Kafka or RabbitMQ. Allows services to publish events and respond asynchronously, preventing slow downstream services from blocking user-facing HTTP requests."
+        videoContent: "The video covers asynchronous event-driven communication using message queues (Kafka, RabbitMQ) so background processes can execute without holding up the user's HTTP request.",
+        extraKnowledge: "Decouples producers and consumers. Message brokers offer Publish/Subscribe (Kafka/SNS) or Point-to-Point Queue (RabbitMQ/SQS) models. Key guarantees: At-least-once, At-most-once, or Exactly-once processing. Dead Letter Queues (DLQ) isolate unprocessable or corrupted messages for human inspection.",
+        pitfalls: "Ignoring consumer lag metrics; failing to design idempotent event handlers (handling duplicate events safely)."
       },
       7: {
         title: "07. Circuit Breakers",
-        body: "A critical stability pattern. When a downstream service begins failing or responding slowly, the circuit breaker opens to temporarily block requests from reaching that failing service, preventing cascading failures across the enterprise."
+        videoContent: "The video explains the Circuit Breaker pattern (borrowed from electrical engineering): when a downstream service fails, the circuit opens to fail fast and stop cascading service failures.",
+        extraKnowledge: "Circuit breakers have 3 states: Closed (normal operation), Open (requests fail immediately without calling the service), and Half-Open (sends trial requests to check recovery). Libraries like Resilience4j or Envoy proxies execute this automatically, serving graceful fallback responses (e.g., cached recommendations).",
+        pitfalls: "Setting timeout thresholds too high, allowing requests to queue up and exhaust server thread pools before the circuit trips."
       },
       8: {
         title: "08. Data Replication & Partitioning (Sharding)",
-        body: "Replication maintains multiple synchronized copies of data across different geographical locations to ensure high availability. Partitioning (Sharding) splits massive database tables across multiple physical database nodes to handle high-volume write operations."
+        videoContent: "The video shows how database replication creates read copies across servers for high availability, while Sharding splits massive database tables horizontally across physical disks.",
+        extraKnowledge: "Replication types: Master-Slave (Single-Master with Read Replicas) vs Multi-Master. Sharding strategies: Range-Based, Hash-Based (Consistent Hashing), or Directory-Based. Sharding key selection is critical to avoid hotspotting a single database shard.",
+        pitfalls: "Cross-shard JOIN queries (prohibitively slow); replication lag leading to stale reads right after a user writes data."
       },
       9: {
         title: "09. Consistency Models (CAP Theorem)",
-        body: "According to the CAP Theorem, distributed systems must trade off between Strong Consistency (every read receives the latest write) and High Availability (every request receives a response). Systems choose models based on business priority (e.g., Banks prioritize Consistency; Social Media prioritizes Availability)."
+        videoContent: "The video breaks down the CAP Theorem: a distributed data system can only guarantee 2 out of 3 properties at the same time: Consistency, Availability, and Partition Tolerance.",
+        extraKnowledge: "Since network partitions (P) are inevitable in real-world networks, systems must choose between CP (Consistent under Partition: blocks reads/writes until synchronized, e.g., HBase, Redis) or AP (Available under Partition: returns stale data rather than failing, e.g., Cassandra, DynamoDB). PACELC Theorem extends this by factoring in Latency during normal operations.",
+        pitfalls: "Expecting Eventual Consistency systems to immediately reflect updates across global nodes."
       },
       10: {
         title: "10. System Security",
-        body: "Security is woven into every layer: Edge Web Application Firewalls (WAF) block DDoS attacks, Identity & Access Management (IAM) handles authentication and Single Sign-On (SSO), and encryption protects data both in transit (TLS) and at rest."
+        videoContent: "The video covers securing enterprise applications across layers: Web Application Firewalls (WAF) for edge protection, IAM/OAuth for authentication, and TLS/HTTPS for encrypted transport.",
+        extraKnowledge: "Zero-Trust Architecture ('Never trust, always verify'). Security controls include Principle of Least Privilege, Secret Management (AWS Secrets Manager/HashiCorp Vault), JWT token signing with asymmetric RS256 keys, Rate Limiting, CORS headers, and OWASP Top 10 mitigation.",
+        pitfalls: "Storing unhashed plain-text passwords or hardcoding API keys in source code repositories."
       },
       11: {
         title: "11. Observability (Logs, Metrics, Traces)",
-        body: "Provides visibility into distributed production systems using three pillars: Logs (capturing specific event details), Metrics (tracking system health and latency), and Traces (following individual request journeys across microservice boundaries)."
+        videoContent: "The video introduces the Three Pillars of Observability required to debug complex distributed systems: Metrics (graphs), Logs (events), and Traces (request journeys).",
+        extraKnowledge: "Metrics (Prometheus/Grafana) track CPU, memory, latency percentiles (p95, p99), and throughput. Structured JSON Logs (ELK Stack) provide context. Distributed Tracing (OpenTelemetry, Jaeger) injects Trace IDs into HTTP/gRPC headers to map full request paths across 20+ microservices.",
+        pitfalls: "Logging sensitive PII or credit card numbers; unindexed high-cardinality metrics causing metric store crashes."
       },
       12: {
         title: "12. CI/CD & Infrastructure as Code",
-        body: "Continuous Integration and Deployment (CI/CD) pipelines automate code testing, container builds, and deployment releases. Infrastructure as Code (Terraform) allows cloud servers and networks to be defined reproducibly in version-controlled scripts."
+        videoContent: "The video explains automating software delivery: CI/CD pipelines automate testing/deployment, while Infrastructure as Code (IaC) defines cloud environments via scripts.",
+        extraKnowledge: "CI (GitHub Actions, Jenkins) builds container images and runs unit/integration tests. CD deploys via Blue/Green or Canary release strategies to eliminate downtime. IaC tools (Terraform, AWS CloudFormation, Pulumi) allow entire data centers to be version-controlled, audited, and reproduced in minutes.",
+        pitfalls: "Manual infrastructure changes in cloud console ('Drift'); deploying directly to production without automated rollback triggers."
       },
       13: {
         title: "13. Fault Tolerance & Graceful Degradation",
-        body: "Ensures systems degrade gracefully during partial hardware or network outages. Uses retries, fallbacks, timeouts, and redundant backup systems so users experience minimal disruption during failures."
+        videoContent: "The video emphasizes designing systems that expect component failures and gracefully degrade feature functionality rather than crashing completely.",
+        extraKnowledge: "Employs Redundancy (Active-Active or Active-Passive multi-region setups), Exponential Backoff with Jitter for retries (prevents retry storms), Bulkheading (isolating resources per tenant), and Fallbacks (serving cached or static degraded UI components during outages).",
+        pitfalls: "Retrying failed requests instantly without backoff, inadvertently DDoS'ing an already struggling backend service."
       }
     };
 
@@ -904,7 +619,6 @@
       });
     }
 
-    // Canvas Animation Rendering Loop
     function animateCanvas() {
       const canvas = document.getElementById("flow-canvas");
       const ctx = canvas.getContext("2d");
@@ -921,7 +635,6 @@
       particleOffset += 1.5 * flowSpeed;
       if (particleOffset > 100) particleOffset = 0;
 
-      // Draw connections between consecutive active hop nodes
       for (let i = 0; i < hops.length - 1; i++) {
         const fromEl = document.getElementById(hops[i]);
         const toEl = document.getElementById(hops[i + 1]);
@@ -937,7 +650,6 @@
         const endX = toRect.left + toRect.width / 2 - wrapRect.left;
         const endY = toRect.top + toRect.height / 2 - wrapRect.top;
 
-        // Draw Bezier Neon Curve
         ctx.beginPath();
         ctx.moveTo(startX, startY);
         
@@ -954,7 +666,6 @@
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // Animated Particle Traveling along Curve
         const t = (particleOffset / 100 + i * 0.2) % 1;
         const pX = Math.pow(1 - t, 3) * startX + 3 * Math.pow(1 - t, 2) * t * controlX1 + 3 * (1 - t) * Math.pow(t, 2) * controlX2 + Math.pow(t, 3) * endX;
         const pY = Math.pow(1 - t, 3) * startY + 3 * Math.pow(1 - t, 2) * t * controlY1 + 3 * (1 - t) * Math.pow(t, 2) * controlY2 + Math.pow(t, 3) * endY;
@@ -992,13 +703,36 @@
         return;
       }
 
+      const spec = nodeTechSpecs[nodeKey] || {
+        tech: "Standard Enterprise Stack",
+        tradeoffs: "Performance vs Complexity trade-offs.",
+        rolesInFlows: {}
+      };
+
+      const specificRoleInActiveFlow = spec.rolesInFlows[currentFlow] || "Executes runtime processing and maintains service availability during execution.";
+
       openDrawer(`Component Inspector: ${title}`, `
-        <p><strong>Overview:</strong> ${desc}</p>
-        <p style="margin-top:10px; color:var(--accent-cyan);"><strong>Mapped Concept:</strong> ${tag}</p>
+        <p><strong>Primary Function:</strong> ${desc}</p>
+        <p style="margin-top:8px; color:var(--accent-cyan);"><strong>Mapped Video Concept:</strong> ${tag}</p>
+        
         <div class="detail-section">
-          <div class="detail-section-title">Enterprise System Role</div>
+          <div class="detail-section-title">⚡ Exact Role in Active Flow (${flowConfigs[currentFlow].title})</div>
+          <div style="font-size:0.85rem; color:var(--text-main); line-height:1.5;">
+            ${specificRoleInActiveFlow}
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">🛠️ Industry Tech Stack & Implementation</div>
           <div style="font-size:0.85rem; color:var(--text-muted);">
-            This component operates within the active <strong>${flowConfigs[currentFlow].title}</strong>. It handles runtime processing, enforces system constraints, and ensures fault-tolerant operation under peak traffic.
+            ${spec.tech}
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">⚖️ Key Engineering Trade-offs & Considerations</div>
+          <div style="font-size:0.85rem; color:var(--text-muted);">
+            ${spec.tradeoffs}
           </div>
         </div>
       `);
@@ -1007,11 +741,24 @@
     function showConceptModal(conceptNum) {
       const details = conceptDetails[conceptNum];
       openDrawer(details.title, `
-        <p style="font-size:0.95rem; color:var(--text-main);">${details.body}</p>
         <div class="detail-section">
-          <div class="detail-section-title">Reference Video Integration</div>
-          <div style="font-size:0.85rem; color:var(--text-muted);">
-            This pillar directly corresponds to Concept #${conceptNum} outlined in the fundamental system design video. It forms a core building block for scalable distributed applications.
+          <div class="detail-section-title">📹 Video Whiteboard Breakdown</div>
+          <div style="font-size:0.875rem; color:var(--text-main); line-height:1.5;">
+            ${details.videoContent}
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">🧠 Production & Architectural Context</div>
+          <div style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+            ${details.extraKnowledge}
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title pitfall-title">⚠️ Common Production Pitfalls</div>
+          <div style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+            ${details.pitfalls}
           </div>
         </div>
       `);
@@ -1046,5 +793,6 @@
       }
     };
   </script>
+<script src="tracker.js"></script>
 </body>
 </html>
