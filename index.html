@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>System Design & Modern AI Architecture Visualizer</title>
+  <style>
+    :root {
+      --bg-dark: #070d19;
+      --bg-card: #0f172a;
+      --bg-card-hover: #1e293b;
+      --border-color: #1e293b;
+      --border-highlight: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-cyan: #00f3ff;
+      --accent-pink: #ff007f;
+      --accent-green: #00ff66;
+      --accent-amber: #ffaa00;
+      --accent-purple: #a855f7;
+      --accent-blue: #3b82f6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    /* Top Navigation Header */
+    header {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #000;
+      font-size: 1.2rem;
+    }
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-btn {
+      background: #070d19;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:hover {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+    }
+    .nav-btn.active {
+      background: rgba(0, 243, 255, 0.1);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+    .nav-btn.job-link {
+      background: linear-gradient(135deg, rgba(0, 255, 102, 0.1), rgba(0, 243, 255, 0.1));
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    /* Embedded Video Section */
+    .video-container-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .video-header {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .video-wrapper {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-highlight);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    .video-wrapper video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Industry Flow Controls */
+    .flow-controls-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .control-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .flow-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .flow-btn {
+      background: #070d19;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flow-btn:hover {
+      border-color: var(--border-highlight);
+      background: var(--bg-card-hover);
+    }
+    .flow-btn.active {
+      border-color: var(--accent-cyan);
+      background: rgba(0, 243, 255, 0.1);
+      color: var(--accent-cyan);
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(0, 243, 255, 0.25);
+    }
+
+    .flow-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+    }
+    .flow-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .speed-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .speed-btn {
+      background: #070d19;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .speed-btn.active {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    /* Visualizer Swimlanes & Canvas */
+    .visualizer-wrapper {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+
+    .swimlanes-container {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(250px, 1fr));
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .lane-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .lane-header {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lane-header .badge {
+      background: rgba(0, 243, 255, 0.1);
+      color: var(--accent-cyan);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+    }
+
+    .node-card {
+      background: #070d19;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .node-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+    .node-card.dimmed {
+      opacity: 0.25;
+      filter: grayscale(80%);
+    }
+    .node-card.active-node {
+      border-color: var(--accent-green);
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+      opacity: 1 !important;
+      filter: none !important;
+    }
+
+    .node-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .node-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .node-tag {
+      font-size: 0.65rem;
+      color: var(--accent-cyan);
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    /* Canvas Overlay */
+    #flow-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Packet Journey Hop Tracker */
+    .journey-tracker-card {
+      background: #070d19;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 20px;
+    }
+    .journey-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .journey-steps {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .journey-step-badge {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .journey-step-badge.active {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+      box-shadow: 0 0 8px rgba(0, 255, 102, 0.3);
+    }
+
+    /* 13 Concepts Grid */
+    .concepts-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .concepts-header {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .concepts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .concept-card {
+      background: #070d19;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .concept-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+    .concept-num {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      margin-bottom: 2px;
+    }
+    .concept-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Drawer Modal */
+    .drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #0f172a;
+      border-top: 2px solid var(--accent-cyan);
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
+      padding: 24px;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    .drawer.open {
+      transform: translateY(0);
+    }
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .drawer-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .drawer-body {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .detail-section {
+      margin-top: 12px;
+      background: #070d19;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .detail-section-title {
+      font-weight: 700;
+      color: var(--accent-green);
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .swimlanes-container {
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
+      }
+    }
+    @media (max-width: 600px) {
+      .swimlanes-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">SD</div>
+      <div>
+        <div class="brand-title">System Design & Modern AI Architecture</div>
+        <div class="brand-subtitle">Interactive Real-World Workflows & Video Concepts Breakdown</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn active" onclick="scrollToSection('visualizer')">Live Flow Visualizer</button>
+      <button class="nav-btn" onclick="scrollToSection('concepts')">13 Video Concepts</button>
+      <a href="job.html" class="nav-btn job-link">SG Tech Jobs Navigator &rarr;</a>
+    </div>
+  </header>
+
+  <!-- Video Section -->
+  <div class="video-container-card">
+    <div class="video-header">
+      <span>📹 Reference Video: System Design Fundamentals</span>
+    </div>
+    <div class="video-wrapper">
+      <video controls preload="metadata">
+        <source src="system.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <!-- Flow Selector Panel -->
+  <div class="flow-controls-card" id="visualizer">
+    <span class="control-label">Select Real-World Process Flow:</span>
+    <div class="flow-buttons">
+      <button class="flow-btn active" onclick="setFlow('login')">🔵 HTML Form Login</button>
+      <button class="flow-btn" onclick="setFlow('order')">🟢 E-Commerce Click Order</button>
+      <button class="flow-btn" onclick="setFlow('weather')">🟡 Check Weather Status</button>
+      <button class="flow-btn" onclick="setFlow('bank')">🟣 Financial Bank Transfer</button>
+      <button class="flow-btn" onclick="setFlow('stream')">🔴 Video Streaming Playback</button>
+      <button class="flow-btn" onclick="setFlow('llm')">🔷 AI ChatGPT / LLM Query</button>
+      <button class="flow-btn" onclick="setFlow('agent')">⚡ Autonomous AI Agent Workflow</button>
+    </div>
+
+    <div class="flow-meta-bar">
+      <div class="flow-title" id="flow-display-title">HTML Form Login Process</div>
+      <div class="speed-controls">
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Flow Speed:</span>
+        <button class="speed-btn" onclick="setSpeed(0.25)">0.25x (Ultra Slow)</button>
+        <button class="speed-btn active" onclick="setSpeed(0.5)">0.5x (Slow)</button>
+        <button class="speed-btn" onclick="setSpeed(1.0)">1x (Normal)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Visualizer Area -->
+  <div class="visualizer-wrapper">
+    <canvas id="flow-canvas"></canvas>
+
+    <div class="swimlanes-container">
+      
+      <!-- Phase 1: Ingress -->
+      <div class="lane-column">
+        <div class="lane-header">
+          <span>1. Edge & Entry</span>
+          <span class="badge">Ingress</span>
+        </div>
+        <div class="node-card" id="node-client" onclick="inspectNode('client')">
+          <div class="node-title">Web & Mobile Client</div>
+          <div class="node-desc">React, iOS, Android frontend user interface.</div>
+          <div class="node-tag">Video Concept: #1 Client-Server</div>
+        </div>
+        <div class="node-card" id="node-waf" onclick="inspectNode('waf')">
+          <div class="node-title">Edge WAF & CDN</div>
+          <div class="node-desc">DDoS filter, SSL termination, and static asset cache.</div>
+          <div class="node-tag">Video Concept: #10 System Security</div>
+        </div>
+        <div class="node-card" id="node-lb" onclick="inspectNode('lb')">
+          <div class="node-title">Load Balancer</div>
+          <div class="node-desc">Distributes traffic across backend application pods.</div>
+          <div class="node-tag">Video Concept: #2 Load Balancing</div>
+        </div>
+      </div>
+
+      <!-- Phase 2: Compute -->
+      <div class="lane-column">
+        <div class="lane-header">
+          <span>2. Compute & Logic</span>
+          <span class="badge">Execution</span>
+        </div>
+        <div class="node-card" id="node-auth" onclick="inspectNode('auth')">
+          <div class="node-title">Auth & API Gateway</div>
+          <div class="node-desc">Validates JWT tokens, OAuth, and enforces rate limits.</div>
+          <div class="node-tag">Video Concept: #10 Security</div>
+        </div>
+        <div class="node-card" id="node-app" onclick="inspectNode('app')">
+          <div class="node-title">Microservices Engine</div>
+          <div class="node-desc">Containerized service logic (Order, Payment, User).</div>
+          <div class="node-tag">Video Concept: #5 Microservices</div>
+        </div>
+        <div class="node-card" id="node-cb" onclick="inspectNode('cb')">
+          <div class="node-title">Circuit Breaker</div>
+          <div class="node-desc">Fails fast to protect failing downstream services.</div>
+          <div class="node-tag">Video Concept: #7 Circuit Breaker</div>
+        </div>
+      </div>
+
+      <!-- Phase 3: Data & Storage -->
+      <div class="lane-column">
+        <div class="lane-header">
+          <span>3. Memory & Storage</span>
+          <span class="badge">Persistence</span>
+        </div>
+        <div class="node-card" id="node-cache" onclick="inspectNode('cache')">
+          <div class="node-title">Redis In-Memory Cache</div>
+          <div class="node-desc">Sub-millisecond session state and hot data cache.</div>
+          <div class="node-tag">Video Concept: #3 Caching</div>
+        </div>
+        <div class="node-card" id="node-db" onclick="inspectNode('db')">
+          <div class="node-title">SQL / NoSQL Database</div>
+          <div class="node-desc">Relational ACID ledger or scalable document store.</div>
+          <div class="node-tag">Video Concept: #4, #8, #9 DB Design</div>
+        </div>
+        <div class="node-card" id="node-queue" onclick="inspectNode('queue')">
+          <div class="node-title">Kafka Event Queue</div>
+          <div class="node-desc">Decoupled async event broker for background jobs.</div>
+          <div class="node-tag">Video Concept: #6 System Communication</div>
+        </div>
+      </div>
+
+      <!-- Phase 4: AI Era & Observability -->
+      <div class="lane-column">
+        <div class="lane-header">
+          <span>4. AI & Operations</span>
+          <span class="badge">Intelligence</span>
+        </div>
+        <div class="node-card" id="node-vector" onclick="inspectNode('vector')">
+          <div class="node-title">Vector DB (AI Memory)</div>
+          <div class="node-desc">High-dimensional embeddings for semantic similarity search.</div>
+          <div class="node-tag">Modern AI Stack Component</div>
+        </div>
+        <div class="node-card" id="node-rag" onclick="inspectNode('rag')">
+          <div class="node-title">LLM & Agent Orchestrator</div>
+          <div class="node-desc">RAG context synthesis, tool calling, and prompt guardrails.</div>
+          <div class="node-tag">Modern AI Stack Component</div>
+        </div>
+        <div class="node-card" id="node-obs" onclick="inspectNode('obs')">
+          <div class="node-title">Observability & Audit</div>
+          <div class="node-desc">Central logs, APM metrics, traces, and ITGC audit logs.</div>
+          <div class="node-tag">Video Concept: #11, #12, #13 Resilience</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Packet Hop Tracker -->
+    <div class="journey-tracker-card">
+      <div class="journey-title">Active Process Hop Sequence:</div>
+      <div class="journey-steps" id="journey-steps-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 Video Core Concepts -->
+  <div class="concepts-section" id="concepts">
+    <div class="concepts-header">
+      <span>13 Fundamental System Design Video Concepts</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Click any concept card to view whiteboard details</span>
+    </div>
+
+    <div class="concepts-grid">
+      <div class="concept-card" onclick="showConceptModal(1)">
+        <div class="concept-num">CONCEPT 01</div>
+        <div class="concept-title">Client-Server Architecture</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(2)">
+        <div class="concept-num">CONCEPT 02</div>
+        <div class="concept-title">Load Balancing</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(3)">
+        <div class="concept-num">CONCEPT 03</div>
+        <div class="concept-title">Caching Strategies</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(4)">
+        <div class="concept-num">CONCEPT 04</div>
+        <div class="concept-title">Database Design (SQL vs NoSQL)</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(5)">
+        <div class="concept-num">CONCEPT 05</div>
+        <div class="concept-title">Microservices Architecture</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(6)">
+        <div class="concept-num">CONCEPT 06</div>
+        <div class="concept-title">System Communication (Async Queues)</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(7)">
+        <div class="concept-num">CONCEPT 07</div>
+        <div class="concept-title">Circuit Breakers</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(8)">
+        <div class="concept-num">CONCEPT 08</div>
+        <div class="concept-title">Replication & Partitioning (Sharding)</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(9)">
+        <div class="concept-num">CONCEPT 09</div>
+        <div class="concept-title">Consistency Models (CAP Theorem)</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(10)">
+        <div class="concept-num">CONCEPT 10</div>
+        <div class="concept-title">System Security</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(11)">
+        <div class="concept-num">CONCEPT 11</div>
+        <div class="concept-title">Observability (Logs, Metrics, Traces)</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(12)">
+        <div class="concept-num">CONCEPT 12</div>
+        <div class="concept-title">CI/CD & Infrastructure as Code</div>
+      </div>
+      <div class="concept-card" onclick="showConceptModal(13)">
+        <div class="concept-num">CONCEPT 13</div>
+        <div class="concept-title">Fault Tolerance & Graceful Degradation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Drawer -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-title" id="drawer-title">Component Inspector</div>
+      <button class="close-btn" onclick="closeDrawer()">&times;</button>
+    </div>
+    <div class="drawer-body" id="drawer-body">
+      Select any node or concept card above to view detailed technical explanations.
+    </div>
+  </div>
+
+  <script>
+    // Process Flow Hop Configurations
+    const flowConfigs = {
+      login: {
+        title: "HTML Form Login Process Flow",
+        color: "#00f3ff",
+        hops: ["node-client", "node-waf", "node-lb", "node-auth", "node-cache", "node-db"],
+        desc: "User enters credentials on browser -> Edge WAF inspects request -> Load Balancer routes to Auth Gateway -> Session checked in Redis Cache -> User verified against SQL Database."
+      },
+      order: {
+        title: "E-Commerce Click Order Process Flow",
+        color: "#00ff66",
+        hops: ["node-client", "node-waf", "node-lb", "node-app", "node-cb", "node-db", "node-queue", "node-obs"],
+        desc: "User clicks Checkout -> Gateway forwards to Order Microservice -> Circuit Breaker protects inventory API -> Order saved to DB -> Event published to Kafka -> Logs captured in Observability."
+      },
+      weather: {
+        title: "Check Weather Status Process Flow",
+        color: "#ffaa00",
+        hops: ["node-client", "node-waf", "node-cache"],
+        desc: "User requests current weather -> Edge WAF routes to Redis Cache -> Sub-millisecond weather cache hit returned immediately without hitting backend DB."
+      },
+      bank: {
+        title: "Financial Bank Transfer Process Flow",
+        color: "#a855f7",
+        hops: ["node-client", "node-waf", "node-lb", "node-auth", "node-app", "node-cb", "node-db", "node-obs"],
+        desc: "User initiates money transfer -> MFA verified -> Ledger Microservice locks account rows in ACID SQL Database -> Audit event dispatched to compliance logs."
+      },
+      stream: {
+        title: "Video Streaming Playback Process Flow",
+        color: "#ff007f",
+        hops: ["node-client", "node-waf", "node-app", "node-db"],
+        desc: "User presses play -> Edge CDN serves video chunks -> Metadata fetched from NoSQL Database -> Playback metrics streamed to analytics."
+      },
+      llm: {
+        title: "AI ChatGPT / LLM Query Process Flow",
+        color: "#3b82f6",
+        hops: ["node-client", "node-waf", "node-auth", "node-vector", "node-rag", "node-obs"],
+        desc: "User submits prompt -> Edge WAF checks prompt injection -> Prompt converted to vector embeddings -> Vector DB retrieves relevant documents -> LLM Orchestrator synthesizes answer."
+      },
+      agent: {
+        title: "Autonomous AI Agent Workflow",
+        color: "#00f3ff",
+        hops: ["node-client", "node-waf", "node-rag", "node-vector", "node-app", "node-queue", "node-obs"],
+        desc: "User dispatches complex task -> Agent Orchestrator runs ReAct reasoning loop -> Queries Vector Memory -> Dynamically invokes Microservice APIs -> Pushes long-running task to Kafka queue."
+      }
+    };
+
+    const conceptDetails = {
+      1: {
+        title: "01. Client-Server Architecture",
+        body: "The foundational pattern of software architecture. The client (frontend browser or mobile app) requests resources or actions, while the server (backend logic and database) processes those requests and returns responses. Separating clients from servers allows multiple client interfaces to share the same central logic without duplication."
+      },
+      2: {
+        title: "02. Load Balancing",
+        body: "Sits in front of backend servers to distribute incoming traffic evenly. Prevents any single server from becoming a bottleneck, automatically routes traffic away from unhealthy instances, and enables horizontal scaling by allowing new servers to be added seamlessly."
+      },
+      3: {
+        title: "03. Caching Strategies",
+        body: "Stores frequently requested data in fast, in-memory storage systems like Redis or Memcached. Caching dramatically reduces latency and database read load by serving hot data in sub-milliseconds."
+      },
+      4: {
+        title: "04. Database Design (SQL vs NoSQL)",
+        body: "Relational SQL databases (PostgreSQL, MySQL) excel at structured data requiring strict ACID transactional guarantees (e.g., financial ledger payments). NoSQL databases (MongoDB, DynamoDB) prioritize schema flexibility, horizontal scale, and high-throughput unstructured data handling."
+      },
+      5: {
+        title: "05. Microservices Architecture",
+        body: "Decomposes a large monolithic codebase into small, loosely coupled services organized around specific business capabilities (e.g., Auth, Orders, Payments). Each service can be developed, deployed, and scaled independently by dedicated engineering teams."
+      },
+      6: {
+        title: "06. System Communication (Async Queues)",
+        body: "Uses asynchronous event streams and message brokers like Apache Kafka or RabbitMQ. Allows services to publish events and respond asynchronously, preventing slow downstream services from blocking user-facing HTTP requests."
+      },
+      7: {
+        title: "07. Circuit Breakers",
+        body: "A critical stability pattern. When a downstream service begins failing or responding slowly, the circuit breaker opens to temporarily block requests from reaching that failing service, preventing cascading failures across the enterprise."
+      },
+      8: {
+        title: "08. Data Replication & Partitioning (Sharding)",
+        body: "Replication maintains multiple synchronized copies of data across different geographical locations to ensure high availability. Partitioning (Sharding) splits massive database tables across multiple physical database nodes to handle high-volume write operations."
+      },
+      9: {
+        title: "09. Consistency Models (CAP Theorem)",
+        body: "According to the CAP Theorem, distributed systems must trade off between Strong Consistency (every read receives the latest write) and High Availability (every request receives a response). Systems choose models based on business priority (e.g., Banks prioritize Consistency; Social Media prioritizes Availability)."
+      },
+      10: {
+        title: "10. System Security",
+        body: "Security is woven into every layer: Edge Web Application Firewalls (WAF) block DDoS attacks, Identity & Access Management (IAM) handles authentication and Single Sign-On (SSO), and encryption protects data both in transit (TLS) and at rest."
+      },
+      11: {
+        title: "11. Observability (Logs, Metrics, Traces)",
+        body: "Provides visibility into distributed production systems using three pillars: Logs (capturing specific event details), Metrics (tracking system health and latency), and Traces (following individual request journeys across microservice boundaries)."
+      },
+      12: {
+        title: "12. CI/CD & Infrastructure as Code",
+        body: "Continuous Integration and Deployment (CI/CD) pipelines automate code testing, container builds, and deployment releases. Infrastructure as Code (Terraform) allows cloud servers and networks to be defined reproducibly in version-controlled scripts."
+      },
+      13: {
+        title: "13. Fault Tolerance & Graceful Degradation",
+        body: "Ensures systems degrade gracefully during partial hardware or network outages. Uses retries, fallbacks, timeouts, and redundant backup systems so users experience minimal disruption during failures."
+      }
+    };
+
+    const agentDetailedBreakdown = {
+      title: "Deep-Dive: Autonomous AI Agent Architecture",
+      overview: "Autonomous AI Agents represent the evolution of generative AI from passive text generators to active problem-solving entities. Instead of simply generating static text, an AI Agent uses a Reasoning and Acting loop to break down user goals, plan steps, query memory, execute external tools, and handle errors autonomously.",
+      components: [
+        {
+          name: "1. Agent Orchestrator (ReAct Loop)",
+          desc: "The central decision engine running a ReAct (Reason + Act) loop. The agent evaluates the user prompt, formulates an internal thought plan ('Reason'), selects an action or tool ('Act'), observes the tool output ('Observe'), and repeats until the objective is completed."
+        },
+        {
+          name: "2. Short-Term Context & Vector Memory",
+          desc: "Agents maintain short-term context (active conversation buffer) alongside long-term semantic memory (Vector Databases like Pinecone or Qdrant). When executing a task, the agent retrieves relevant past user interactions and domain documentation via vector embedding similarity search."
+        },
+        {
+          name: "3. Dynamic Tool Use APIs",
+          desc: "Agents are equipped with executable tools defined via OpenAPI specifications or function schemas. Tools allow agents to execute web searches, query database ledgers, trigger email notifications, or call internal enterprise microservice APIs directly."
+        },
+        {
+          name: "4. Enterprise Guardrails & Human-in-the-Loop (HITL)",
+          desc: "Safety layers that inspect both input prompts and generated tool calls. For sensitive operations (e.g., executing a financial transfer or modifying production data), guardrails pause execution and request explicit Human-in-the-Loop approval before proceeding."
+        },
+        {
+          name: "5. Asynchronous Execution Queue & State Machine",
+          desc: "Long-running multi-step agent tasks are managed via event queues (Kafka / Celery) and persistent state machines. If an external API fails, the execution queue manages retries and state recovery without losing progress."
+        }
+      ]
+    };
+
+    let currentFlow = "login";
+    let flowSpeed = 0.5;
+    let particleOffset = 0;
+
+    function setFlow(flowKey) {
+      currentFlow = flowKey;
+      document.querySelectorAll(".flow-btn").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+
+      const config = flowConfigs[flowKey];
+      document.getElementById("flow-display-title").innerText = config.title;
+
+      renderJourneyTracker();
+      highlightActiveNodes();
+    }
+
+    function setSpeed(spd) {
+      flowSpeed = spd;
+      document.querySelectorAll(".speed-btn").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+    }
+
+    function renderJourneyTracker() {
+      const config = flowConfigs[currentFlow];
+      const container = document.getElementById("journey-steps-container");
+      container.innerHTML = "";
+
+      config.hops.forEach((nodeId, idx) => {
+        const nodeEl = document.getElementById(nodeId);
+        const title = nodeEl.querySelector(".node-title").innerText;
+
+        const badge = document.createElement("div");
+        badge.className = "journey-step-badge active";
+        badge.innerHTML = `<span style="color:${config.color}; font-weight:800;">Hop ${idx + 1}:</span> ${title}`;
+        container.appendChild(badge);
+
+        if (idx < config.hops.length - 1) {
+          const arrow = document.createElement("span");
+          arrow.style.color = "var(--text-muted)";
+          arrow.style.fontSize = "0.8rem";
+          arrow.innerHTML = "&rarr;";
+          container.appendChild(arrow);
+        }
+      });
+    }
+
+    function highlightActiveNodes() {
+      const config = flowConfigs[currentFlow];
+      document.querySelectorAll(".node-card").forEach(node => {
+        node.classList.remove("active-node", "dimmed");
+        if (config.hops.includes(node.id)) {
+          node.classList.add("active-node");
+        } else {
+          node.classList.add("dimmed");
+        }
+      });
+    }
+
+    // Canvas Animation Rendering Loop
+    function animateCanvas() {
+      const canvas = document.getElementById("flow-canvas");
+      const ctx = canvas.getContext("2d");
+      const wrapper = document.querySelector(".visualizer-wrapper");
+
+      canvas.width = wrapper.clientWidth;
+      canvas.height = wrapper.clientHeight;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const config = flowConfigs[currentFlow];
+      const hops = config.hops;
+
+      particleOffset += 1.5 * flowSpeed;
+      if (particleOffset > 100) particleOffset = 0;
+
+      // Draw connections between consecutive active hop nodes
+      for (let i = 0; i < hops.length - 1; i++) {
+        const fromEl = document.getElementById(hops[i]);
+        const toEl = document.getElementById(hops[i + 1]);
+
+        if (!fromEl || !toEl) continue;
+
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = toEl.getBoundingClientRect();
+        const wrapRect = wrapper.getBoundingClientRect();
+
+        const startX = fromRect.left + fromRect.width / 2 - wrapRect.left;
+        const startY = fromRect.top + fromRect.height / 2 - wrapRect.top;
+        const endX = toRect.left + toRect.width / 2 - wrapRect.left;
+        const endY = toRect.top + toRect.height / 2 - wrapRect.top;
+
+        // Draw Bezier Neon Curve
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        
+        const controlX1 = startX + (endX - startX) / 2;
+        const controlY1 = startY;
+        const controlX2 = startX + (endX - startX) / 2;
+        const controlY2 = endY;
+
+        ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, endX, endY);
+        ctx.strokeStyle = config.color;
+        ctx.lineWidth = 2;
+        ctx.globalAlpha = 0.4;
+        ctx.setLineDash([6, 6]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Animated Particle Traveling along Curve
+        const t = (particleOffset / 100 + i * 0.2) % 1;
+        const pX = Math.pow(1 - t, 3) * startX + 3 * Math.pow(1 - t, 2) * t * controlX1 + 3 * (1 - t) * Math.pow(t, 2) * controlX2 + Math.pow(t, 3) * endX;
+        const pY = Math.pow(1 - t, 3) * startY + 3 * Math.pow(1 - t, 2) * t * controlY1 + 3 * (1 - t) * Math.pow(t, 2) * controlY2 + Math.pow(t, 3) * endY;
+
+        ctx.beginPath();
+        ctx.arc(pX, pY, 5, 0, Math.PI * 2);
+        ctx.fillStyle = config.color;
+        ctx.globalAlpha = 1;
+        ctx.shadowColor = config.color;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      requestAnimationFrame(animateCanvas);
+    }
+
+    function inspectNode(nodeKey) {
+      const nodeEl = document.getElementById(`node-${nodeKey}`);
+      const title = nodeEl.querySelector(".node-title").innerText;
+      const desc = nodeEl.querySelector(".node-desc").innerText;
+      const tag = nodeEl.querySelector(".node-tag").innerText;
+
+      if (nodeKey === "rag" && currentFlow === "agent") {
+        let agentHtml = `<p><strong>${agentDetailedBreakdown.overview}</strong></p>`;
+        agentDetailedBreakdown.components.forEach(c => {
+          agentHtml += `
+            <div class="detail-section">
+              <div class="detail-section-title">${c.name}</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">${c.desc}</div>
+            </div>
+          `;
+        });
+        openDrawer(agentDetailedBreakdown.title, agentHtml);
+        return;
+      }
+
+      openDrawer(`Component Inspector: ${title}`, `
+        <p><strong>Overview:</strong> ${desc}</p>
+        <p style="margin-top:10px; color:var(--accent-cyan);"><strong>Mapped Concept:</strong> ${tag}</p>
+        <div class="detail-section">
+          <div class="detail-section-title">Enterprise System Role</div>
+          <div style="font-size:0.85rem; color:var(--text-muted);">
+            This component operates within the active <strong>${flowConfigs[currentFlow].title}</strong>. It handles runtime processing, enforces system constraints, and ensures fault-tolerant operation under peak traffic.
+          </div>
+        </div>
+      `);
+    }
+
+    function showConceptModal(conceptNum) {
+      const details = conceptDetails[conceptNum];
+      openDrawer(details.title, `
+        <p style="font-size:0.95rem; color:var(--text-main);">${details.body}</p>
+        <div class="detail-section">
+          <div class="detail-section-title">Reference Video Integration</div>
+          <div style="font-size:0.85rem; color:var(--text-muted);">
+            This pillar directly corresponds to Concept #${conceptNum} outlined in the fundamental system design video. It forms a core building block for scalable distributed applications.
+          </div>
+        </div>
+      `);
+    }
+
+    function openDrawer(title, htmlContent) {
+      document.getElementById("drawer-title").innerHTML = title;
+      document.getElementById("drawer-body").innerHTML = htmlContent;
+      document.getElementById("drawer").classList.add("open");
+    }
+
+    function closeDrawer() {
+      document.getElementById("drawer").classList.remove("open");
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.onload = function() {
+      renderJourneyTracker();
+      highlightActiveNodes();
+      requestAnimationFrame(animateCanvas);
+    };
+
+    window.onresize = function() {
+      const canvas = document.getElementById("flow-canvas");
+      const wrapper = document.querySelector(".visualizer-wrapper");
+      if (canvas && wrapper) {
+        canvas.width = wrapper.clientWidth;
+        canvas.height = wrapper.clientHeight;
+      }
+    };
+  </script>
+</body>
+</html>
