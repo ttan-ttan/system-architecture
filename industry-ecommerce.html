@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tech Scale-Up & E-Commerce Architecture | SG Tech Navigator</title>
+  <link rel="stylesheet" href="stylejob.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">SG</div>
+      <div>
+        <div class="brand-title">Tech Scale-Up & E-Commerce Architecture</div>
+        <div class="brand-subtitle">High-Concurrency Flash Sales, Kafka Streaming & Recommendation Engines</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn back-link">🏠 Visualizer</a>
+      <a href="job.html" class="nav-btn">🏛️ Industry Hub</a>
+      <a href="checkjob.html" class="nav-btn" style="border-color: var(--accent-amber); color: var(--accent-amber);">🎯 Career Matcher</a>
+    </div>
+  </header>
+
+  <main class="assessment-container">
+    
+    <!-- Context & Philosophy Section -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-title">Architectural Philosophy & High Concurrency</div>
+        <div class="quiz-subtitle">Why scale-ups prioritize horizontal elasticity, asynchronous event streaming, and feature velocity.</div>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+        Unlike traditional institutions governed by strict bureaucratic change windows, Singapore e-commerce unicorns and tech scale-ups prioritize <strong style="color: var(--text-main);">horizontal scalability, low-latency search indexing, and real-time event-driven pipelines</strong>. When millions of users flock to a 11.11 flash sale, systems must decouple services using distributed messaging queues to prevent cascading failures.
+      </p>
+    </section>
+
+    <!-- End-to-End Walkthrough -->
+    <section class="quiz-card">
+      <div class="section-divider" style="margin-top: 0;">End-to-End Activity Walkthrough: Flash Sale Checkout</div>
+      <div class="quiz-subtitle" style="margin-bottom: 12px;">Tracing how high-volume checkout traffic is absorbed, validated, and processed.</div>
+
+      <!-- Layer 1 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-blue);">
+        <div class="detail-section-title">Layer 1: CDN, Edge & Rate Limiting Layer</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Static assets are cached at edge locations (Cloudflare/Akamai). Flash-sale API calls hit dynamic rate limiters to deflect automated bots and malicious traffic spikes.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('edge')">Platform / SRE Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-purple);">
+        <div class="detail-section-title">Layer 2: API Gateway & Event Ingestion Layer</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Requests hit API gateways (Kong/Envoy) and immediately push order events into high-throughput message brokers (Apache Kafka / RabbitMQ) for asynchronous processing.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('backend')">Backend / Stream Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-amber);">
+        <div class="detail-section-title">Layer 3: Distributed Caching & Inventory Stock Deduction</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> In-memory data stores (Redis Cluster) handle atomic stock decrements in microseconds, bypassing heavy relational database disk writes during peak surges.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('data')">Data Platform Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 4 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-green);">
+        <div class="detail-section-title">Layer 4: Recommendation, Search & Analytics Layer</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Search queries hit distributed search indexes (Elasticsearch / OpenSearch), while user interaction streams feed real-time ML feature stores for personalized product suggestions.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('ml')">ML / Machine Learning Engineer 🏷️</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Role Drawer -->
+  <div class="drawer" id="roleDrawer">
+    <div class="drawer-header">
+      <div class="drawer-title" id="drawerTitle">Role Details</div>
+      <button class="close-btn" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </div>
+
+  <script>
+    const roleData = {
+      edge: {
+        title: "Platform / SRE Engineer (E-Commerce)",
+        mission: "Guarantee 99.99% uptime during massive traffic spikes (e.g., 9.9 or 11.11 sales events) through automated scaling and edge caching.",
+        tools: "Kubernetes, Terraform, Prometheus, Grafana, Cloudflare, AWS ECS.",
+        resp: "1. Configure horizontal pod autoscalers (HPA) based on traffic metrics.\n2. Set up multi-region traffic routing and failover strategies.\n3. Conduct chaos engineering tests to simulate sudden database failures.",
+        paths: "• Path A (IC Track): DevOps Engineer → Senior SRE → Principal Infrastructure Architect.\n• Path B (Management): SRE → Engineering Manager → VP of Infrastructure."
+      },
+      backend: {
+        title: "Backend / Stream Engineer (E-Commerce)",
+        mission: "Build decoupled microservices and event-driven data streams capable of ingesting millions of clickstream and order events per second.",
+        tools: "Golang, Node.js, Spring Boot, Apache Kafka, Redis, Docker.",
+        resp: "1. Design asynchronous event pipelines using Kafka topics.\n2. Optimize microservice response times and reduce network payload overhead.\n3. Implement distributed tracing for end-to-end request visibility.",
+        paths: "• Path A (IC Track): Junior Backend SWE → Senior Backend Engineer → Staff Distributed Systems Engineer.\n• Path B (Specialist): Backend Engineer → Principal Kafka / Stream Processing Architect."
+      },
+      data: {
+        title: "Data Platform Engineer (E-Commerce)",
+        mission: "Architect high-performance caching layers and data lakehouse pipelines to support real-time inventory and historical business intelligence.",
+        tools: "Redis, PostgreSQL, Apache Iceberg, Spark, Airflow, Snowflake.",
+        resp: "1. Manage clustered Redis caching instances for low-latency lookups.\n2. Build ELT batch pipelines synchronizing transactional DBs to data lakes.\n3. Monitor query performance and database sharding strategies.",
+        paths: "• Path A (IC Track): Data Engineer → Senior Data Infrastructure Engineer → Principal Data Architect."
+      },
+      ml: {
+        title: "Machine Learning Engineer (E-Commerce)",
+        mission: "Deploy and scale real-time recommendation models, search ranking algorithms, and fraud detection classifiers.",
+        tools: "Python, PyTorch, MLflow, Ray, Elasticsearch, Feature Store (Feast).",
+        resp: "1. Train and serve personalized product ranking models using online feature stores.\n2. Optimize inference latency for sub-50ms search query recommendations.\n3. Monitor model drift and automate continuous model retraining pipelines.",
+        paths: "• Path A (IC Track): Junior MLE → Senior ML Engineer → Principal AI Scientist → Head of AI."
+      }
+    };
+
+    function openDrawer(roleKey) {
+      const role = roleData[roleKey];
+      if (!role) return;
+      document.getElementById('drawerTitle').innerText = role.title;
+      document.getElementById('drawerBody').innerHTML = `
+        <div class="detail-section">
+          <div class="detail-section-title">Core Mission</div>
+          <p style="color: var(--text-main); margin-bottom: 10px;">${role.mission}</p>
+          <div class="detail-section-title">Tool Stack</div>
+          <p style="color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 10px;">${role.tools}</p>
+          <div class="detail-section-title">Key Responsibilities</div>
+          <p style="color: var(--text-muted); white-space: pre-line; margin-bottom: 10px;">${role.resp}</p>
+          <div class="detail-section-title">Career Progression Paths</div>
+          <p style="color: var(--text-main); white-space: pre-line;">${role.paths}</p>
+        </div>
+      `;
+      document.getElementById('roleDrawer').classList.add('open');
+    }
+
+    function closeDrawer() {
+      document.getElementById('roleDrawer').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
