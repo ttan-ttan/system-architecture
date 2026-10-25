@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>HealthTech & Telehealth Architecture | SG Tech Navigator</title>
+  <link rel="stylesheet" href="stylejob.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">SG</div>
+      <div>
+        <div class="brand-title">HealthTech & Telehealth Architecture</div>
+        <div class="brand-subtitle">PDPA Compliance, Encrypted EMR Databases & Low-Latency Video Consultations</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn back-link">🏠 Visualizer</a>
+      <a href="job.html" class="nav-btn">🏛️ Industry Hub</a>
+      <a href="checkjob.html" class="nav-btn" style="border-color: var(--accent-amber); color: var(--accent-amber);">🎯 Career Matcher</a>
+    </div>
+  </header>
+
+  <main class="assessment-container">
+    
+    <!-- Context & Philosophy Section -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-title">Architectural Philosophy & Patient Data Privacy</div>
+        <div class="quiz-subtitle">Why healthcare systems prioritize medical-grade encryption, data residency, and real-time telehealth stability.</div>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+        Singapore healthcare platforms (across public restructured hospitals and private telehealth providers) must adhere strictly to the <strong style="color: var(--text-main);">Personal Data Protection Act (PDPA)</strong> and Ministry of Health (MOH) cybersecurity guidelines. Architectures require end-to-end encryption for electronic medical records (EMR), localized data residency, and fault-tolerant WebRTC signaling servers for virtual consultations.
+      </p>
+    </section>
+
+    <!-- End-to-End Walkthrough -->
+    <section class="quiz-card">
+      <div class="section-divider" style="margin-top: 0;">End-to-End Activity Walkthrough: Telehealth Video Consultation & EMR Update</div>
+      <div class="quiz-subtitle" style="margin-bottom: 12px;">Tracing how a secure video session connects doctor and patient while updating clinical notes.</div>
+
+      <!-- Layer 1 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-blue);">
+        <div class="detail-section-title">Layer 1: Secure Patient Portal & WebRTC Signaling</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Patients authenticate via Singpass or biometric login. The client app negotiates peer-to-peer video/audio streams through TURN/STUN media servers encrypted via DTLS/SRTP.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('rtc')">WebRTC / Telehealth Infrastructure Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-purple);">
+        <div class="detail-section-title">Layer 2: Clinical Microservices & API Gateway</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Appointment scheduling, e-prescription routing, and doctor availability services handle business workflows behind a secure API gateway enforcing strict role-based access.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('backend')">Backend Clinical Systems Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-amber);">
+        <div class="detail-section-title">Layer 3: Data Privacy & Access Governance Layer</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Every chart view or medication order is checked against patient consent records and logged into tamper-evident compliance audit systems to satisfy MOH regulations.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('privacy')">Data Privacy & PDPA Compliance Officer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 4 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-green);">
+        <div class="detail-section-title">Layer 4: Encrypted EMR & Database Vault</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Clinical notes and DICOM imaging files are stored in localized database clusters with column-level encryption at rest and multi-factor key management.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('db')">Healthcare Database & Data Platform Engineer 🏷️</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Role Drawer -->
+  <div class="drawer" id="roleDrawer">
+    <div class="drawer-header">
+      <div class="drawer-title" id="drawerTitle">Role Details</div>
+      <button class="close-btn" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </div>
+
+  <script>
+    const roleData = {
+      rtc: {
+        title: "WebRTC / Telehealth Infrastructure Engineer",
+        mission: "Design and scale low-latency real-time communication pipelines for virtual doctor-patient consultations under variable network conditions.",
+        tools: "WebRTC, Coturn, Janus/Mediasoup, Kubernetes, AWS, Prometheus.",
+        resp: "1. Deploy and manage distributed media servers for low-jitter video routing.\n2. Monitor packet loss, bandwidth adaptation, and audio/video synchronization.\n3. Ensure secure DTLS/SRTP encryption across all consultation streams.",
+        paths: "• Path A (IC Track): Network Engineer → Real-Time Media Streaming Specialist → Principal Infrastructure Architect."
+      },
+      backend: {
+        title: "Backend Clinical Systems Engineer",
+        mission: "Develop robust microservices connecting electronic medical record systems, prescription gateways, and patient portals.",
+        tools: "Java Spring Boot, Node.js, PostgreSQL, FHIR APIs, Docker.",
+        resp: "1. Build secure REST and GraphQL APIs adhering to healthcare interoperability standards (HL7 FHIR).\n2. Implement fine-grained access control for physician and nurse roles.\n3. Integrate with national health exchange networks securely.",
+        paths: "• Path A (IC Track): Junior Software Engineer → Senior HealthTech Engineer → Staff Solutions Architect."
+      },
+      privacy: {
+        title: "Data Privacy & PDPA Compliance Officer (HealthTech)",
+        mission: "Safeguard patient confidentiality, ensure lawful data processing, and maintain clinical audit readiness.",
+        tools: "Data Governance Frameworks, GRC Software, Encryption Key Management.",
+        resp: "1. Conduct Data Protection Impact Assessments (DPIA) for new clinical features.\n2. Review access logs and audit trails to detect unauthorized record lookups.\n3. Liaise with MOH and legal teams regarding compliance mandates.",
+        paths: "• Path A (Career Track): Privacy Analyst → Senior Compliance Manager → Chief Information Security Officer."
+      },
+      db: {
+        title: "Healthcare Database & Data Platform Engineer",
+        mission: "Manage secure, highly available medical databases ensuring zero data loss and robust cryptographic protection.",
+        tools: "PostgreSQL, Oracle, AWS KMS, Column-level encryption tools.",
+        resp: "1. Configure encrypted storage volumes and column-level masking for PII/PHI.\n2. Implement point-in-time recovery and automated high-availability failover.\n3. Optimize database performance for high-volume clinical queries.",
+        paths: "• Path A (IC Track): DBA → Senior Health Data Engineer → Principal Data Architect."
+      }
+    };
+
+    function openDrawer(roleKey) {
+      const role = roleData[roleKey];
+      if (!role) return;
+      document.getElementById('drawerTitle').innerText = role.title;
+      document.getElementById('drawerBody').innerHTML = `
+        <div class="detail-section">
+          <div class="detail-section-title">Core Mission</div>
+          <p style="color: var(--text-main); margin-bottom: 10px;">${role.mission}</p>
+          <div class="detail-section-title">Tool Stack</div>
+          <p style="color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 10px;">${role.tools}</p>
+          <div class="detail-section-title">Key Responsibilities</div>
+          <p style="color: var(--text-muted); white-space: pre-line; margin-bottom: 10px;">${role.resp}</p>
+          <div class="detail-section-title">Career Progression Paths</div>
+          <p style="color: var(--text-main); white-space: pre-line;">${role.paths}</p>
+        </div>
+      `;
+      document.getElementById('roleDrawer').classList.add('open');
+    }
+
+    function closeDrawer() {
+      document.getElementById('roleDrawer').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
