@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SG Tech Customized Career Proposal & Job Pool</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="stylecheckjob.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Customized Career Proposal | SG Tech Navigator</title>
+  <link rel="stylesheet" href="stylejob.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -15,402 +13,124 @@
     <div class="brand">
       <div class="brand-icon">SG</div>
       <div>
-        <div class="brand-title">Tailored SG Career Proposal & 22-Role Pool</div>
-        <div class="brand-subtitle">Real Working Environments • Daily Task Analysis • SSG Framework</div>
+        <div class="brand-title">Customized Career Proposal & Role Pool</div>
+        <div class="brand-subtitle">Tailored Job Matches based on your diagnostic profile and Singapore market demand</div>
       </div>
     </div>
     <div class="nav-actions">
-      <a href="checkjob.html" class="nav-btn">&leftarrow; Re-take 12-Factor Diagnostic</a>
-      <a href="job.html" class="nav-btn job-link">SG Tech Roles Directory &rarr;</a>
+      <a href="checkjob.html" class="nav-btn back-link">← Retake Diagnostic</a>
+      <a href="job.html" class="nav-btn">🏛️ Industry Hub</a>
     </div>
   </header>
 
-  <div class="assessment-container">
-
-    <!-- Primary Strategic Proposal -->
-    <div class="hero-recommendation">
-      <span class="match-pill" id="prop-match-score">Calculating Best Fit...</span>
-      <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--accent-green); margin-bottom: 8px;" id="prop-role-title">
-        Loading Strategic Match...
-      </h2>
-      <p style="font-size: 0.95rem; color: var(--text-main); line-height: 1.6;" id="prop-role-summary">
-        Analyzing your 12 diagnostic factors against Singapore enterprise roles...
-      </p>
-    </div>
-
-    <!-- Section 1: Detailed Match Reasoning -->
-    <div class="proposal-section">
-      <div class="proposal-section-title">💡 1. Strategic Match Reasoning & Person-Role Fit</div>
-      <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.7;" id="prop-reasoning"></p>
-    </div>
-
-    <!-- Section 2: Real Daily Tasks & Working Environment -->
-    <div class="proposal-section">
-      <div class="proposal-section-title">🏢 2. Real Singapore Working Environment & Daily Tasks</div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 10px;">
-        <div style="background: rgba(7, 11, 20, 0.7); border: 1px solid var(--border-color); padding: 14px; border-radius: 10px;">
-          <div style="color: var(--accent-cyan); font-weight: 700; font-size: 0.85rem; margin-bottom: 6px;">📋 Primary Daily Tasks</div>
-          <div style="font-size: 0.825rem; color: var(--text-main); line-height: 1.5;" id="prop-daily-tasks"></div>
+  <main class="assessment-container">
+    
+    <!-- Profile Summary Card -->
+    <section class="quiz-card" style="margin-bottom: 20px;">
+      <div class="quiz-header">
+        <div class="quiz-title">Your Evaluated Professional Profile</div>
+        <div class="quiz-subtitle">Generated dynamically from your trait and background assessment inputs.</div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 10px;">
+        <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Background</div>
+          <div id="profileBg" style="font-size: 0.85rem; color: var(--text-main); font-weight: 600; margin-top: 4px;">Engineering / Project Management</div>
         </div>
-        <div style="background: rgba(7, 11, 20, 0.7); border: 1px solid var(--border-color); padding: 14px; border-radius: 10px;">
-          <div style="color: var(--accent-amber); font-weight: 700; font-size: 0.85rem; margin-bottom: 6px;">🏛️ Singapore Enterprise Work Environment</div>
-          <div style="font-size: 0.825rem; color: var(--text-main); line-height: 1.5;" id="prop-work-env"></div>
+        <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Core Strength</div>
+          <div id="profileStrength" style="font-size: 0.85rem; color: var(--text-main); font-weight: 600; margin-top: 4px;">Systemizing & Problem Solving</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Environment / Risk</div>
+          <div id="profileEnv" style="font-size: 0.85rem; color: var(--text-main); font-weight: 600; margin-top: 4px;">Regulated & High-Security</div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Section 3: Factor Mapping Matrix -->
-    <div class="proposal-section">
-      <div class="proposal-section-title">🧩 3. Diagnostic Factor-to-Role Mapping Matrix</div>
-      <table class="matrix-table">
-        <thead>
-          <tr>
-            <th>Your Diagnostic Factor</th>
-            <th>Impact on Daily Responsibilities</th>
-            <th>Career Benefit & Friction Prevention</th>
-          </tr>
-        </thead>
-        <tbody id="matrix-tbody"></tbody>
-      </table>
-    </div>
+    <!-- Job Match 1 -->
+    <section class="quiz-card" style="margin-bottom: 20px; border-left: 4px solid var(--accent-cyan);">
+      <div class="quiz-header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="quiz-title" id="match1Title">Job Match 1: Data Platform & Infrastructure Engineer</div>
+          <span style="background: rgba(0, 240, 255, 0.1); color: var(--accent-cyan); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">94% Suitability Match</span>
+        </div>
+        <div class="quiz-subtitle" id="match1Reason">Tailored Reasoning: Leverages your structured project management and process discipline to design fault-tolerant data pipelines and zero-trust cloud architectures.</div>
+      </div>
 
-    <!-- Section 4: Future Growth & Certifications -->
-    <div class="proposal-section">
-      <div class="proposal-section-title">🚀 4. Long-Term Future Upside & SkillsFuture / TeSA Certifications</div>
-      <div style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px;" id="prop-future-upside"></div>
-      <div style="font-size: 0.85rem; background: rgba(56, 189, 248, 0.1); border-left: 3px solid var(--accent-blue); padding: 10px; border-radius: 6px; color: var(--accent-blue);" id="prop-cert-pathway"></div>
-    </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Core Responsibilities</div>
+        <p id="match1Resp" style="font-size: 0.775rem; color: var(--text-muted); white-space: pre-line; margin-bottom: 12px;">
+          1. Architect, build, and optimize scalable ETL/ELT pipelines using PySpark, SQL, and Airflow.
+          2. Ensure enterprise compliance with data governance and security guardrails.
+          3. Manage cloud infrastructure, container clusters, and automated CI/CD deployments.
+        </p>
 
-    <!-- Section 5: Full 22-Role Job Pool Matrix -->
-    <div class="proposal-section">
-      <div class="proposal-section-title">📊 5. Comprehensive Singapore 22-Role Job Pool Evaluation</div>
-      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
-        All 22 roles evaluated against your 12 diagnostic factors, ranked by compatibility score:
-      </p>
-      <div class="pool-grid" id="pool-grid"></div>
-    </div>
+        <div class="detail-section-title">Required Tool Stack</div>
+        <p id="match1Tools" style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent-blue); margin-bottom: 12px;">
+          Python, PySpark, Apache Airflow, Snowflake, Docker, Kubernetes, Terraform, SQL.
+        </p>
 
-  </div>
+        <div class="detail-section-title">Career Progression Paths (A, B, C)</div>
+        <div style="font-size: 0.775rem; color: var(--text-main); line-height: 1.6;" id="match1Paths">
+          • <strong>Path A (Technical IC Track)</strong>: Junior Data/Platform Engineer → Senior Data Infrastructure Engineer → Principal Cloud Architect.<br>
+          • <strong>Path B (Specialized Domain Track)</strong>: Data Engineer → MLOps / AI Platform Engineer → Head of Data Infrastructure.<br>
+          • <strong>Path C (Leadership Track)</strong>: Data Engineer → Data Engineering Team Lead → Head of Data Platforms / CDO Office.
+        </div>
+      </div>
+    </section>
+
+    <!-- Job Match 2 -->
+    <section class="quiz-card" style="margin-bottom: 20px; border-left: 4px solid var(--accent-amber);">
+      <div class="quiz-header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="quiz-title" id="match2Title">Job Match 2: Cybersecurity / SecOps Analyst (GRC Focus)</div>
+          <span style="background: rgba(255, 184, 0, 0.1); color: var(--accent-amber); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">88% Suitability Match</span>
+        </div>
+        <div class="quiz-subtitle" id="match2Reason">Tailored Reasoning: Aligns with your risk mitigation mindset and rigorous compliance standards (such as MAS TRM and IM8 frameworks) in regulated Singapore enterprises.</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Core Responsibilities</div>
+        <p id="match2Resp" style="font-size: 0.775rem; color: var(--text-muted); white-space: pre-line; margin-bottom: 12px;">
+          1. Monitor real-time SIEM alerts and investigate security incidents or anomalies.
+          2. Conduct vulnerability assessments and audit IT General Controls (ITGC).
+          3. Ensure system configurations comply with enterprise security policies.
+        </p>
+
+        <div class="detail-section-title">Required Tool Stack</div>
+        <p id="match2Tools" style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent-blue); margin-bottom: 12px;">
+          Splunk, CrowdStrike, Okta, Wireshark, Python Scripting, Linux, GRC Frameworks.
+        </p>
+
+        <div class="detail-section-title">Career Progression Paths (A, B, C)</div>
+        <div style="font-size: 0.775rem; color: var(--text-main); line-height: 1.6;" id="match2Paths">
+          • <strong>Path A (Technical IC Track)</strong>: Security Analyst → Senior SecOps Engineer → Principal Security Architect.<br>
+          • <strong>Path B (Governance & Compliance Track)</strong>: Security Analyst → IT Compliance / IM8 Officer → Head of Information Security.<br>
+          • <strong>Path C (Offensive Security Track)</strong>: Security Analyst → Penetration Tester / Red Team Lead → Head of Cyber Defense.
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <script>
-    // Comprehensive Singapore 22-Role Job Pool Database
-    const jobPool = [
-      {
-        id: "syseng",
-        title: "Systems Engineer",
-        category: "Infrastructure & Cloud",
-        dailyTasks: "Configuring Linux/Windows server baselines, managing VMware hypervisors, patching OS vulnerabilities, active directory user policies.",
-        workEnv: "Enterprise Data Centers, System Integrators (NCS), Banks. Moderately structured with planned maintenance windows.",
-        futureUpside: "Essential operational foundation. Strong resilience during economic downturns; natural transition path to Cloud Architecture.",
-        cert: "RHCSA (Red Hat System Admin) / VMware VCP",
-        tags: { strength: ["infra_hardware"], weakness: ["no_coding"], domain: ["cloud_infra"], task: ["maintaining_infra"] }
-      },
-      {
-        id: "infraeng",
-        title: "Infrastructure Engineer",
-        category: "Infrastructure & Cloud",
-        dailyTasks: "Managing physical rack servers, PureStorage/NetApp SAN arrays, hyper-converged infrastructure, cloud VM provisioning.",
-        workEnv: "On-premise data centers managed by SG banks (DBS/UOB/OCBC) and government cloud infrastructure.",
-        futureUpside: "High demand in hybrid cloud environments combining on-prem storage with AWS/Azure public clouds.",
-        cert: "AWS Certified Solutions Architect Associate / Nutanix NCP",
-        tags: { strength: ["infra_hardware"], hobby: ["homelab"], domain: ["cloud_infra"], task: ["maintaining_infra"] }
-      },
-      {
-        id: "devops",
-        title: "DevOps / SRE Engineer",
-        category: "Cloud & Automation",
-        dailyTasks: "Automating CI/CD pipelines (GitHub Actions/Jenkins), managing Kubernetes (EKS), Infrastructure as Code (Terraform).",
-        workEnv: "Fast-paced Tech Scale-ups (Grab, Shopee) and digital banking platforms. High autonomy with rostered deployment support.",
-        futureUpside: "Top salary tier in Singapore tech market. Positioned at the core of software delivery automation.",
-        cert: "CKA (Certified Kubernetes Admin) / AWS DevOps Engineer Professional",
-        tags: { strength: ["infra_hardware", "software_logic"], domain: ["cloud_infra"], hours: ["flexible", "high_intensity"], task: ["building_code"] }
-      },
-      {
-        id: "dataeng",
-        title: "Data Engineer",
-        category: "Data & AI",
-        dailyTasks: "Building batch/streaming ETL data pipelines (PySpark/Kafka), modeling data lakehouses (Snowflake/Databricks), optimizing SQL queries.",
-        workEnv: "SG Banks, E-Commerce, Retail, and GovTech. High focus on data accuracy and pipeline SLAs.",
-        futureUpside: "Massive demand driven by Singapore National AI Strategy 2.0 and enterprise analytics mandates.",
-        cert: "Databricks Certified Data Engineer Associate / SnowPro Core",
-        tags: { strength: ["data_math"], domain: ["data_ai"], trait: ["analytical"], task: ["building_code"] }
-      },
-      {
-        id: "mleng",
-        title: "Machine Learning (ML) Engineer",
-        category: "Data & AI",
-        dailyTasks: "Deploying ML/LLM models to production, indexing vector databases (Pinecone/Qdrant), building MLOps pipelines.",
-        workEnv: "AI innovation labs in SG banks, tech MNCs, and government research units.",
-        futureUpside: "Exponential market growth in Generative AI implementation across APAC regional HQs in Singapore.",
-        cert: "AWS Certified Machine Learning Specialty / Databricks ML Professional",
-        tags: { strength: ["data_math", "software_logic"], domain: ["data_ai"], hours: ["high_intensity"] }
-      },
-      {
-        id: "datascientist",
-        title: "Data Scientist",
-        category: "Data & AI",
-        dailyTasks: "Developing predictive statistical models, feature engineering, running A/B experiment analysis, business hypothesis testing.",
-        workEnv: "Algorithmic trading desks, bank credit risk departments, tech platform recommendation teams.",
-        futureUpside: "High strategic value for executive decision-making and automated credit/risk scoring.",
-        cert: "Open Certified Data Scientist (Open CDS) / Azure Data Scientist",
-        tags: { strength: ["data_math"], hobby: ["investing_puzzles"], trait: ["analytical"] }
-      },
-      {
-        id: "dataanalyst",
-        title: "Data Analyst / BI Specialist",
-        category: "Data & AI",
-        dailyTasks: "Writing complex SQL queries, designing Power BI / Tableau executive dashboards, analyzing sales/user churn KPIs.",
-        workEnv: "Corporate offices across all SG industries. Business-facing with frequent stakeholder interaction.",
-        futureUpside: "Universal demand across non-tech and tech sectors alike; low entry barrier with high business visibility.",
-        cert: "Microsoft Certified: Power BI Data Analyst Associate (PL-300)",
-        tags: { strength: ["data_math"], trait: ["organizer"], task: ["auditing_risk"] }
-      },
-      {
-        id: "seceng",
-        title: "Cybersecurity Engineer",
-        category: "Cybersecurity",
-        dailyTasks: "Hardening Web Application Firewalls (WAF), configuring EDR agents (CrowdStrike), implementing zero-trust network rules.",
-        workEnv: "Critical Information Infrastructure (CII) organizations in SG (Power, Telecom, Banking, Aviation).",
-        futureUpside: "High job security under Singapore Cyber Security Agency (CSA) statutory directives.",
-        cert: "CompTIA Security+ / CISSP / AWS Certified Security Specialty",
-        tags: { domain: ["cyber_sec"], trait: ["guardian"], weakness: ["no_coding"] }
-      },
-      {
-        id: "soc",
-        title: "SOC Analyst (L1 / L2)",
-        category: "Cybersecurity",
-        dailyTasks: "Monitoring SIEM dashboards 24/7 (Splunk/Sentinel), triaging security alerts, isolating compromised credentials.",
-        workEnv: "24/7 Security Operations Centers. Shift-based work with formal escalation playbooks.",
-        futureUpside: "Standard entry gateway into offensive/defensive cybersecurity specialist careers.",
-        cert: "BTL1 (Blue Team Level 1) / CompTIA CySA+",
-        tags: { domain: ["cyber_sec"], oncall: ["rotation"], trait: ["guardian"] }
-      },
-      {
-        id: "blueteam",
-        title: "Blue Team / Threat Hunter",
-        category: "Cybersecurity",
-        dailyTasks: "Proactively hunting hidden network adversaries, crafting custom SIEM detection rules, analyzing malware samples.",
-        workEnv: "Dedicated cyber defense units in banks, military/defense contractors, and specialized MSSPs.",
-        futureUpside: "High prestige in technical cyber defense; elite problem-solving positioning.",
-        cert: "GIAC Certified Incident Handler (GCIH) / GCFA",
-        tags: { domain: ["cyber_sec"], trait: ["analytical"], problem_solving: ["contain_sec"] }
-      },
-      {
-        id: "redteam",
-        title: "Red Team / Pentester",
-        category: "Cybersecurity",
-        dailyTasks: "Executing authorized penetration tests, exploiting web/network vulnerabilities, writing breach demonstration reports.",
-        workEnv: "CREST-certified cybersecurity consultancies and specialized bank red-teaming squads.",
-        futureUpside: "Highly sought-after specialized skill set with premium consulting day-rates in Singapore.",
-        cert: "OSCP (Offensive Security Certified Professional) / CREST CRT",
-        tags: { domain: ["cyber_sec"], trait: ["creative"], problem_solving: ["contain_sec"] }
-      },
-      {
-        id: "grc",
-        title: "Tech Risk & GRC Specialist",
-        category: "Governance & Risk",
-        dailyTasks: "Auditing IT controls against MAS TRM / GovTech IM8, writing risk registers, assessing vendor security posture.",
-        workEnv: "Financial institutions regulated by MAS, government stat boards, Big 4 audit consultancies.",
-        futureUpside: "Immune to automation; mandatory compliance requirement under Singapore law.",
-        cert: "CRISC / CISA / ISO 27001 Lead Auditor",
-        tags: { weakness: ["no_coding"], trait: ["guardian", "organizer"], task: ["auditing_risk"] }
-      },
-      {
-        id: "itauditor",
-        title: "IT Security Auditor",
-        category: "Governance & Risk",
-        dailyTasks: "Inspecting IT General Controls (ITGC), verifying Active Directory access logs, auditing change management tickets.",
-        workEnv: "Internal audit departments and statutory financial audit firms. Structured business hours.",
-        futureUpside: "Clear progression to Chief Audit Executive (CAE) or Head of Compliance.",
-        cert: "CISA (Certified Information Systems Auditor)",
-        tags: { weakness: ["no_coding"], trait: ["guardian"], task: ["auditing_risk"], hours: ["fixed"] }
-      },
-      {
-        id: "dpo",
-        title: "Data Protection Officer (DPO)",
-        category: "Governance & Risk",
-        dailyTasks: "Ensuring organization-wide compliance with Singapore PDPA rules, managing PII data breach response, privacy impact reviews.",
-        workEnv: "Corporate legal and compliance departments across all industries in Singapore.",
-        futureUpside: "Statutory requirement under Singapore Personal Data Protection Act for all companies handling PII.",
-        cert: "Practitioner Certificate in Personal Data Protection (SG) / CIPP/A",
-        tags: { weakness: ["no_coding"], trait: ["organizer"], task: ["auditing_risk"] }
-      },
-      {
-        id: "backend",
-        title: "Backend / Microservices Engineer",
-        category: "Software Engineering",
-        dailyTasks: "Writing REST/gRPC API microservices (Java Spring Boot/Go/Node.js), writing unit tests, designing relational SQL schemas.",
-        workEnv: "Product engineering teams in tech scale-ups, banks, and MNC software centers.",
-        futureUpside: "Core backbone of all modern digital applications; high demand across APAC engineering hubs.",
-        cert: "AWS Certified Developer Associate / Oracle Certified Java SE",
-        tags: { strength: ["software_logic"], domain: ["apps_web"], task: ["building_code"] }
-      },
-      {
-        id: "fullstack",
-        title: "Full-Stack Engineer",
-        category: "Software Engineering",
-        dailyTasks: "Developing React/Vue frontend interfaces, connecting backend APIs, handling state management and database queries.",
-        workEnv: "Agile product squads, digital agencies, SaaS companies. Collaborative sprint environment.",
-        futureUpside: "High versatility for startup founding or end-to-end product engineering roles.",
-        cert: "Meta Front-End Developer / AWS Certified Developer",
-        tags: { strength: ["software_logic"], trait: ["creative"], domain: ["apps_web"] }
-      },
-      {
-        id: "neteng",
-        title: "Network Engineer",
-        category: "Infrastructure & Cloud",
-        dailyTasks: "Configuring Cisco/Arista switches, Palo Alto firewalls, BGP routing, corporate VPN tunnels, network VLAN segmentation.",
-        workEnv: "Data centers, telecommunications providers (Singtel/StarHub), MNC regional HQs.",
-        futureUpside: "Essential infrastructure domain; transition pathway into Cloud Networking and Zero-Trust Architecture.",
-        cert: "CCNA / CCNP Enterprise / Palo Alto PCNSA",
-        tags: { strength: ["infra_hardware"], domain: ["cloud_infra"], weakness: ["no_coding"] }
-      },
-      {
-        id: "iameng",
-        title: "Identity & Access (IAM) Engineer",
-        team: "Cybersecurity & Admin",
-        dailyTasks: "Managing Single Sign-On (Okta/Azure AD), Privileged Access Management (CyberArk), enforcing RBAC policies.",
-        workEnv: "Enterprise IT departments in banks and large MNCs with strict access security mandates.",
-        futureUpside: "High demand as Zero-Trust Security replaces traditional perimeter security.",
-        cert: "Okta Certified Administrator / Microsoft Certified: Identity and Access Admin",
-        tags: { domain: ["cyber_sec"], trait: ["guardian"], weakness: ["no_coding"] }
-      },
-      {
-        id: "itsupport",
-        title: "IT Support / Admin Specialist",
-        category: "Helpdesk & EUC",
-        dailyTasks: "Onboarding staff laptops via MDM (Intune/Jamf), resolving Active Directory account tickets, hardware troubleshooting.",
-        workEnv: "Corporate IT service desks across all companies. Highly routine, business-hours oriented.",
-        futureUpside: "Stable baseline entry point into enterprise IT operations and systems administration.",
-        cert: "CompTIA A+ / MS-102: Microsoft 365 Administrator",
-        tags: { weakness: ["no_coding"], hours: ["fixed"], oncall: ["no_oncall"] }
-      },
-      {
-        id: "solutionarch",
-        title: "Solution Architect",
-        category: "Architecture & Strategy",
-        dailyTasks: "Designing end-to-end cloud infrastructure blueprints, evaluating tech stack tradeoffs, presenting architecture to clients.",
-        workEnv: "Cloud consultancies, AWS/Azure vendor teams, enterprise IT strategy departments.",
-        futureUpside: "Senior executive career track with high industry recognition and remuneration.",
-        cert: "AWS Certified Solutions Architect Professional / TOGAF Practitioner",
-        tags: { trait: ["organizer", "creative"], strength: ["software_logic", "infra_hardware"] }
-      },
-      {
-        id: "ea",
-        title: "Enterprise Architect",
-        category: "Architecture & Strategy",
-        dailyTasks: "Setting multi-year corporate technology roadmaps, establishing governance standards, eliminating legacy tech debt.",
-        workEnv: "Executive architecture review boards in SG banks, government agencies (GovTech), and MNCs.",
-        futureUpside: "Direct stepping stone to CTO (Chief Technology Officer) or Head of Infrastructure.",
-        cert: "TOGAF Enterprise Architecture Practitioner / CGEIT",
-        tags: { trait: ["organizer"], weakness: ["no_tickets"], task: ["auditing_risk"] }
-      },
-      {
-        id: "qaeng",
-        title: "QA Automation Engineer",
-        category: "Software Engineering",
-        dailyTasks: "Writing automated test scripts (Selenium/Cypress/Playwright), running performance regression tests, managing bug reports.",
-        workEnv: "Software testing teams in banks and tech firms. Structured agile sprint environment.",
-        futureUpside: "Crucial quality gatekeeper for rapid CI/CD release pipelines.",
-        cert: "ISTQB Certified Tester / Selenium Automation Specialist",
-        tags: { trait: ["guardian"], weakness: ["no_outages"], domain: ["apps_web"] }
+    window.addEventListener('DOMContentLoaded', () => {
+      const rawData = localStorage.getItem('sgTechDiagnostic');
+      if (rawData) {
+        const data = JSON.parse(rawData);
+        document.getElementById('profileBg').innerText = data.background;
+        document.getElementById('profileStrength').innerText = data.strength;
+        document.getElementById('profileEnv').innerText = data.environment;
+
+        if (data.environment && data.environment.includes('Scale-Up')) {
+          document.getElementById('match1Title').innerText = "Job Match 1: High-Concurrency Backend Engineer";
+          document.getElementById('match1Reason').innerText = "Tailored Reasoning: Perfect for high-velocity scale-ups needing resilient microservices and low-latency event streaming.";
+          document.getElementById('match1Tools').innerText = "Golang, Node.js, Spring Boot, Apache Kafka, Redis, Docker, Kubernetes.";
+          document.getElementById('match1Paths').innerHTML = `• <strong>Path A (IC Track)</strong>: Junior SWE → Senior Backend Engineer → Staff Distributed Systems Architect.<br>• <strong>Path B (Scale-Up Track)</strong>: Backend SWE → SRE / Infrastructure Lead → VP of Engineering.`;
+        }
       }
-    ];
-
-    function evaluateUserProposal() {
-      const stored = localStorage.getItem("sg_tech_user_profile");
-      if (!stored) {
-        alert("No diagnostic profile found. Redirecting to questionnaire...");
-        window.location.href = "checkjob.html";
-        return;
-      }
-
-      const p = JSON.parse(stored);
-
-      // Score each job in the pool against user inputs
-      const scoredPool = jobPool.map(job => {
-        let score = 50; // Base baseline
-
-        if (job.tags.strength && job.tags.strength.includes(p.strength)) score += 20;
-        if (job.tags.domain && job.tags.domain.includes(p.tech_domain)) score += 15;
-        if (job.tags.trait && job.tags.trait.includes(p.trait)) score += 10;
-        if (job.tags.weakness && job.tags.weakness.includes(p.weakness)) score += 10;
-        if (job.tags.task && job.tags.task.includes(p.daily_task)) score += 10;
-        if (job.tags.hours && job.tags.hours.includes(p.hours)) score += 5;
-
-        // Penalty for conflicting preferences
-        if (p.weakness === "no_coding" && (job.id === "backend" || job.id === "fullstack")) score -= 35;
-        if (p.weakness === "no_tickets" && job.id === "itsupport") score -= 35;
-
-        return { ...job, score: Math.min(score, 98) };
-      });
-
-      scoredPool.sort((a, b) => b.score - a.score);
-      const topJob = scoredPool[0];
-
-      // Render Top Proposal
-      document.getElementById("prop-match-score").innerText = `${topJob.score}% Compatibility Score`;
-      document.getElementById("prop-role-title").innerText = topJob.title;
-      document.getElementById("prop-role-summary").innerText = `Categorized under ${topJob.category}. Perfectly fits your ${formatVal(p.trait)} profile and ${formatVal(p.strength)} core strength.`;
-
-      document.getElementById("prop-reasoning").innerText = 
-        `Your diagnostic inputs indicate a strong alignment with ${topJob.title}. Specifically, your strength in '${formatVal(p.strength)}' paired with your preference for '${formatVal(p.tech_domain)}' eliminates career friction. By avoiding roles that trigger your blindspot ('${formatVal(p.weakness)}'), this pathway provides maximum long-term productivity and job satisfaction.`;
-
-      document.getElementById("prop-daily-tasks").innerText = topJob.dailyTasks;
-      document.getElementById("prop-work-env").innerText = topJob.workEnv;
-      document.getElementById("prop-future-upside").innerHTML = topJob.futureUpside;
-      document.getElementById("prop-cert-pathway").innerHTML = `<strong>Recommended SkillsFuture / TeSA Certification Pathway:</strong> ${topJob.cert}`;
-
-      // Render Factor Matrix
-      const tbody = document.getElementById("matrix-tbody");
-      tbody.innerHTML = `
-        <tr>
-          <td class="factor">Primary Strength: ${formatVal(p.strength)}</td>
-          <td class="impact">Directly matches core technical requirements of ${topJob.title}.</td>
-          <td class="benefit">High execution speed and natural problem-solving.</td>
-        </tr>
-        <tr>
-          <td class="factor">Blindspot Avoided: ${formatVal(p.weakness)}</td>
-          <td class="impact">Filters out friction-heavy tasks from your daily routine.</td>
-          <td class="benefit">Prevents workplace burnout and role dissatisfaction.</td>
-        </tr>
-        <tr>
-          <td class="factor">Tech Domain: ${formatVal(p.tech_domain)}</td>
-          <td class="impact">Ensures daily tasks utilize tools you naturally enjoy.</td>
-          <td class="benefit">Accelerates skill acquisition and onboarding.</td>
-        </tr>
-        <tr>
-          <td class="factor">Work Hours: ${formatVal(p.hours)}</td>
-          <td class="impact">Aligns workload intensity with your lifestyle expectations.</td>
-          <td class="benefit">Sustained career longevity in Singapore.</td>
-        </tr>
-      `;
-
-      // Render Full 22-Role Job Pool Grid
-      const poolGrid = document.getElementById("pool-grid");
-      poolGrid.innerHTML = "";
-      scoredPool.forEach((job, idx) => {
-        const card = document.createElement("div");
-        card.className = `pool-card ${idx === 0 ? 'top-match' : ''}`;
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <span style="font-weight:800; font-size:0.95rem; color:var(--accent-blue);">${job.title}</span>
-            <span class="pool-card-score">${job.score}%</span>
-          </div>
-          <div style="font-size:0.725rem; color:var(--accent-purple); font-weight:700; font-family:'JetBrains Mono',monospace; margin-bottom:8px;">${job.category}</div>
-          <div style="font-size:0.775rem; color:var(--text-muted); line-height:1.4;">${job.dailyTasks}</div>
-        `;
-        poolGrid.appendChild(card);
-      });
-    }
-
-    function formatVal(val) {
-      if (!val) return "";
-      return val.replace(/_/g, ' ').toUpperCase();
-    }
-
-    window.onload = evaluateUserProposal;
+    });
   </script>
-<script src="tracker.js"></script>
+
 </body>
 </html>
