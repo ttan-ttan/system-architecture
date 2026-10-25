@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Logistics & Supply Chain Architecture | SG Tech Navigator</title>
+  <link rel="stylesheet" href="stylejob.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">SG</div>
+      <div>
+        <div class="brand-title">Logistics & Supply Chain Architecture</div>
+        <div class="brand-subtitle">IoT Telemetry Ingestion, Fleet Route Optimization & Real-Time Inventory Sync</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn back-link">🏠 Visualizer</a>
+      <a href="job.html" class="nav-btn">🏛️ Industry Hub</a>
+      <a href="checkjob.html" class="nav-btn" style="border-color: var(--accent-amber); color: var(--accent-amber);">🎯 Career Matcher</a>
+    </div>
+  </header>
+
+  <main class="assessment-container">
+    
+    <!-- Context & Philosophy Section -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-title">Architectural Philosophy & IoT Scale</div>
+        <div class="quiz-subtitle">Why logistics networks require real-time geospatial processing, edge computing, and resilient event streaming.</div>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+        In Singapore's global logistics and transshipment hub, architectures must process millions of continuous GPS telemetry pings from vessels, trucks, and warehouse IoT sensors. Systems prioritize <strong style="color: var(--text-main);">low-latency stream processing, geospatial indexing, and real-time inventory synchronization</strong> across distributed nodes.
+      </p>
+    </section>
+
+    <!-- End-to-End Walkthrough -->
+    <section class="quiz-card">
+      <div class="section-divider" style="margin-top: 0;">End-to-End Activity Walkthrough: Real-Time Fleet Telemetry & Route Optimization</div>
+      <div class="quiz-subtitle" style="margin-bottom: 12px;">Tracing how GPS pings are ingested, processed, and used to recalculate delivery routes dynamically.</div>
+
+      <!-- Layer 1 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-blue);">
+        <div class="detail-section-title">Layer 1: IoT & Telemetry Ingestion Gateway</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Connected vehicles and warehouse scanners stream lightweight MQTT or HTTP telemetry packets continuously into cloud ingestion endpoints.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('iot')">IoT Platform / Network Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-purple);">
+        <div class="detail-section-title">Layer 2: Stream Processing & Geospatial Routing Engine</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Stream processing frameworks (Apache Flink / Kafka Streams) ingest location pings, matching coordinates against geospatial boundaries and traffic congestion maps in real time.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('stream')">Stream Processing / Backend Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-amber);">
+        <div class="detail-section-title">Layer 3: Warehouse Management System (WMS) Microservices</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Inventory status, automated sorting systems, and dispatch triggers update asynchronously, ensuring warehouse stock levels match transport availability.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('wms')">WMS Software Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 4 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-green);">
+        <div class="detail-section-title">Layer 4: Supply Chain Data Lakehouse & Analytics</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Historical shipping routes, fuel consumption logs, and delivery lead times feed analytical data warehouses for predictive supply chain forecasting.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('data')">Supply Chain Data Architect 🏷️</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Role Drawer -->
+  <div class="drawer" id="roleDrawer">
+    <div class="drawer-header">
+      <div class="drawer-title" id="drawerTitle">Role Details</div>
+      <button class="close-btn" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </div>
+
+  <script>
+    const roleData = {
+      iot: {
+        title: "IoT Platform / Network Engineer",
+        mission: "Design and maintain high-capacity ingestion pipelines capable of handling millions of concurrent IoT device and sensor connections.",
+        tools: "MQTT Brokers, AWS IoT Core, Kafka, Terraform, Python.",
+        resp: "1. Provision scalable message broker clusters for device telemetry.\n2. Ensure low-latency packet delivery and secure device authentication certificates.\n3. Monitor network throughput and device connectivity dropouts.",
+        paths: "• Path A (IC Track): Network Engineer → IoT Infrastructure Specialist → Principal Edge Architect."
+      },
+      stream: {
+        title: "Stream Processing / Backend Engineer",
+        mission: "Build real-time data pipelines that process geospatial streams, trigger geofence alerts, and optimize delivery routing.",
+        tools: "Apache Flink, Kafka, Go, Java, PostGIS.",
+        resp: "1. Write real-time stream transformation jobs using Flink or Kafka Streams.\n2. Implement spatial indexing algorithms for rapid coordinate lookups.\n3. Optimize backend service response times for dynamic dispatchers.",
+        paths: "• Path A (IC Track): Junior Backend Engineer → Senior Stream Processing Engineer → Principal Distributed Systems Architect."
+      },
+      wms: {
+        title: "WMS Software Engineer (Supply Chain)",
+        mission: "Develop core enterprise modules for warehouse automation, inventory tracking, and barcode scanning workflows.",
+        tools: "Spring Boot, C# .NET, PostgreSQL, Docker, Redis.",
+        resp: "1. Build scalable microservices for warehouse picking, packing, and sorting logic.\n2. Integrate IoT handheld scanners and automated guided vehicles (AGVs).\n3. Maintain high availability for mission-critical warehouse operations.",
+        paths: "• Path A (IC Track): Software Engineer → Senior Enterprise Software Engineer → Head of Supply Chain Tech."
+      },
+      data: {
+        title: "Supply Chain Data Architect",
+        mission: "Architect analytical data models and machine learning pipelines to forecast shipping bottlenecks and optimize fuel efficiency.",
+        tools: "Snowflake, Spark, dbt, Python, Tableau.",
+        resp: "1. Design dimensional data models for global shipping and inventory metrics.\n2. Build predictive ETA models using historical telemetry data.\n3. Partner with operations leadership to deliver actionable executive dashboards.",
+        paths: "• Path A (IC Track): Data Analyst → Senior Data Engineer → Principal Supply Chain Data Architect."
+      }
+    };
+
+    function openDrawer(roleKey) {
+      const role = roleData[roleKey];
+      if (!role) return;
+      document.getElementById('drawerTitle').innerText = role.title;
+      document.getElementById('drawerBody').innerHTML = `
+        <div class="detail-section">
+          <div class="detail-section-title">Core Mission</div>
+          <p style="color: var(--text-main); margin-bottom: 10px;">${role.mission}</p>
+          <div class="detail-section-title">Tool Stack</div>
+          <p style="color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 10px;">${role.tools}</p>
+          <div class="detail-section-title">Key Responsibilities</div>
+          <p style="color: var(--text-muted); white-space: pre-line; margin-bottom: 10px;">${role.resp}</p>
+          <div class="detail-section-title">Career Progression Paths</div>
+          <p style="color: var(--text-main); white-space: pre-line;">${role.paths}</p>
+        </div>
+      `;
+      document.getElementById('roleDrawer').classList.add('open');
+    }
+
+    function closeDrawer() {
+      document.getElementById('roleDrawer').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
