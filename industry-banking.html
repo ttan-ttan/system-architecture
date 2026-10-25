@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Banking & Financial Services Architecture | SG Tech Navigator</title>
+  <link rel="stylesheet" href="stylejob.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">SG</div>
+      <div>
+        <div class="brand-title">Banking & Financial Services Architecture</div>
+        <div class="brand-subtitle">MAS TRM Compliance & High-Security Fund Transfer Blueprint</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="job.html" class="nav-btn back-link">← Back to Industry Hub</a>
+    </div>
+  </header>
+
+  <main class="assessment-container">
+    
+    <!-- Context & Philosophy Section -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-title">Architectural Philosophy & Compliance</div>
+        <div class="quiz-subtitle">Why banking systems are organized with strict isolation and zero-trust security boundaries.</div>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+        In Singapore’s banking sector, architectures are heavily governed by the <strong style="color: var(--text-main);">MAS Technology Risk Management (TRM)</strong> guidelines. Systems require strict zero-trust network segmentation, multi-factor encryption, and non-repudiation. Unlike tech scale-ups that prioritize raw feature velocity, banks prioritize <strong style="color: var(--accent-blue);">system resiliency, data consistency (ACID), and immutable auditability</strong>.
+      </p>
+    </section>
+
+    <!-- End-to-End Walkthrough -->
+    <section class="quiz-card">
+      <div class="section-divider" style="margin-top: 0;">End-to-End Activity Walkthrough: Fund Transfer</div>
+      <div class="quiz-subtitle" style="margin-bottom: 12px;">Tracing how a transaction moves from client mobile apps down to core financial ledgers.</div>
+
+      <!-- Layer 1 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-blue);">
+        <div class="detail-section-title">Layer 1: Client, Edge & API Gateway Layer</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> The user's mobile app initiates a transfer. Traffic hits Cloudflare WAF and Kong/Apigee API gateways. External traffic never communicates directly with internal bank servers.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('platform')">Platform / Infrastructure Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-purple);">
+        <div class="detail-section-title">Layer 2: Backend Microservices & Orchestration Layer</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Gateways route requests to internal microservices (`Fund-Transfer-Service` & `Account-Ledger-Service`) built on Java Spring Boot or .NET. Business logic validates limits and balances.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('backend')">Backend Software Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-amber);">
+        <div class="detail-section-title">Layer 3: Security, Encryption & Compliance Zone</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Payloads pass through Hardware Security Modules (HSM) for cryptographic signing, while SIEM tools (Splunk) capture immutable audit trails for non-repudiation.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('security')">Cybersecurity / SecOps Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 4 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-green);">
+        <div class="detail-section-title">Layer 4: Core Transaction & Database Layer</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> The transaction is committed to ACID-compliant relational databases (Oracle RAC / PostgreSQL) with Redis handling fast idempotency checks to prevent double-debts.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('dba')">Database Administrator / Data Engineer 🏷️</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Role Drawer / Modal -->
+  <div class="drawer" id="roleDrawer">
+    <div class="drawer-header">
+      <div class="drawer-title" id="drawerTitle">Role Details</div>
+      <button class="close-btn" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="drawer-body" id="drawerBody">
+      <!-- Dynamic Content Loaded Here -->
+    </div>
+  </div>
+
+  <script>
+    const roleData = {
+      platform: {
+        title: "Platform / Infrastructure Engineer (Banking)",
+        mission: "Design and maintain resilient cloud infrastructure, zero-trust network boundaries, and API gateways adhering to MAS TRM standards.",
+        tools: "Terraform, AWS/Azure, Kubernetes, Kong API Gateway, Docker, HashiCorp Vault.",
+        resp: "1. Provision multi-region isolated VPCs with strict network firewalls.\n2. Configure API gateway rate limiting and mTLS encryption.\n3. Automate infrastructure compliance checks and CI/CD pipelines.",
+        paths: "• Path A (IC Track): Junior Platform Engineer → Senior Cloud Architect → Principal Reliability Engineer.\n• Path B (Security Track): Platform Engineer → DevSecOps Specialist → Head of Cloud Security."
+      },
+      backend: {
+        title: "Backend Software Engineer (Banking)",
+        mission: "Build high-throughput, fault-tolerant microservices that process financial transactions securely under strict SLAs.",
+        tools: "Java, Spring Boot, gRPC, Kafka, Oracle DB, Maven, Docker, JUnit.",
+        resp: "1. Develop secure transactional REST/gRPC APIs adhering to OpenAPI specs.\n2. Implement distributed locking and idempotency patterns to prevent duplicate transfers.\n3. Write rigorous test suites covering edge-case network timeouts.",
+        paths: "• Path A (IC Track): Junior SWE → Senior SWE → Staff Engineer → Distinguished Enterprise Architect.\n• Path B (Domain Track): Backend SWE → FinTech Payment Specialist → Head of Core Banking Tech."
+      },
+      security: {
+        title: "Cybersecurity / SecOps Engineer (Banking)",
+        mission: "Protect banking infrastructure and customer data against sophisticated cyber threats while ensuring regulatory audit readiness.",
+        tools: "Splunk, HSM (Hardware Security Modules), Okta, SonarQube, Wireshark, CrowdStrike.",
+        resp: "1. Monitor real-time SIEM alerts and investigate security anomalies.\n2. Conduct vulnerability assessments and secure code reviews.\n3. Ensure cryptographic keys are rotated and managed securely via HSM.",
+        paths: "• Path A (IC Track): Security Analyst → Senior SecOps Engineer → Principal Security Architect.\n• Path B (Leadership): Security Engineer → CISO / Head of Information Security."
+      },
+      dba: {
+        title: "Database Administrator / Data Engineer (Banking)",
+        mission: "Ensure zero data loss, high availability, and optimal query performance for core financial ledgers.",
+        tools: "Oracle RAC, PostgreSQL, Redis, Debezium, Apache Airflow, SQL tuning tools.",
+        resp: "1. Manage high-availability master-replica database clusters.\n2. Optimize complex financial reporting queries and indexing.\n3. Implement robust backup, disaster recovery, and data masking procedures.",
+        paths: "• Path A (IC Track): Junior DBA → Senior Database Reliability Engineer → Principal Data Architect.\n• Path B (Data Track): DBA → Senior Data Engineer → Head of Data Platforms."
+      }
+    };
+
+    function openDrawer(roleKey) {
+      const role = roleData[roleKey];
+      if (!role) return;
+      document.getElementById('drawerTitle').innerText = role.title;
+      document.getElementById('drawerBody').innerHTML = `
+        <div class="detail-section">
+          <div class="detail-section-title">Core Mission</div>
+          <p style="color: var(--text-main); margin-bottom: 10px;">${role.mission}</p>
+          <div class="detail-section-title">Tool Stack</div>
+          <p style="color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 10px;">${role.tools}</p>
+          <div class="detail-section-title">Key Responsibilities</div>
+          <p style="color: var(--text-muted); white-space: pre-line; margin-bottom: 10px;">${role.resp}</p>
+          <div class="detail-section-title">Career Progression Paths (A, B)</div>
+          <p style="color: var(--text-main); white-space: pre-line;">${role.paths}</p>
+        </div>
+      `;
+      document.getElementById('roleDrawer').classList.add('open');
+    }
+
+    function closeDrawer() {
+      document.getElementById('roleDrawer').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
