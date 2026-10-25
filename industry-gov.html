@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Government & Public Sector Architecture | SG Tech Navigator</title>
+  <link rel="stylesheet" href="stylejob.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">SG</div>
+      <div>
+        <div class="brand-title">Government & Public Sector Architecture</div>
+        <div class="brand-subtitle">IM8 Compliance, GovCloud Security Zones & Citizen Portal Workflows</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn back-link">🏠 Visualizer</a>
+      <a href="job.html" class="nav-btn">🏛️ Industry Hub</a>
+      <a href="checkjob.html" class="nav-btn" style="border-color: var(--accent-amber); color: var(--accent-amber);">🎯 Career Matcher</a>
+    </div>
+  </header>
+
+  <main class="assessment-container">
+    
+    <!-- Context & Philosophy Section -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-title">Architectural Philosophy & IM8 Standards</div>
+        <div class="quiz-subtitle">Why public sector systems prioritize rigorous governance, data sovereignty, and secure cloud enclaves.</div>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+        Singapore government digital services (managed by GovTech and public agencies) operate under <strong style="color: var(--text-main);">IM8 (Instruction Manual on Infocomm Technology & Smart Systems Management)</strong>. Architectures require multi-tenant isolation, rigorous ITGC change-approval audits, and deployment inside accredited secure government cloud environments (<strong style="color: var(--accent-blue);">GovCloud / GCC</strong>).
+      </p>
+    </section>
+
+    <!-- End-to-End Walkthrough -->
+    <section class="quiz-card">
+      <div class="section-divider" style="margin-top: 0;">End-to-End Activity Walkthrough: Secure Citizen Application Service</div>
+      <div class="quiz-subtitle" style="margin-bottom: 12px;">Tracing how a citizen authenticates and submits confidential data securely.</div>
+
+      <!-- Layer 1 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-blue);">
+        <div class="detail-section-title">Layer 1: National Digital Identity (NDI) & Edge Gateway</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Citizens access portals via secure TLS channels authenticated by Singpass / Corppass open-ID connect (OIDC) protocols, shielded by government-accredited web application firewalls.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('sec')">GovCloud Security Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-purple);">
+        <div class="detail-section-title">Layer 2: GCC Microservices & Container Enclave</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Application logic runs inside Government Commercial Cloud (GCC) container clusters (Kubernetes/OpenShift), enforcing strict RBAC and network micro-segmentation.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('dev')">Full-Stack / GovTech Software Engineer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-amber);">
+        <div class="detail-section-title">Layer 3: Policy Enforcement & Change Audit Layer</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> All code deployments and configuration changes pass through automated policy-as-code checks, while SIEM audit logs track every database read/write for compliance audits.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('audit')">IT Auditor / IM8 Compliance Officer 🏷️</span>
+        </p>
+      </div>
+
+      <!-- Layer 4 -->
+      <div class="detail-section" style="border-left: 3px solid var(--accent-green);">
+        <div class="detail-section-title">Layer 4: Encrypted Citizen Data Vault</div>
+        <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 8px;">
+          <strong>What Happens:</strong> Personally Identifiable Information (PII) is encrypted at rest using agency-managed KMS keys, stored in isolated database enclaves with strict data masking.
+        </p>
+        <p style="font-size: 0.775rem; color: var(--text-main);">
+          <strong>Accountable Role:</strong> <span style="color: var(--accent-cyan); cursor: pointer; text-decoration: underline;" onclick="openDrawer('db')">Database Administrator / Data Governance Lead 🏷️</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Role Drawer -->
+  <div class="drawer" id="roleDrawer">
+    <div class="drawer-header">
+      <div class="drawer-title" id="drawerTitle">Role Details</div>
+      <button class="close-btn" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </div>
+
+  <script>
+    const roleData = {
+      sec: {
+        title: "GovCloud Security Engineer (Public Sector)",
+        mission: "Design and enforce rigorous cloud security postures adhering to IM8 policies, GovCloud baselines, and national cybersecurity directives.",
+        tools: "AWS/Azure GovCloud, Terraform, HashiCorp Vault, Prisma Cloud, Splunk.",
+        resp: "1. Implement secure landing zones inside Government Commercial Cloud (GCC).\n2. Configure IAM policies, multi-factor authentication, and secret key rotation.\n3. Conduct automated compliance scanning and threat modeling.",
+        paths: "• Path A (IC Track): Security Engineer → Senior GovCloud Architect → Principal Cyber Defense Lead."
+      },
+      dev: {
+        title: "Full-Stack / GovTech Software Engineer",
+        mission: "Build citizen-centric digital services and internal government portals that are accessible, highly reliable, and secure.",
+        tools: "React, Node.js, Spring Boot, PostgreSQL, Docker, OpenShift, GitLab CI.",
+        resp: "1. Develop responsive frontend applications meeting government accessibility standards.\n2. Build robust backend APIs integrating with Singpass and national data services.\n3. Write secure code adhering to OWASP Top 10 guidelines.",
+        paths: "• Path A (IC Track): Software Engineer → Senior GovTech Engineer → Principal Technical Lead."
+      },
+      audit: {
+        title: "IT Auditor / IM8 Compliance Officer",
+        mission: "Ensure that all IT systems, cloud deployments, and operational processes strictly comply with government ICT and security governance standards.",
+        tools: "GRC Tools, ServiceNow, Automated Policy-as-Code (OPA), Splunk Audit Logs.",
+        resp: "1. Review system architecture designs against IM8 compliance checklists.\n2. Audit IT General Controls (ITGC) and change-management approval logs.\n3. Coordinate annual security audits and penetration testing exercises.",
+        paths: "• Path A (Career Track): IT Auditor → Senior Compliance Manager → Director of ICT Governance."
+      },
+      db: {
+        title: "Database Administrator / Data Governance Lead",
+        mission: "Protect sensitive citizen data repositories, ensuring absolute compliance with data privacy acts and secure encryption standards.",
+        tools: "PostgreSQL, Oracle, AWS KMS, Data Masking tools, SQL Server.",
+        resp: "1. Manage encrypted database instances with strict role-based access control.\n2. Enforce data retention and anonymization policies.\n3. Monitor database audit logs for unauthorized access attempts.",
+        paths: "• Path A (IC Track): DBA → Senior Data Security Engineer → Chief Data Officer (CDO) Office."
+      }
+    };
+
+    function openDrawer(roleKey) {
+      const role = roleData[roleKey];
+      if (!role) return;
+      document.getElementById('drawerTitle').innerText = role.title;
+      document.getElementById('drawerBody').innerHTML = `
+        <div class="detail-section">
+          <div class="detail-section-title">Core Mission</div>
+          <p style="color: var(--text-main); margin-bottom: 10px;">${role.mission}</p>
+          <div class="detail-section-title">Tool Stack</div>
+          <p style="color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 10px;">${role.tools}</p>
+          <div class="detail-section-title">Key Responsibilities</div>
+          <p style="color: var(--text-muted); white-space: pre-line; margin-bottom: 10px;">${role.resp}</p>
+          <div class="detail-section-title">Career Progression Paths</div>
+          <p style="color: var(--text-main); white-space: pre-line;">${role.paths}</p>
+        </div>
+      `;
+      document.getElementById('roleDrawer').classList.add('open');
+    }
+
+    function closeDrawer() {
+      document.getElementById('roleDrawer').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
