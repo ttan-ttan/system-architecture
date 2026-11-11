@@ -571,3 +571,55 @@ header {
     min-width: auto;
   }
 }
+
+.role-market-note,
+.cert-note {
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.role-market-note a,
+.pool-card a,
+#runner-up-link a {
+  color: var(--accent-blue);
+}
+
+.role-salary {
+  margin-top: 10px;
+  color: var(--accent-green);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.role-salary span,
+.role-salary-detail span {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.role-salary-detail {
+  margin-top: 10px;
+  color: var(--accent-green);
+}
+
+.role-card:focus-visible {
+  outline: 3px solid var(--accent-blue);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 14px;
+  }
+
+  .roles-section {
+    padding: 16px;
+  }
+
+  .roles-grid {
+    grid-template-columns: 1fr;
+  }
+}

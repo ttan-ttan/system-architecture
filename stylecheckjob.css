@@ -353,3 +353,92 @@ header {
   color: var(--accent-green);
   font-family: 'JetBrains Mono', monospace;
 }
+
+.quiz-progress {
+  margin-top: 12px;
+  color: var(--accent-cyan);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.quiz-progress span {
+  font-size: 1rem;
+  color: var(--accent-green);
+}
+
+.match-explainer,
+.salary-note,
+.cert-note {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.match-runner-up {
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 22px;
+  background: var(--bg-surface);
+}
+
+.match-runner-up h3 {
+  color: var(--accent-cyan);
+  margin-bottom: 6px;
+}
+
+.salary-value {
+  display: inline-block;
+  margin: 8px 0;
+  color: var(--accent-green);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.salary-note a,
+#runner-up-link a,
+.pool-card a {
+  color: var(--accent-cyan);
+}
+
+.story-kicker {
+  color: var(--accent-cyan);
+  font: 700 0.75rem 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.story-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--accent-cyan);
+  border-radius: 9px;
+  background: var(--accent-cyan);
+  color: #04202c;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.match-runner-up,
+.pool-card {
+  line-height: 1.6;
+}
+
+.matrix-scroll {
+  overflow-x: auto;
+}
+
+@media (max-width: 640px) {
+  .quiz-card,
+  .proposal-section,
+  .hero-recommendation,
+  .match-runner-up {
+    padding: 18px;
+  }
+
+  .matrix-table {
+    min-width: 660px;
+  }
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Enterprise Tech Systems & Role Architecture Navigator</title>
+  <title>Singapore Tech Career Explorer | Roles and Progression</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,31 +16,32 @@
     <div class="brand">
       <div class="brand-icon">SG</div>
       <div>
-        <div class="brand-title">Enterprise Tech Systems & Role Architecture</div>
-        <div class="brand-subtitle">Singapore Tech Industry System Roles, Compliance & Career Ladder</div>
+        <div class="brand-title">People behind the system</div>
+        <div class="brand-subtitle">Explore the jobs behind each system layer, from hands-on specialists to team leads</div>
       </div>
     </div>
     <div class="nav-actions">
       <a href="index.html" class="nav-btn back-link">&leftarrow; Back to Flow Visualizer</a>
+      <a href="checkjob.html" class="nav-btn">Find a suitable path</a>
     </div>
   </header>
 
   <div class="controls-panel">
     <div class="control-group">
-      <label>1. Sector Structure:</label>
-      <button class="btn btn-ind active" onclick="setIndustry('all')">Master View (All)</button>
-      <button class="btn btn-ind" onclick="setIndustry('banking')">Banking & Financial Services (MAS TRM)</button>
-      <button class="btn btn-ind" onclick="setIndustry('tech')">Tech Scale-Up / E-Commerce</button>
-      <button class="btn btn-ind" onclick="setIndustry('gov')">Government & Public Sector (IM8)</button>
+      <label>Filter by workplace:</label>
+      <button class="btn btn-ind active" onclick="setIndustry('all', this)">All roles</button>
+      <button class="btn btn-ind" onclick="setIndustry('banking', this)">Banking & financial services</button>
+      <button class="btn btn-ind" onclick="setIndustry('tech', this)">Tech companies & e-commerce</button>
+      <button class="btn btn-ind" onclick="setIndustry('gov', this)">Government & public sector</button>
     </div>
 
     <div class="control-group">
-      <label>2. Walkthrough Flow:</label>
-      <button class="btn btn-scenario" onclick="triggerScenario('none')">Reset Walkthrough</button>
-      <button class="btn btn-scenario" onclick="triggerScenario('audit')">Flow A: Change Approval & ITGC Audit</button>
-      <button class="btn btn-scenario" onclick="triggerScenario('ai')">Flow B: AI Vector Search Query</button>
-      <button class="btn btn-scenario" onclick="triggerScenario('sec')">Flow C: Cyber Incident & SOC Response</button>
-      <button class="btn btn-scenario" onclick="triggerScenario('data')">Flow D: Data Lakehouse ETL & Analytics</button>
+      <label>Follow a system story:</label>
+      <button class="btn btn-scenario" onclick="triggerScenario('none', this)">Reset walkthrough</button>
+      <button class="btn btn-scenario" onclick="triggerScenario('audit', this)">Software change and audit</button>
+      <button class="btn btn-scenario" onclick="triggerScenario('ai', this)">AI search request</button>
+      <button class="btn btn-scenario" onclick="triggerScenario('sec', this)">Cyber incident response</button>
+      <button class="btn btn-scenario" onclick="triggerScenario('data', this)">Data to dashboard</button>
     </div>
 
     <div id="industry-banner" class="industry-info-banner"></div>
@@ -164,13 +165,15 @@
   <!-- Roles Directory -->
   <div class="roles-section">
     <div class="roles-header">
-      <span>Singapore Enterprise Role & Progression Path Directory</span>
-      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Click any role card to view branching IC vs Management tracks & required/optional certifications</span>
+      <span>Explore 22 Singapore tech career paths</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Select a role to explore what it does, monthly pay, and possible IC or management growth</span>
     </div>
 
     <div class="roles-grid" id="roles-grid">
       <!-- Rendered via JS -->
     </div>
+    <p class="role-market-note">A practical directory of common paths, not an exhaustive list of every tech job. Salary figures are rounded estimates of monthly base pay in SGD across experience levels—not live quotes or guarantees. Actual offers vary by seniority, employer, and total compensation.</p>
+    <p class="role-market-note" id="salary-sources"></p>
   </div>
 
   <!-- Detail Drawer -->
@@ -184,6 +187,7 @@
     </div>
   </div>
 
+  <script src="careers-data.js"></script>
   <script>
     const nodeDeepSpecs = {
       app: {
@@ -750,6 +754,126 @@
             ]
           }
         ]
+      },
+      {
+        id: "seceng",
+        title: "Cybersecurity Engineer",
+        team: "Cybersecurity & Defense",
+        nodes: ["node-edge", "node-soc", "node-iam"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Builds and operates security controls such as endpoint protection, firewalls, vulnerability management, and zero-trust access.",
+        sgContext: "Works across banks, public-sector teams, consultancies, and critical-infrastructure operators.",
+        tracks: [
+          { name: "Security Engineering (IC)", type: "ic", steps: [
+            { role: "Associate Security Engineer", certs: { req: [], opt: ["Security+ / cloud fundamentals"] } },
+            { role: "Senior Security Engineer", certs: { req: [], opt: ["CISSP / cloud security certification"] } },
+            { role: "Security Architect", certs: { req: [], opt: ["CISSP / CCSP"] } }
+          ] },
+          { name: "Security Leadership", type: "mgmt", steps: [
+            { role: "Security Engineering Lead", certs: { req: [], opt: ["CISM"] } },
+            { role: "Head of Security Engineering", certs: { req: [], opt: ["CISSP / CISM"] } }
+          ] }
+        ]
+      },
+      {
+        id: "backend",
+        title: "Backend / Microservices Engineer",
+        team: "Product Engineering",
+        nodes: ["node-app", "node-db", "node-queue"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Builds APIs and services that enforce product rules, process transactions, and connect databases and other systems.",
+        sgContext: "Found in product companies, financial institutions, consultancies, and government digital teams.",
+        tracks: [
+          { name: "Software Engineering (IC)", type: "ic", steps: [
+            { role: "Associate Software Engineer", certs: { req: [], opt: ["Cloud developer certification"] } },
+            { role: "Senior Backend Engineer", certs: { req: [], opt: ["Cloud architecture certification"] } },
+            { role: "Staff / Principal Engineer", certs: { req: [], opt: ["Specialist training as relevant"] } }
+          ] },
+          { name: "Engineering Leadership", type: "mgmt", steps: [
+            { role: "Engineering Lead", certs: { req: [], opt: ["People-management training"] } },
+            { role: "Engineering Manager", certs: { req: [], opt: ["Agile / leadership training"] } }
+          ] }
+        ]
+      },
+      {
+        id: "fullstack",
+        title: "Full-Stack Engineer",
+        team: "Product Engineering",
+        nodes: ["node-client", "node-app"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Builds customer-facing interfaces and the backend APIs that power them, working across the product lifecycle.",
+        sgContext: "Common in digital product teams and smaller organisations where engineers work across layers.",
+        tracks: [
+          { name: "Software Engineering (IC)", type: "ic", steps: [
+            { role: "Associate Full-Stack Engineer", certs: { req: [], opt: ["Web development portfolio"] } },
+            { role: "Senior Full-Stack Engineer", certs: { req: [], opt: ["Cloud developer certification"] } },
+            { role: "Staff / Principal Engineer", certs: { req: [], opt: ["Specialist training as relevant"] } }
+          ] },
+          { name: "Engineering Leadership", type: "mgmt", steps: [
+            { role: "Technical Lead", certs: { req: [], opt: ["Agile / leadership training"] } },
+            { role: "Engineering Manager", certs: { req: [], opt: ["People-management training"] } }
+          ] }
+        ]
+      },
+      {
+        id: "iameng",
+        title: "Identity & Access (IAM) Engineer",
+        team: "Security Engineering",
+        nodes: ["node-iam", "node-app"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Designs identity, single sign-on, multi-factor authentication, and privileged-access controls for people and services.",
+        sgContext: "Important in regulated organisations and enterprises managing large workforces and sensitive systems.",
+        tracks: [
+          { name: "Identity Engineering (IC)", type: "ic", steps: [
+            { role: "IAM Analyst / Engineer", certs: { req: [], opt: ["Vendor IAM administrator certification"] } },
+            { role: "Senior IAM Engineer", certs: { req: [], opt: ["Cloud identity certification"] } },
+            { role: "Identity Architect", certs: { req: [], opt: ["Security architecture training"] } }
+          ] },
+          { name: "Identity Leadership", type: "mgmt", steps: [
+            { role: "IAM Team Lead", certs: { req: [], opt: ["ITIL / leadership training"] } },
+            { role: "Head of Identity Security", certs: { req: [], opt: ["CISM / leadership training"] } }
+          ] }
+        ]
+      },
+      {
+        id: "solutionarch",
+        title: "Solution Architect",
+        team: "Architecture & Consulting",
+        nodes: ["node-app", "node-lb", "node-db"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Turns business needs into an implementable design across applications, data, integration, security, and infrastructure.",
+        sgContext: "Often works with delivery teams and stakeholders in banks, consultancies, public sector, and large enterprises.",
+        tracks: [
+          { name: "Architecture (IC)", type: "ic", steps: [
+            { role: "Solution Designer / Engineer", certs: { req: [], opt: ["Cloud practitioner certification"] } },
+            { role: "Solution Architect", certs: { req: [], opt: ["Cloud architect certification / TOGAF"] } },
+            { role: "Principal / Enterprise Architect", certs: { req: [], opt: ["TOGAF / domain-specific learning"] } }
+          ] },
+          { name: "Architecture Leadership", type: "mgmt", steps: [
+            { role: "Architecture Practice Lead", certs: { req: [], opt: ["TOGAF / leadership training"] } },
+            { role: "Head of Architecture", certs: { req: [], opt: ["Executive leadership development"] } }
+          ] }
+        ]
+      },
+      {
+        id: "qaeng",
+        title: "QA Automation Engineer",
+        team: "Quality Engineering",
+        nodes: ["node-client", "node-app"],
+        industry: ["all", "banking", "tech", "gov"],
+        resp: "Designs test strategies and automated checks to catch defects before software reaches users.",
+        sgContext: "Works alongside product engineers in banks, software firms, consultancies, and public-sector delivery teams.",
+        tracks: [
+          { name: "Quality Engineering (IC)", type: "ic", steps: [
+            { role: "QA / Test Engineer", certs: { req: [], opt: ["ISTQB Foundation"] } },
+            { role: "QA Automation Engineer", certs: { req: [], opt: ["Playwright / Cypress portfolio"] } },
+            { role: "Staff Quality Engineer", certs: { req: [], opt: ["Performance / reliability testing"] } }
+          ] },
+          { name: "Quality Leadership", type: "mgmt", steps: [
+            { role: "QA Lead", certs: { req: [], opt: ["ISTQB Advanced"] } },
+            { role: "Quality Engineering Manager", certs: { req: [], opt: ["Agile / leadership training"] } }
+          ] }
+        ]
       }
     ];
 
@@ -772,6 +896,10 @@
 
     function init() {
       renderRoles();
+      document.getElementById("salary-sources").innerHTML =
+        `For current market cross-checks: ${window.sgSalarySources.map(source => `<a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.name}</a>`).join(" · ")}. The ranges shown are rounded estimates, not live feeds or quotations from these guides.`;
+      const roleId = location.hash.slice(1).replace(/^role-/, "");
+      if (rolesData.some(role => role.id === roleId)) selectRole(roleId);
     }
 
     function renderRoles() {
@@ -779,16 +907,27 @@
       grid.innerHTML = "";
 
       rolesData.forEach(role => {
+        const salary = window.sgSalaryBands[role.id];
         const card = document.createElement("div");
         card.className = "role-card";
         card.id = `role-${role.id}`;
         card.onclick = () => selectRole(role.id);
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", `${role.title}. ${role.resp} Salary ${formatSalary(salary)}`);
+        card.onkeydown = event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            selectRole(role.id);
+          }
+        };
 
         card.innerHTML = `
           <div>
             <div class="role-title">${role.title}</div>
             <div class="role-team">${role.team}</div>
             <div class="role-resp">${role.resp}</div>
+            <div class="role-salary">${formatSalary(salary)} <span>monthly base, SGD</span></div>
           </div>
           <div>
             <div class="role-sg-context"><strong>SG Context:</strong> ${role.sgContext}</div>
@@ -798,10 +937,10 @@
       });
     }
 
-    function setIndustry(indKey) {
+    function setIndustry(indKey, button) {
       currentIndustry = indKey;
       document.querySelectorAll(".btn-ind").forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
+      button.classList.add("active");
 
       const banner = document.getElementById("industry-banner");
       const profile = industryProfiles[indKey];
@@ -815,7 +954,7 @@
 
       rolesData.forEach(role => {
         const roleCard = document.getElementById(`role-${role.id}`);
-        if (!role.industry.includes("all") && !role.industry.includes(indKey)) {
+        if (!role.industry.includes(indKey)) {
           roleCard.classList.add("dimmed");
         }
       });
@@ -827,6 +966,7 @@
 
       document.querySelectorAll(".role-card").forEach(card => card.classList.remove("active"));
       document.getElementById(`role-${roleId}`).classList.add("active");
+      const salary = window.sgSalaryBands[role.id];
 
       document.querySelectorAll(".node").forEach(node => {
         node.classList.remove("highlighted", "dimmed");
@@ -846,8 +986,8 @@
             <div class="path-timeline">
         `;
         track.steps.forEach(step => {
-          let reqCertsPills = step.certs.req.map(c => `<span class="cert-pill cert-req">Req: ${c}</span>`).join("");
-          let optCertsPills = step.certs.opt.map(c => `<span class="cert-pill cert-opt">Opt: ${c}</span>`).join("");
+          let reqCertsPills = step.certs.req.map(c => `<span class="cert-pill cert-req">Useful: ${c}</span>`).join("");
+          let optCertsPills = step.certs.opt.map(c => `<span class="cert-pill cert-opt">Also useful: ${c}</span>`).join("");
 
           tracksHtml += `
             <div class="path-node">
@@ -862,7 +1002,9 @@
       openDrawer(`Branching Progression Tracks: ${role.title}`, `
         <p><strong>Department Domain:</strong> ${role.team}</p>
         <p><strong>Primary Role Overview:</strong> ${role.resp}</p>
+        <p class="role-salary-detail"><strong>Indicative monthly base:</strong> ${formatSalary(salary)} SGD <span>Ranges vary by experience, employer, and variable pay.</span></p>
         <p style="margin-top:6px; color:var(--accent-amber);"><strong>Singapore Regulatory Context:</strong> ${role.sgContext}</p>
+        <p class="cert-note">Certificates below are examples for learning and progression. Most tech roles do not require one specific certificate by law; check the actual job listing and employer requirements.</p>
         ${tracksHtml}
       `);
     }
@@ -903,7 +1045,7 @@
       `);
     }
 
-    function triggerScenario(scenKey) {
+    function triggerScenario(scenKey, button) {
       document.querySelectorAll(".node").forEach(n => n.classList.remove("scenario-active", "dimmed", "highlighted"));
       document.querySelectorAll(".btn-scenario").forEach(b => b.classList.remove("active"));
 
@@ -913,7 +1055,7 @@
         return;
       }
 
-      event.target.classList.add("active");
+      button.classList.add("active");
       const scen = scenarios[scenKey];
 
       scen.nodes.forEach(nodeId => {
@@ -939,6 +1081,12 @@
 
     function closeDrawer() {
       document.getElementById("drawer").classList.remove("open");
+    }
+
+    function formatSalary(salary) {
+      if (!salary) return "See current market listings";
+      const format = value => `S$${(value / 1000).toFixed(value % 1000 ? 1 : 0)}k`;
+      return `${format(salary.low)}–${format(salary.high)}`;
     }
 
     window.onload = init;

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SG Tech Career Diagnostics - 12-Factor Selection Engine</title>
+  <title>Find Your Singapore Tech Career Path</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,8 +15,8 @@
     <div class="brand">
       <div class="brand-icon">SG</div>
       <div>
-        <div class="brand-title">Comprehensive Tech Trait & Skill Diagnostic</div>
-        <div class="brand-subtitle">12-Factor Personal Profiler • SSG Infocomm Tech Framework</div>
+        <div class="brand-title">Find your place in the tech team</div>
+        <div class="brand-subtitle">A guided Singapore tech career match—not a pass/fail test</div>
       </div>
     </div>
     <div class="nav-actions">
@@ -28,8 +28,9 @@
   <div class="assessment-container">
     <div class="quiz-card">
       <div class="quiz-header">
-        <div class="quiz-title">Singapore Tech Career Personal Assessment</div>
-        <div class="quiz-subtitle">Complete all 12 custom criteria below to generate your personalized career proposal across 22 Singapore tech roles.</div>
+        <div class="quiz-title">What kind of work would you enjoy?</div>
+        <div class="quiz-subtitle">Choose what sounds most like you. Your answers help compare 22 common Singapore tech paths, explain the trade-offs, and suggest two starting points.</div>
+        <div class="quiz-progress" role="status" aria-live="polite"><span id="answer-count">0</span> of 12 answered</div>
       </div>
 
       <form id="diagnostic-form" onsubmit="submitDiagnostic(event)">
@@ -279,7 +280,7 @@
           </div>
         </div>
 
-        <button type="submit" class="submit-btn">Evaluate Profile Against 22 SG Roles &rarr;</button>
+        <button type="submit" class="submit-btn">Show me my two best-fit paths <span aria-hidden="true">→</span></button>
       </form>
     </div>
   </div>
@@ -290,8 +291,13 @@
     function selectOpt(key, val, el) {
       userAnswers[key] = val;
       const parent = el.closest('.options-grid');
-      parent.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+      parent.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('selected');
+        btn.setAttribute("aria-pressed", "false");
+      });
       el.classList.add('selected');
+      el.setAttribute("aria-pressed", "true");
+      document.getElementById("answer-count").textContent = Object.keys(userAnswers).length;
     }
 
     function submitDiagnostic(e) {
@@ -300,13 +306,25 @@
       
       const missing = requiredKeys.filter(k => !userAnswers[k]);
       if (missing.length > 0) {
-        alert(`Please complete all questions before submitting. (${missing.length} remaining)`);
+        alert(`Please answer the remaining ${missing.length} question${missing.length === 1 ? "" : "s"} to see your matches.`);
         return;
       }
 
       localStorage.setItem("sg_tech_user_profile", JSON.stringify(userAnswers));
       window.location.href = "proposal.html";
     }
+
+    document.querySelectorAll(".option-btn").forEach(option => {
+      option.setAttribute("role", "button");
+      option.setAttribute("tabindex", "0");
+      option.setAttribute("aria-pressed", "false");
+      option.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          option.click();
+        }
+      });
+    });
   </script>
 <script src="tracker.js"></script>
 </body>

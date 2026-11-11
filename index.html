@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>System Design & Modern AI Architecture Visualizer</title>
+  <title>From Click to Career | Singapore Tech Roles</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,8 +16,8 @@
     <div class="brand">
       <div class="brand-icon">SD</div>
       <div>
-        <div class="brand-title">System Design & Modern AI Architecture</div>
-        <div class="brand-subtitle">Interactive Enterprise Systems & Real-World AI Workflows</div>
+        <div class="brand-title">From Click to Career</div>
+        <div class="brand-subtitle">See how an app works—and who makes every step happen</div>
       </div>
     </div>
     <div class="nav-actions">
@@ -28,39 +28,36 @@
     </div>
   </header>
 
-  <!-- Video Section -->
-  <div class="video-container-card">
-    <div class="video-header">
-      <span>📹 Reference Video: System Design Fundamentals</span>
+  <section class="story-hero" aria-labelledby="story-title">
+    <p class="story-kicker">ONE CLICK. A WHOLE TEAM.</p>
+    <h1 id="story-title">Every app journey is powered by people.</h1>
+    <p>Follow a request from the screen through the systems behind it, then discover the Singapore tech roles that build, protect, and run each step.</p>
+    <div class="story-actions">
+      <a class="story-cta" href="#visualizer">Follow a live flow <span aria-hidden="true">↓</span></a>
+      <a class="story-secondary" href="checkjob.html">Not sure what fits? Find your path <span aria-hidden="true">→</span></a>
     </div>
-    <div class="video-wrapper">
-      <video controls preload="metadata">
-        <source src="system.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-  </div>
+  </section>
 
   <!-- Flow Selector Panel -->
   <div class="flow-controls-card" id="visualizer">
-    <span class="control-label">Select Real-World Industry Process Flow:</span>
+    <span class="control-label">Choose something a person does in an app</span>
     <div class="flow-buttons">
-      <button class="flow-btn active" onclick="setFlow('login')">🔵 HTML Form Login</button>
-      <button class="flow-btn" onclick="setFlow('order')">🟢 E-Commerce Click Order</button>
-      <button class="flow-btn" onclick="setFlow('weather')">🟡 Check Weather Status</button>
-      <button class="flow-btn" onclick="setFlow('bank')">🟣 Financial Bank Transfer</button>
-      <button class="flow-btn" onclick="setFlow('stream')">🔴 Video Streaming Playback</button>
-      <button class="flow-btn" onclick="setFlow('llm')">🔷 AI ChatGPT / LLM Query</button>
-      <button class="flow-btn" onclick="setFlow('agent')">⚡ Autonomous AI Agent Workflow</button>
+      <button class="flow-btn active" onclick="setFlow('login', this)">Sign in to an app</button>
+      <button class="flow-btn" onclick="setFlow('order', this)">Place an online order</button>
+      <button class="flow-btn" onclick="setFlow('weather', this)">Check the weather</button>
+      <button class="flow-btn" onclick="setFlow('bank', this)">Send money</button>
+      <button class="flow-btn" onclick="setFlow('stream', this)">Play a video</button>
+      <button class="flow-btn" onclick="setFlow('llm', this)">Ask an AI assistant</button>
+      <button class="flow-btn" onclick="setFlow('agent', this)">Ask an AI agent to do a task</button>
     </div>
 
     <div class="flow-meta-bar">
-      <div class="flow-title" id="flow-display-title">HTML Form Login Process</div>
+      <div class="flow-title" id="flow-display-title">Sign in to an app</div>
       <div class="speed-controls">
         <span style="font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">Flow Speed:</span>
-        <button class="speed-btn" onclick="setSpeed(0.25)">0.25x (Ultra Slow)</button>
-        <button class="speed-btn active" onclick="setSpeed(0.5)">0.5x (Slow)</button>
-        <button class="speed-btn" onclick="setSpeed(1.0)">1x (Normal)</button>
+        <button class="speed-btn" onclick="setSpeed(0.25, this)">0.25x</button>
+        <button class="speed-btn active" onclick="setSpeed(0.5, this)">0.5x</button>
+        <button class="speed-btn" onclick="setSpeed(1.0, this)">1x</button>
       </div>
     </div>
   </div>
@@ -167,12 +164,75 @@
 
     <!-- Hop Sequence Tracker -->
     <div class="journey-tracker-card">
-      <div class="journey-title">Active Process Hop Sequence:</div>
+      <div class="journey-title">Follow the request—and its response—through the system</div>
       <div class="journey-steps" id="journey-steps-container">
         <!-- Rendered via JS -->
       </div>
+      <p class="flow-explanation" id="flow-explanation" aria-live="polite"></p>
+      <div class="flow-roles" id="flow-roles" aria-live="polite"></div>
+      <p class="flow-return-note"><strong>And then the response comes back:</strong> the service returns a result through the system to the screen. Each step has people responsible for designing, building, operating, or protecting it.</p>
     </div>
   </div>
+
+  <section class="workflow-library" aria-labelledby="workflow-library-title">
+    <div class="concepts-header" id="workflow-library-title">Explore all seven app journeys</div>
+    <p class="workflow-library-intro">Each journey shows a typical request path and the team roles that help make it work.</p>
+    <div class="workflow-library-grid">
+      <details class="workflow-item">
+        <summary>Sign in to an app</summary>
+        <p>Screen → edge protection → traffic routing → identity check → app service → session cache and account database → response to screen.</p>
+        <p><strong>Roles:</strong> frontend, cybersecurity, network, infrastructure, identity, backend, and data teams.</p>
+      </details>
+      <details class="workflow-item">
+        <summary>Place an online order</summary>
+        <p>Screen → edge protection → traffic routing → order service → failure protection → database → event queue and monitoring → order confirmation to screen.</p>
+        <p><strong>Roles:</strong> product engineers, QA, cybersecurity, DevOps/SRE, backend, data, and operations teams.</p>
+      </details>
+      <details class="workflow-item">
+        <summary>Check the weather</summary>
+        <p>Screen → edge protection → traffic routing → weather service → fast cache → current result to screen.</p>
+        <p><strong>Roles:</strong> frontend, network, backend, platform, and data teams.</p>
+      </details>
+      <details class="workflow-item">
+        <summary>Send money</summary>
+        <p>Screen → edge protection → traffic routing → identity and MFA → transfer service → failure protection → account ledger → audit record → confirmation to screen.</p>
+        <p><strong>Roles:</strong> software, identity, cybersecurity, database, SRE, and technology-risk teams.</p>
+      </details>
+      <details class="workflow-item">
+        <summary>Play a video</summary>
+        <p>Player → content edge → traffic routing → playback service → title and access lookup → signed playback details → video stream back to player.</p>
+        <p><strong>Roles:</strong> frontend, network, backend, cloud, data, and reliability teams.</p>
+      </details>
+      <details class="workflow-item">
+        <summary>Ask an AI assistant</summary>
+        <p>Screen → edge protection → identity and usage checks → relevant context search → AI response generation → monitoring → answer to screen.</p>
+        <p><strong>Roles:</strong> AI/ML, data, backend, security, and platform teams.</p>
+      </details>
+      <details class="workflow-item">
+        <summary>Ask an AI agent to do a task</summary>
+        <p>Screen → edge protection → task orchestration → memory lookup → approved service actions → background queue and monitoring → task status to screen.</p>
+        <p><strong>Roles:</strong> AI/ML, backend, data, cloud, security, and operations teams.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="video-container-card" aria-labelledby="video-title">
+    <div class="video-header" id="video-title">
+      <span>Watch the system architecture video</span>
+    </div>
+    <div class="video-wrapper">
+      <video id="architecture-video" controls preload="metadata" playsinline>
+        <source src="system.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="video-fallback" id="video-fallback" role="status" hidden>
+      This browser could not load the video from this page. Open the site with VS Code Live Server (or another local web server), or
+      <a href="system.mp4" download>download the video</a>.
+    </p>
+    <p class="video-help">If you opened this page directly from your files and playback does not start, use VS Code Live Server so the browser can load the video.</p>
+  </section>
 
   <!-- 13 Video Core Concepts Grid -->
   <div class="concepts-section" id="concepts">
@@ -248,48 +308,49 @@
     </div>
   </div>
 
+  <script src="careers-data.js"></script>
   <script>
     const flowConfigs = {
       login: {
-        title: "HTML Form Login Process Flow",
+        title: "Sign in to an app",
         color: "#00f3ff",
-        hops: ["node-client", "node-waf", "node-lb", "node-auth", "node-cache", "node-db"],
-        desc: "User enters credentials on browser -> Edge WAF inspects request -> Load Balancer routes to Auth Gateway -> Session checked in Redis Cache -> User verified against SQL Database."
+        hops: ["node-client", "node-waf", "node-lb", "node-auth", "node-app", "node-cache", "node-db", "node-app", "node-client"],
+        desc: "You submit your sign-in details. The edge filters traffic, the gateway checks identity, and application services verify the account and session before returning a result to the screen."
       },
       order: {
-        title: "E-Commerce Click Order Process Flow",
+        title: "Place an online order",
         color: "#10b981",
-        hops: ["node-client", "node-waf", "node-lb", "node-app", "node-cb", "node-db", "node-queue", "node-obs"],
-        desc: "User clicks Checkout -> Gateway forwards to Order Microservice -> Circuit Breaker protects inventory API -> Order saved to DB -> Event published to Kafka -> Logs captured in Observability."
+        hops: ["node-client", "node-waf", "node-lb", "node-app", "node-cb", "node-db", "node-queue", "node-obs", "node-app", "node-client"],
+        desc: "You place an order. The service checks stock and payment, stores the order, then sends background events for fulfilment and notifications."
       },
       weather: {
-        title: "Check Weather Status Process Flow",
+        title: "Check the weather",
         color: "#f59e0b",
-        hops: ["node-client", "node-waf", "node-cache"],
-        desc: "User requests current weather -> Edge WAF routes to Redis Cache -> Sub-millisecond weather cache hit returned immediately without hitting backend DB."
+        hops: ["node-client", "node-waf", "node-lb", "node-app", "node-cache", "node-client"],
+        desc: "The app requests local weather. A service checks a fast cache first; if it has fresh data, it can return it without rebuilding the result."
       },
       bank: {
-        title: "Financial Bank Transfer Process Flow",
+        title: "Send money",
         color: "#a855f7",
-        hops: ["node-client", "node-waf", "node-lb", "node-auth", "node-app", "node-cb", "node-db", "node-obs"],
+        hops: ["node-client", "node-waf", "node-lb", "node-auth", "node-app", "node-cb", "node-db", "node-obs", "node-app", "node-client"],
         desc: "User initiates money transfer -> MFA verified -> Ledger Microservice locks account rows in ACID SQL Database -> Audit event dispatched to compliance logs."
       },
       stream: {
-        title: "Video Streaming Playback Process Flow",
+        title: "Play a video",
         color: "#ec4899",
-        hops: ["node-client", "node-waf", "node-app", "node-db"],
-        desc: "User presses play -> Edge CDN serves video chunks -> Metadata fetched from NoSQL Database -> Playback metrics streamed to analytics."
+        hops: ["node-client", "node-waf", "node-lb", "node-app", "node-db", "node-app", "node-client"],
+        desc: "You press play. The service checks the title and your access, then the content network delivers video chunks to your player."
       },
       llm: {
-        title: "AI ChatGPT / LLM Query Process Flow",
+        title: "Ask an AI assistant",
         color: "#3b82f6",
-        hops: ["node-client", "node-waf", "node-auth", "node-vector", "node-rag", "node-obs"],
+        hops: ["node-client", "node-waf", "node-auth", "node-vector", "node-rag", "node-obs", "node-app", "node-client"],
         desc: "User submits prompt -> Edge WAF checks prompt injection -> Prompt converted to vector embeddings -> Vector DB retrieves relevant documents -> LLM Orchestrator synthesizes answer."
       },
       agent: {
-        title: "Autonomous AI Agent Workflow",
+        title: "Ask an AI agent to do a task",
         color: "#00f3ff",
-        hops: ["node-client", "node-waf", "node-rag", "node-vector", "node-app", "node-queue", "node-obs"],
+        hops: ["node-client", "node-waf", "node-rag", "node-vector", "node-app", "node-queue", "node-obs", "node-client"],
         desc: "User dispatches complex task -> Agent Orchestrator runs ReAct reasoning loop -> Queries Vector Memory -> Dynamically invokes Microservice APIs -> Pushes long-running task to Kafka queue."
       }
     };
@@ -453,6 +514,21 @@
       }
     };
 
+    const nodeCareerLinks = {
+      client: [{ id: "fullstack", title: "Front-end / Full-stack Engineer" }, { id: "qaeng", title: "QA Automation Engineer" }],
+      waf: [{ id: "seceng", title: "Cybersecurity Engineer" }, { id: "neteng", title: "Network Engineer" }],
+      lb: [{ id: "infraeng", title: "Infrastructure Engineer" }, { id: "devops", title: "DevOps / SRE Engineer" }],
+      auth: [{ id: "iameng", title: "Identity & Access Engineer" }, { id: "seceng", title: "Cybersecurity Engineer" }],
+      app: [{ id: "backend", title: "Backend Engineer" }, { id: "qaeng", title: "QA Automation Engineer" }],
+      cb: [{ id: "devops", title: "DevOps / SRE Engineer" }, { id: "backend", title: "Backend Engineer" }],
+      cache: [{ id: "backend", title: "Backend Engineer" }, { id: "dataeng", title: "Data Engineer" }],
+      db: [{ id: "dataeng", title: "Data Engineer" }, { id: "syseng", title: "Systems Engineer" }],
+      queue: [{ id: "dataeng", title: "Data Engineer" }, { id: "backend", title: "Backend Engineer" }],
+      vector: [{ id: "mleng", title: "Machine Learning Engineer" }, { id: "dataeng", title: "Data Engineer" }],
+      rag: [{ id: "mleng", title: "Machine Learning Engineer" }, { id: "backend", title: "Backend Engineer" }],
+      obs: [{ id: "devops", title: "DevOps / SRE Engineer" }, { id: "soc", title: "SOC Analyst" }, { id: "blueteam", title: "Blue Team / Threat Hunter" }]
+    };
+
     const conceptDetails = {
       1: {
         title: "01. Client-Server Architecture",
@@ -565,36 +641,39 @@
     let flowSpeed = 0.5;
     let particleOffset = 0;
 
-    function setFlow(flowKey) {
+    function setFlow(flowKey, button) {
       currentFlow = flowKey;
       document.querySelectorAll(".flow-btn").forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
+      button.classList.add("active");
 
       const config = flowConfigs[flowKey];
       document.getElementById("flow-display-title").innerText = config.title;
+      document.getElementById("flow-explanation").innerText = config.desc;
 
       renderJourneyTracker();
       highlightActiveNodes();
     }
 
-    function setSpeed(spd) {
+    function setSpeed(spd, button) {
       flowSpeed = spd;
       document.querySelectorAll(".speed-btn").forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
+      button.classList.add("active");
     }
 
     function renderJourneyTracker() {
       const config = flowConfigs[currentFlow];
       const container = document.getElementById("journey-steps-container");
       container.innerHTML = "";
+      document.getElementById("flow-explanation").innerText = config.desc;
 
       config.hops.forEach((nodeId, idx) => {
         const nodeEl = document.getElementById(nodeId);
         const title = nodeEl.querySelector(".node-title").innerText;
+        const isReturnToScreen = idx > 0 && nodeId === "node-client";
 
         const badge = document.createElement("div");
-        badge.className = "journey-step-badge active";
-        badge.innerHTML = `<span style="color:${config.color}; font-weight:800;">Hop ${idx + 1}:</span> ${title}`;
+        badge.className = `journey-step-badge active${isReturnToScreen ? " response-step" : ""}`;
+        badge.innerHTML = `<span style="color:${config.color}; font-weight:800;">${isReturnToScreen ? "Response" : `Step ${idx + 1}`}:</span> ${isReturnToScreen ? "Result returns to your screen" : title}`;
         container.appendChild(badge);
 
         if (idx < config.hops.length - 1) {
@@ -605,6 +684,17 @@
           container.appendChild(arrow);
         }
       });
+
+      const activeRoles = [...new Set(config.hops.flatMap(nodeId => {
+        const key = nodeId.replace("node-", "");
+        return (nodeCareerLinks[key] || []).map(role => role.id);
+      }))];
+      document.getElementById("flow-roles").innerHTML = `
+        <strong>People behind this journey</strong>
+        <div class="flow-role-links">${activeRoles.map(roleId => {
+          const role = Object.values(nodeCareerLinks).flat().find(item => item.id === roleId);
+          return `<a href="job.html#role-${role.id}">${role.title} <span aria-hidden="true">→</span></a>`;
+        }).join("")}</div>`;
     }
 
     function highlightActiveNodes() {
@@ -697,6 +787,7 @@
               <div class="detail-section-title">${c.name}</div>
               <div style="font-size:0.85rem; color:var(--text-muted);">${c.desc}</div>
             </div>
+
           `;
         });
         openDrawer(agentDetailedBreakdown.title, agentHtml);
@@ -734,6 +825,11 @@
           <div style="font-size:0.85rem; color:var(--text-muted);">
             ${spec.tradeoffs}
           </div>
+        </div>
+
+        <div class="detail-section">
+          <div class="detail-section-title">👥 Careers that work on this component</div>
+          <div class="flow-role-links">${(nodeCareerLinks[nodeKey] || []).map(role => `<a href="job.html#role-${role.id}">${role.title} <span aria-hidden="true">→</span></a>`).join("")}</div>
         </div>
       `);
     }
@@ -783,6 +879,21 @@
       highlightActiveNodes();
       requestAnimationFrame(animateCanvas);
     };
+
+    const architectureVideo = document.getElementById("architecture-video");
+    const videoFallback = document.getElementById("video-fallback");
+    const showVideoFallback = () => {
+      videoFallback.hidden = false;
+    };
+    architectureVideo.addEventListener("error", showVideoFallback);
+    architectureVideo.addEventListener("loadedmetadata", () => {
+      videoFallback.hidden = true;
+    });
+    window.setTimeout(() => {
+      if (architectureVideo.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+        showVideoFallback();
+      }
+    }, 1500);
 
     window.onresize = function() {
       const canvas = document.getElementById("flow-canvas");
