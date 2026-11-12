@@ -40,7 +40,7 @@
 
   <!-- Flow Selector Panel -->
   <div class="flow-controls-card" id="visualizer">
-    <span class="control-label">Choose something a person does in an app</span>
+    <span class="control-label">Choose a journey to follow</span>
     <div class="flow-buttons">
       <button class="flow-btn active" onclick="setFlow('login', this)">Sign in to an app</button>
       <button class="flow-btn" onclick="setFlow('order', this)">Place an online order</button>
@@ -54,12 +54,21 @@
     <div class="flow-meta-bar">
       <div class="flow-title" id="flow-display-title">Sign in to an app</div>
       <div class="speed-controls">
-        <span style="font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">Flow Speed:</span>
+        <span class="speed-label">Animation speed</span>
         <button class="speed-btn" onclick="setSpeed(0.25, this)">0.25x</button>
         <button class="speed-btn active" onclick="setSpeed(0.5, this)">0.5x</button>
         <button class="speed-btn" onclick="setSpeed(1.0, this)">1x</button>
       </div>
     </div>
+  </div>
+
+  <div class="journey-tracker-card">
+    <div class="journey-title">From your tap to the result</div>
+    <p class="flow-explanation" id="flow-explanation" aria-live="polite"></p>
+    <div class="journey-steps" id="journey-steps-container">
+      <!-- Rendered via JS -->
+    </div>
+    <div class="flow-roles" id="flow-roles" aria-live="polite"></div>
   </div>
 
   <!-- Swimlane Visualizer & Canvas Overlay -->
@@ -71,8 +80,8 @@
       <!-- Phase 1: Ingress -->
       <div class="lane-column">
         <div class="lane-header">
-          <span>1. Edge & Entry</span>
-          <span class="badge">Ingress</span>
+          <span>1. Your device sends a request</span>
+          <span class="badge">Start</span>
         </div>
         <div class="node-card" id="node-client" onclick="inspectNode('client')">
           <div class="node-title">Web & Mobile Client</div>
@@ -94,8 +103,8 @@
       <!-- Phase 2: Compute -->
       <div class="lane-column">
         <div class="lane-header">
-          <span>2. Compute & Logic</span>
-          <span class="badge">Execution</span>
+          <span>2. The app works it out</span>
+          <span class="badge">App</span>
         </div>
         <div class="node-card" id="node-auth" onclick="inspectNode('auth')">
           <div class="node-title">Auth & API Gateway</div>
@@ -117,8 +126,8 @@
       <!-- Phase 3: Data & Storage -->
       <div class="lane-column">
         <div class="lane-header">
-          <span>3. Memory & Storage</span>
-          <span class="badge">Persistence</span>
+          <span>3. It finds or saves information</span>
+          <span class="badge">Data</span>
         </div>
         <div class="node-card" id="node-cache" onclick="inspectNode('cache')">
           <div class="node-title">Redis In-Memory Cache</div>
@@ -140,8 +149,8 @@
       <!-- Phase 4: AI Era & Operations -->
       <div class="lane-column">
         <div class="lane-header">
-          <span>4. AI & Operations</span>
-          <span class="badge">Intelligence</span>
+          <span>4. Extra services help behind the scenes</span>
+          <span class="badge">Extra</span>
         </div>
         <div class="node-card" id="node-vector" onclick="inspectNode('vector')">
           <div class="node-title">Vector DB (AI Memory)</div>
@@ -162,59 +171,7 @@
 
     </div>
 
-    <!-- Hop Sequence Tracker -->
-    <div class="journey-tracker-card">
-      <div class="journey-title">Follow the request—and its response—through the system</div>
-      <div class="journey-steps" id="journey-steps-container">
-        <!-- Rendered via JS -->
-      </div>
-      <p class="flow-explanation" id="flow-explanation" aria-live="polite"></p>
-      <div class="flow-roles" id="flow-roles" aria-live="polite"></div>
-      <p class="flow-return-note"><strong>And then the response comes back:</strong> the service returns a result through the system to the screen. Each step has people responsible for designing, building, operating, or protecting it.</p>
-    </div>
   </div>
-
-  <section class="workflow-library" aria-labelledby="workflow-library-title">
-    <div class="concepts-header" id="workflow-library-title">Explore all seven app journeys</div>
-    <p class="workflow-library-intro">Each journey shows a typical request path and the team roles that help make it work.</p>
-    <div class="workflow-library-grid">
-      <details class="workflow-item">
-        <summary>Sign in to an app</summary>
-        <p>Screen → edge protection → traffic routing → identity check → app service → session cache and account database → response to screen.</p>
-        <p><strong>Roles:</strong> frontend, cybersecurity, network, infrastructure, identity, backend, and data teams.</p>
-      </details>
-      <details class="workflow-item">
-        <summary>Place an online order</summary>
-        <p>Screen → edge protection → traffic routing → order service → failure protection → database → event queue and monitoring → order confirmation to screen.</p>
-        <p><strong>Roles:</strong> product engineers, QA, cybersecurity, DevOps/SRE, backend, data, and operations teams.</p>
-      </details>
-      <details class="workflow-item">
-        <summary>Check the weather</summary>
-        <p>Screen → edge protection → traffic routing → weather service → fast cache → current result to screen.</p>
-        <p><strong>Roles:</strong> frontend, network, backend, platform, and data teams.</p>
-      </details>
-      <details class="workflow-item">
-        <summary>Send money</summary>
-        <p>Screen → edge protection → traffic routing → identity and MFA → transfer service → failure protection → account ledger → audit record → confirmation to screen.</p>
-        <p><strong>Roles:</strong> software, identity, cybersecurity, database, SRE, and technology-risk teams.</p>
-      </details>
-      <details class="workflow-item">
-        <summary>Play a video</summary>
-        <p>Player → content edge → traffic routing → playback service → title and access lookup → signed playback details → video stream back to player.</p>
-        <p><strong>Roles:</strong> frontend, network, backend, cloud, data, and reliability teams.</p>
-      </details>
-      <details class="workflow-item">
-        <summary>Ask an AI assistant</summary>
-        <p>Screen → edge protection → identity and usage checks → relevant context search → AI response generation → monitoring → answer to screen.</p>
-        <p><strong>Roles:</strong> AI/ML, data, backend, security, and platform teams.</p>
-      </details>
-      <details class="workflow-item">
-        <summary>Ask an AI agent to do a task</summary>
-        <p>Screen → edge protection → task orchestration → memory lookup → approved service actions → background queue and monitoring → task status to screen.</p>
-        <p><strong>Roles:</strong> AI/ML, backend, data, cloud, security, and operations teams.</p>
-      </details>
-    </div>
-  </section>
 
   <!-- Video Section -->
   <section class="video-container-card" aria-labelledby="video-title">
@@ -237,8 +194,8 @@
   <!-- 13 Video Core Concepts Grid -->
   <div class="concepts-section" id="concepts">
     <div class="concepts-header">
-      <span>13 Fundamental System Design Video Concepts</span>
-      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Click any card to inspect whiteboard details</span>
+      <span>13 Essential System Concepts</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Explore what people do with each concept at work</span>
     </div>
 
     <div class="concepts-grid">
@@ -321,37 +278,37 @@
         title: "Place an online order",
         color: "#10b981",
         hops: ["node-client", "node-waf", "node-lb", "node-app", "node-cb", "node-db", "node-queue", "node-obs", "node-app", "node-client"],
-        desc: "You place an order. The service checks stock and payment, stores the order, then sends background events for fulfilment and notifications."
+        desc: "You place an order. The app checks stock and payment, saves the order, and starts fulfilment. Your confirmation then comes back to your screen."
       },
       weather: {
         title: "Check the weather",
         color: "#f59e0b",
         hops: ["node-client", "node-waf", "node-lb", "node-app", "node-cache", "node-client"],
-        desc: "The app requests local weather. A service checks a fast cache first; if it has fresh data, it can return it without rebuilding the result."
+        desc: "You ask for the weather. The app looks for a recent forecast and sends it back to your screen."
       },
       bank: {
         title: "Send money",
         color: "#a855f7",
         hops: ["node-client", "node-waf", "node-lb", "node-auth", "node-app", "node-cb", "node-db", "node-obs", "node-app", "node-client"],
-        desc: "User initiates money transfer -> MFA verified -> Ledger Microservice locks account rows in ACID SQL Database -> Audit event dispatched to compliance logs."
+        desc: "You ask your bank to send money. It checks it is really you, confirms the account details, records the transfer and returns a confirmation."
       },
       stream: {
         title: "Play a video",
         color: "#ec4899",
         hops: ["node-client", "node-waf", "node-lb", "node-app", "node-db", "node-app", "node-client"],
-        desc: "You press play. The service checks the title and your access, then the content network delivers video chunks to your player."
+        desc: "You press play. The service checks the title and your access, then sends the video to your player."
       },
       llm: {
         title: "Ask an AI assistant",
         color: "#3b82f6",
         hops: ["node-client", "node-waf", "node-auth", "node-vector", "node-rag", "node-obs", "node-app", "node-client"],
-        desc: "User submits prompt -> Edge WAF checks prompt injection -> Prompt converted to vector embeddings -> Vector DB retrieves relevant documents -> LLM Orchestrator synthesizes answer."
+        desc: "You ask a question. The app checks it, finds useful information, asks the AI to prepare an answer and sends it back to your screen."
       },
       agent: {
         title: "Ask an AI agent to do a task",
         color: "#00f3ff",
         hops: ["node-client", "node-waf", "node-rag", "node-vector", "node-app", "node-queue", "node-obs", "node-client"],
-        desc: "User dispatches complex task -> Agent Orchestrator runs ReAct reasoning loop -> Queries Vector Memory -> Dynamically invokes Microservice APIs -> Pushes long-running task to Kafka queue."
+        desc: "You give an AI a task. It finds helpful information, uses approved tools to do the work, tracks progress and returns the result to your screen."
       }
     };
 
@@ -529,84 +486,102 @@
       obs: [{ id: "devops", title: "DevOps / SRE Engineer" }, { id: "soc", title: "SOC Analyst" }, { id: "blueteam", title: "Blue Team / Threat Hunter" }]
     };
 
+    const careerLinksById = Object.values(nodeCareerLinks).flat().reduce((links, role) => {
+      links.set(role.id, role);
+      return links;
+    }, new Map());
+
     const conceptDetails = {
       1: {
         title: "01. Client-Server Architecture",
         videoContent: "The video presents the client-server pattern as the fundamental starting point of system design: a Client (web browser, mobile app) sends HTTP requests across the network, and a Server processes those requests and returns responses (HTML, JSON, XML).",
         extraKnowledge: "Modern production systems separate clients and servers via API contracts (OpenAPI/GraphQL). Clients manage UI state and optimistic rendering, while stateless servers scale horizontally behind load balancers. Key considerations include CORS security, TLS termination, and choosing between REST, gRPC (for sub-millisecond microservice RPCs), or WebSockets (for full-duplex live updates).",
-        pitfalls: "Tight coupling between frontend state and backend schema; placing business logic inside client applications."
+        workExample: "A user says a page is showing yesterday's information. A front-end engineer checks what the screen requested, while a back-end engineer checks the reply from the service; together they locate where the data stopped matching.",
+        roleIds: ["fullstack", "backend", "qaeng"]
       },
       2: {
         title: "02. Load Balancing",
         videoContent: "The video demonstrates how a Load Balancer sits between clients and server pools to distribute incoming HTTP traffic evenly, eliminating single points of failure and avoiding server overload.",
         extraKnowledge: "Load balancers operate at Layer 4 (TCP/UDP packet forwarding via AWS NLB or HAProxy) or Layer 7 (HTTP application routing via AWS ALB or Nginx). Advanced algorithms include Least Connections, Weighted Response Time, and Consistent Hashing (essential for sticky caching without breaking when nodes scale). Health checks continually remove failing nodes from the pool.",
-        pitfalls: "Failing to configure sticky sessions when backend applications maintain local state; DNS caching bypassing load balancer distribution."
+        workExample: "Before a planned release, a network or platform engineer checks that traffic is reaching healthy servers. During a scheduled change, they watch errors and may roll back if users stop reaching the service.",
+        roleIds: ["neteng", "infraeng", "devops"]
       },
       3: {
         title: "03. Caching Strategies",
         videoContent: "The video highlights caching as putting fast, in-memory data stores (like Redis or Memcached) in front of slow databases to serve hot reads with sub-millisecond response times.",
         extraKnowledge: "Caching patterns include Cache-Aside (Lazy Loading), Write-Through, Write-Behind (Write-Back for extreme throughput), and Read-Through. Eviction policies govern memory management: LRU (Least Recently Used), LFU (Least Frequently Used), and TTL (Time-To-Live). Edge Caching via CDNs handles static media assets geographically close to users.",
-        pitfalls: "Cache Stampede (Thundering Herd) when a key expires and thousands of concurrent requests hit the database at once; Cache Invalidation complexity ('Hardest problem in CS')."
+        workExample: "After a shop changes a price, some users still see the old one. An engineer checks how long the saved copy lasts and safely refreshes it without sending a sudden rush of requests to the database.",
+        roleIds: ["backend", "dataeng", "syseng"]
       },
       4: {
         title: "04. Database Design (SQL vs NoSQL)",
         videoContent: "The video compares Relational SQL databases (structured tables, strict schemas, foreign keys) against NoSQL databases (flexible key-value, document, column-family, or graph models).",
         extraKnowledge: "SQL (PostgreSQL, MySQL) provides strict ACID (Atomicity, Consistency, Isolation, Durability) guarantees, ideal for financial ledgers and transactional integrity. NoSQL (MongoDB, DynamoDB, Cassandra) trades rigid schemas for horizontal partitioning and massive write throughput. Polyglot Persistence uses both in the same system based on workload requirements.",
-        pitfalls: "Using NoSQL for complex multi-table JOIN transactions; using SQL without proper indexes causing full table scans under load."
+        workExample: "A finance report does not match the source records. A data analyst checks the report query, while a data engineer checks whether the data arrived on time and in the right shape.",
+        roleIds: ["dataanalyst", "dataeng", "backend"]
       },
       5: {
         title: "05. Microservices Architecture",
         videoContent: "The video explains breaking a large, tightly coupled Monolith into smaller, independent Microservices organized around specific business domains (User, Order, Payment).",
         extraKnowledge: "Microservices enable team autonomy and independent deployment pipelines. Communication occurs via synchronous REST/gRPC or asynchronous events (Kafka). Domain-Driven Design (DDD) defines Bounded Contexts. Kubernetes (K8s) manages container orchestration, service discovery, and auto-scaling.",
-        pitfalls: "Distributed Monolith (microservices sharing a single database or making chain-reaction synchronous HTTP calls); massive network latency and operational complexity."
+        workExample: "A team adds a new checkout feature that uses several services. Engineers agree on what each service sends and receives, test the hand-offs, and coordinate the release so one change does not break another.",
+        roleIds: ["backend", "fullstack", "qaeng", "solutionarch"]
       },
       6: {
         title: "06. System Communication (Async Queues)",
         videoContent: "The video covers asynchronous event-driven communication using message queues (Kafka, RabbitMQ) so background processes can execute without holding up the user's HTTP request.",
         extraKnowledge: "Decouples producers and consumers. Message brokers offer Publish/Subscribe (Kafka/SNS) or Point-to-Point Queue (RabbitMQ/SQS) models. Key guarantees: At-least-once, At-most-once, or Exactly-once processing. Dead Letter Queues (DLQ) isolate unprocessable or corrupted messages for human inspection.",
-        pitfalls: "Ignoring consumer lag metrics; failing to design idempotent event handlers (handling duplicate events safely)."
+        workExample: "An order is confirmed but the delivery update is delayed. The team checks the waiting-task list, investigates failed messages, and retries them safely so an order is not processed twice.",
+        roleIds: ["backend", "dataeng", "devops"]
       },
       7: {
         title: "07. Circuit Breakers",
         videoContent: "The video explains the Circuit Breaker pattern (borrowed from electrical engineering): when a downstream service fails, the circuit opens to fail fast and stop cascading service failures.",
         extraKnowledge: "Circuit breakers have 3 states: Closed (normal operation), Open (requests fail immediately without calling the service), and Half-Open (sends trial requests to check recovery). Libraries like Resilience4j or Envoy proxies execute this automatically, serving graceful fallback responses (e.g., cached recommendations).",
-        pitfalls: "Setting timeout thresholds too high, allowing requests to queue up and exhaust server thread pools before the circuit trips."
+        workExample: "A payment partner is responding slowly. Engineers check whether the app is waiting too long, limit repeated calls, and show a safe pending message until the partner recovers.",
+        roleIds: ["backend", "devops", "syseng"]
       },
       8: {
         title: "08. Data Replication & Partitioning (Sharding)",
         videoContent: "The video shows how database replication creates read copies across servers for high availability, while Sharding splits massive database tables horizontally across physical disks.",
         extraKnowledge: "Replication types: Master-Slave (Single-Master with Read Replicas) vs Multi-Master. Sharding strategies: Range-Based, Hash-Based (Consistent Hashing), or Directory-Based. Sharding key selection is critical to avoid hotspotting a single database shard.",
-        pitfalls: "Cross-shard JOIN queries (prohibitively slow); replication lag leading to stale reads right after a user writes data."
+        workExample: "After database maintenance, users report that a recent update is not visible everywhere. A data or platform engineer checks replica delay and confirms when it is safe to serve the updated information.",
+        roleIds: ["dataeng", "syseng", "backend"]
       },
       9: {
         title: "09. Consistency Models (CAP Theorem)",
         videoContent: "The video breaks down the CAP Theorem: a distributed data system can only guarantee 2 out of 3 properties at the same time: Consistency, Availability, and Partition Tolerance.",
         extraKnowledge: "Since network partitions (P) are inevitable in real-world networks, systems must choose between CP (Consistent under Partition: blocks reads/writes until synchronized, e.g., HBase, Redis) or AP (Available under Partition: returns stale data rather than failing, e.g., Cassandra, DynamoDB). PACELC Theorem extends this by factoring in Latency during normal operations.",
-        pitfalls: "Expecting Eventual Consistency systems to immediately reflect updates across global nodes."
+        workExample: "A regional network link is interrupted, so different copies of information may briefly disagree. The team decides what can stay available and reconciles the copies when the link returns.",
+        roleIds: ["backend", "dataeng", "solutionarch"]
       },
       10: {
         title: "10. System Security",
         videoContent: "The video covers securing enterprise applications across layers: Web Application Firewalls (WAF) for edge protection, IAM/OAuth for authentication, and TLS/HTTPS for encrypted transport.",
         extraKnowledge: "Zero-Trust Architecture ('Never trust, always verify'). Security controls include Principle of Least Privilege, Secret Management (AWS Secrets Manager/HashiCorp Vault), JWT token signing with asymmetric RS256 keys, Rate Limiting, CORS headers, and OWASP Top 10 mitigation.",
-        pitfalls: "Storing unhashed plain-text passwords or hardcoding API keys in source code repositories."
+        workExample: "A security alert shows an unusual sign-in. The security team checks the account and activity, limits access if needed, records what happened, and follows the organisation's incident process.",
+        roleIds: ["seceng", "soc", "iameng", "blueteam"]
       },
       11: {
         title: "11. Observability (Logs, Metrics, Traces)",
         videoContent: "The video introduces the Three Pillars of Observability required to debug complex distributed systems: Metrics (graphs), Logs (events), and Traces (request journeys).",
         extraKnowledge: "Metrics (Prometheus/Grafana) track CPU, memory, latency percentiles (p95, p99), and throughput. Structured JSON Logs (ELK Stack) provide context. Distributed Tracing (OpenTelemetry, Jaeger) injects Trace IDs into HTTP/gRPC headers to map full request paths across 20+ microservices.",
-        pitfalls: "Logging sensitive PII or credit card numbers; unindexed high-cardinality metrics causing metric store crashes."
+        workExample: "Users report that the app is slow. An on-call engineer compares response-time charts with logs and request traces to find the slow service, then shares updates while the team investigates.",
+        roleIds: ["devops", "backend", "syseng", "soc"]
       },
       12: {
         title: "12. CI/CD & Infrastructure as Code",
         videoContent: "The video explains automating software delivery: CI/CD pipelines automate testing/deployment, while Infrastructure as Code (IaC) defines cloud environments via scripts.",
         extraKnowledge: "CI (GitHub Actions, Jenkins) builds container images and runs unit/integration tests. CD deploys via Blue/Green or Canary release strategies to eliminate downtime. IaC tools (Terraform, AWS CloudFormation, Pulumi) allow entire data centers to be version-controlled, audited, and reproduced in minutes.",
-        pitfalls: "Manual infrastructure changes in cloud console ('Drift'); deploying directly to production without automated rollback triggers."
+        workExample: "A software release fails its automated checks. The engineer reviews the build and deployment logs, restores the last known-good version if needed, then fixes the pipeline before trying again.",
+        roleIds: ["devops", "backend", "qaeng", "syseng"]
       },
       13: {
         title: "13. Fault Tolerance & Graceful Degradation",
         videoContent: "The video emphasizes designing systems that expect component failures and gracefully degrade feature functionality rather than crashing completely.",
         extraKnowledge: "Employs Redundancy (Active-Active or Active-Passive multi-region setups), Exponential Backoff with Jitter for retries (prevents retry storms), Bulkheading (isolating resources per tenant), and Fallbacks (serving cached or static degraded UI components during outages).",
-        pitfalls: "Retrying failed requests instantly without backoff, inadvertently DDoS'ing an already struggling backend service."
+        workExample: "A cloud service becomes unavailable. The operations team switches to a backup where possible, checks recovery, and later practises restoring from backups so the next response is less rushed.",
+        roleIds: ["devops", "syseng", "infraeng", "seceng"]
       }
     };
 
@@ -640,6 +615,41 @@
     let currentFlow = "login";
     let flowSpeed = 0.5;
     let particleOffset = 0;
+    let canvasRoutes = [];
+    let animationFrameId = null;
+    let lastFrameTime = 0;
+    const canvasBreakpoint = window.matchMedia("(min-width: 768px)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const friendlyNodeNames = {
+      "node-client": "Your phone or computer",
+      "node-waf": "A safety check",
+      "node-lb": "A traffic director",
+      "node-auth": "A sign-in and permission check",
+      "node-app": "The app's decision maker",
+      "node-cb": "A backup and safety check",
+      "node-cache": "Quick-access memory",
+      "node-db": "Saved information",
+      "node-queue": "A background task list",
+      "node-vector": "AI's information finder",
+      "node-rag": "AI's response builder",
+      "node-obs": "A system activity record"
+    };
+
+    const friendlyNodeDescriptions = {
+      "node-client": "Where you tap, type or view the result.",
+      "node-waf": "Filters suspicious traffic before it reaches the app.",
+      "node-lb": "Sends each request to an available app server.",
+      "node-auth": "Checks who you are and what you can do.",
+      "node-app": "Applies the rules needed to complete your request.",
+      "node-cb": "Helps the app cope when another service is unavailable.",
+      "node-cache": "Keeps frequently used information ready to load quickly.",
+      "node-db": "Keeps important information for later.",
+      "node-queue": "Holds work that can finish in the background.",
+      "node-vector": "Finds information related to the question you asked.",
+      "node-rag": "Uses the question and helpful information to prepare a reply.",
+      "node-obs": "Keeps a record so the team can check how things are working."
+    };
 
     function setFlow(flowKey, button) {
       currentFlow = flowKey;
@@ -652,6 +662,7 @@
 
       renderJourneyTracker();
       highlightActiveNodes();
+      updateCanvas();
     }
 
     function setSpeed(spd, button) {
@@ -668,19 +679,32 @@
 
       config.hops.forEach((nodeId, idx) => {
         const nodeEl = document.getElementById(nodeId);
-        const title = nodeEl.querySelector(".node-title").innerText;
         const isReturnToScreen = idx > 0 && nodeId === "node-client";
 
         const badge = document.createElement("div");
         badge.className = `journey-step-badge active${isReturnToScreen ? " response-step" : ""}`;
-        badge.innerHTML = `<span style="color:${config.color}; font-weight:800;">${isReturnToScreen ? "Response" : `Step ${idx + 1}`}:</span> ${isReturnToScreen ? "Result returns to your screen" : title}`;
+        const number = document.createElement("span");
+        number.className = "journey-step-number";
+        number.textContent = isReturnToScreen ? "BACK" : `STEP ${idx + 1}`;
+
+        const title = document.createElement("strong");
+        title.textContent = isReturnToScreen ? "Your screen" : friendlyNodeNames[nodeId] || nodeEl.querySelector(".node-title").innerText;
+
+        const description = document.createElement("span");
+        description.className = "journey-step-description";
+        description.textContent = isReturnToScreen
+          ? "The result is sent back to you."
+          : friendlyNodeDescriptions[nodeId] || nodeEl.querySelector(".node-desc").innerText;
+
+        badge.append(number, title, description);
         container.appendChild(badge);
 
         if (idx < config.hops.length - 1) {
           const arrow = document.createElement("span");
+          arrow.className = "journey-step-arrow";
+          arrow.setAttribute("aria-hidden", "true");
           arrow.style.color = "var(--text-muted)";
-          arrow.style.fontSize = "0.8rem";
-          arrow.innerHTML = "&rarr;";
+          arrow.textContent = "↓";
           container.appendChild(arrow);
         }
       });
@@ -690,10 +714,10 @@
         return (nodeCareerLinks[key] || []).map(role => role.id);
       }))];
       document.getElementById("flow-roles").innerHTML = `
-        <strong>People behind this journey</strong>
+        <strong>People who help make it work</strong>
         <div class="flow-role-links">${activeRoles.map(roleId => {
           const role = Object.values(nodeCareerLinks).flat().find(item => item.id === roleId);
-          return `<a href="job.html#role-${role.id}">${role.title} <span aria-hidden="true">→</span></a>`;
+          return `<a href="job.html#role-${role.id}" target="_blank" rel="noopener noreferrer">${role.title} <span aria-hidden="true">→</span></a>`;
         }).join("")}</div>`;
     }
 
@@ -709,68 +733,116 @@
       });
     }
 
-    function animateCanvas() {
+    function stopCanvasAnimation() {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    }
+
+    function drawCanvasFrame() {
       const canvas = document.getElementById("flow-canvas");
       const ctx = canvas.getContext("2d");
-      const wrapper = document.querySelector(".visualizer-wrapper");
+      const { width, height, ratio } = canvas;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.clearRect(0, 0, width / ratio, height / ratio);
 
-      canvas.width = wrapper.clientWidth;
-      canvas.height = wrapper.clientHeight;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const config = flowConfigs[currentFlow];
-      const hops = config.hops;
-
-      particleOffset += 1.5 * flowSpeed;
-      if (particleOffset > 100) particleOffset = 0;
-
-      for (let i = 0; i < hops.length - 1; i++) {
-        const fromEl = document.getElementById(hops[i]);
-        const toEl = document.getElementById(hops[i + 1]);
-
-        if (!fromEl || !toEl) continue;
-
-        const fromRect = fromEl.getBoundingClientRect();
-        const toRect = toEl.getBoundingClientRect();
-        const wrapRect = wrapper.getBoundingClientRect();
-
-        const startX = fromRect.left + fromRect.width / 2 - wrapRect.left;
-        const startY = fromRect.top + fromRect.height / 2 - wrapRect.top;
-        const endX = toRect.left + toRect.width / 2 - wrapRect.left;
-        const endY = toRect.top + toRect.height / 2 - wrapRect.top;
-
+      canvasRoutes.forEach((route, idx) => {
         ctx.beginPath();
-        ctx.moveTo(startX, startY);
-        
-        const controlX1 = startX + (endX - startX) / 2;
-        const controlY1 = startY;
-        const controlX2 = startX + (endX - startX) / 2;
-        const controlY2 = endY;
-
-        ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, endX, endY);
-        ctx.strokeStyle = config.color;
+        ctx.moveTo(route.startX, route.startY);
+        ctx.bezierCurveTo(route.controlX1, route.controlY1, route.controlX2, route.controlY2, route.endX, route.endY);
+        ctx.strokeStyle = route.color;
         ctx.lineWidth = 2;
         ctx.globalAlpha = 0.4;
         ctx.setLineDash([6, 6]);
         ctx.stroke();
         ctx.setLineDash([]);
 
-        const t = (particleOffset / 100 + i * 0.2) % 1;
-        const pX = Math.pow(1 - t, 3) * startX + 3 * Math.pow(1 - t, 2) * t * controlX1 + 3 * (1 - t) * Math.pow(t, 2) * controlX2 + Math.pow(t, 3) * endX;
-        const pY = Math.pow(1 - t, 3) * startY + 3 * Math.pow(1 - t, 2) * t * controlY1 + 3 * (1 - t) * Math.pow(t, 2) * controlY2 + Math.pow(t, 3) * endY;
-
+        const t = (particleOffset / 100 + idx * 0.2) % 1;
+        const inverseT = 1 - t;
+        const pX = inverseT ** 3 * route.startX + 3 * inverseT ** 2 * t * route.controlX1 + 3 * inverseT * t ** 2 * route.controlX2 + t ** 3 * route.endX;
+        const pY = inverseT ** 3 * route.startY + 3 * inverseT ** 2 * t * route.controlY1 + 3 * inverseT * t ** 2 * route.controlY2 + t ** 3 * route.endY;
         ctx.beginPath();
         ctx.arc(pX, pY, 5, 0, Math.PI * 2);
-        ctx.fillStyle = config.color;
+        ctx.fillStyle = route.color;
         ctx.globalAlpha = 1;
-        ctx.shadowColor = config.color;
+        ctx.shadowColor = route.color;
         ctx.shadowBlur = 10;
         ctx.fill();
         ctx.shadowBlur = 0;
+      });
+      ctx.globalAlpha = 1;
+    }
+
+    function animateCanvas() {
+      animationFrameId = null;
+      if (!canvasBreakpoint.matches || document.hidden) return;
+      if (performance.now() - lastFrameTime < 1000 / 30) {
+        animationFrameId = requestAnimationFrame(animateCanvas);
+        return;
       }
 
-      requestAnimationFrame(animateCanvas);
+      lastFrameTime = performance.now();
+      particleOffset = (particleOffset + 3 * flowSpeed) % 100;
+      drawCanvasFrame();
+      if (!reducedMotion.matches) animationFrameId = requestAnimationFrame(animateCanvas);
+    }
+
+    function updateCanvas() {
+      const canvas = document.getElementById("flow-canvas");
+      const wrapper = document.querySelector(".visualizer-wrapper");
+      if (!canvasBreakpoint.matches || !wrapper) {
+        stopCanvasAnimation();
+        canvasRoutes = [];
+        return;
+      }
+
+      const wrapperRect = wrapper.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      const width = Math.round(wrapperRect.width);
+      const height = Math.round(wrapperRect.height);
+      canvas.ratio = ratio;
+      if (canvas.width !== Math.round(width * ratio) || canvas.height !== Math.round(height * ratio)) {
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+      }
+
+      const config = flowConfigs[currentFlow];
+      canvasRoutes = config.hops.slice(0, -1).flatMap((nodeId, idx) => {
+        const fromEl = document.getElementById(nodeId);
+        const toEl = document.getElementById(config.hops[idx + 1]);
+        if (!fromEl || !toEl) return [];
+
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = toEl.getBoundingClientRect();
+        const fromX = fromRect.left + fromRect.width / 2;
+        const fromY = fromRect.top + fromRect.height / 2;
+        const toX = toRect.left + toRect.width / 2;
+        const toY = toRect.top + toRect.height / 2;
+        const isHorizontal = Math.abs(toX - fromX) > Math.abs(toY - fromY);
+        const direction = isHorizontal ? Math.sign(toX - fromX) : Math.sign(toY - fromY);
+        const startX = fromX + (isHorizontal ? direction * fromRect.width / 2 : 0) - wrapperRect.left;
+        const startY = fromY + (isHorizontal ? 0 : direction * fromRect.height / 2) - wrapperRect.top;
+        const endX = toX - (isHorizontal ? direction * toRect.width / 2 : 0) - wrapperRect.left;
+        const endY = toY - (isHorizontal ? 0 : direction * toRect.height / 2) - wrapperRect.top;
+        const controlX = startX + (endX - startX) / 2;
+
+        return [{
+          startX,
+          startY,
+          controlX1: controlX,
+          controlY1: startY,
+          controlX2: controlX,
+          controlY2: endY,
+          endX,
+          endY,
+          color: config.color
+        }];
+      });
+
+      drawCanvasFrame();
+      stopCanvasAnimation();
+      if (!reducedMotion.matches && !document.hidden) animationFrameId = requestAnimationFrame(animateCanvas);
     }
 
     function inspectNode(nodeKey) {
@@ -836,6 +908,9 @@
 
     function showConceptModal(conceptNum) {
       const details = conceptDetails[conceptNum];
+      const relatedRoles = details.roleIds
+        .map(roleId => careerLinksById.get(roleId))
+        .filter(Boolean);
       openDrawer(details.title, `
         <div class="detail-section">
           <div class="detail-section-title">📹 Video Whiteboard Breakdown</div>
@@ -852,10 +927,14 @@
         </div>
 
         <div class="detail-section">
-          <div class="detail-section-title pitfall-title">⚠️ Common Production Pitfalls</div>
+          <div class="detail-section-title">At work, this may look like</div>
           <div style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
-            ${details.pitfalls}
+            ${details.workExample}
           </div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-section-title">People who work with this</div>
+          <div class="flow-role-links">${relatedRoles.map(role => `<a href="job.html#role-${role.id}" target="_blank" rel="noopener noreferrer">${role.title} <span aria-hidden="true">→</span></a>`).join("")}</div>
         </div>
       `);
     }
@@ -877,7 +956,7 @@
     window.onload = function() {
       renderJourneyTracker();
       highlightActiveNodes();
-      requestAnimationFrame(animateCanvas);
+      updateCanvas();
     };
 
     const architectureVideo = document.getElementById("architecture-video");
@@ -895,14 +974,10 @@
       }
     }, 1500);
 
-    window.onresize = function() {
-      const canvas = document.getElementById("flow-canvas");
-      const wrapper = document.querySelector(".visualizer-wrapper");
-      if (canvas && wrapper) {
-        canvas.width = wrapper.clientWidth;
-        canvas.height = wrapper.clientHeight;
-      }
-    };
+    window.addEventListener("resize", updateCanvas);
+    canvasBreakpoint.addEventListener("change", updateCanvas);
+    reducedMotion.addEventListener("change", updateCanvas);
+    document.addEventListener("visibilitychange", updateCanvas);
   </script>
 <script src="tracker.js"></script>
 </body>

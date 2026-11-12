@@ -212,6 +212,16 @@ header {
   display: block;
 }
 
+.experience-hint {
+  margin: -2px 0 8px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.experience-hint[role="status"] {
+  min-height: 1.2em;
+}
+
 .options-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -351,6 +361,18 @@ header {
   font-weight: 800;
   color: var(--accent-green);
   font-family: 'JetBrains Mono', monospace;
+}
+
+.experience-match,
+.experience-summary {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent-purple);
+  border-radius: 0 6px 6px 0;
+  background: rgba(192, 132, 252, 0.08);
+  color: var(--text-muted);
+  font-size: 0.775rem;
+  line-height: 1.5;
 }
 
 @media (min-width: 768px) {

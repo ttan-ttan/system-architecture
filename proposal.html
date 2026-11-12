@@ -37,7 +37,8 @@
         Comparing your preferences with common Singapore tech career paths…
       </p>
       <div class="salary-value" id="prop-role-salary"></div>
-      <p class="match-explainer">This is a relative preference match based on your answers, not a probability of getting hired or a measure of your ability.</p>
+      <p class="match-explainer">Preference points are an exploratory comparison, not a percent chance of getting hired or a verdict on your ability. Your experience areas are shown separately and never lower this score.</p>
+      <p class="experience-summary" id="prop-experience-summary"></p>
       <p id="prop-role-link"></p>
     </div>
 
@@ -51,7 +52,7 @@
 
     <!-- Section 1: Detailed Match Reasoning -->
     <div class="proposal-section">
-      <div class="proposal-section-title">💡 Why these paths match your preferences</div>
+      <div class="proposal-section-title">💡 How your answers influenced these suggestions</div>
       <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.7;" id="prop-reasoning"></p>
     </div>
 
@@ -77,9 +78,9 @@
         <table class="matrix-table">
           <thead>
             <tr>
-              <th>Your Preference</th>
-              <th>Your Answer</th>
-              <th>How it relates to this role</th>
+              <th>Work preference</th>
+              <th>Your answer</th>
+              <th>How it can relate</th>
             </tr>
           </thead>
           <tbody id="matrix-tbody"></tbody>
@@ -99,7 +100,7 @@
     <div class="proposal-section">
       <div class="proposal-section-title">📊 Compare all 22 paths</div>
       <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
-        Ranked against the preferences you selected. Use this as a shortlist, then explore the roles and progression paths:
+      Ranked by preference signals, not by ability or hiring prospects. Roles exist across different industries; the sector you prefer is a work setting, not a qualification:
       </p>
       <div class="pool-grid" id="pool-grid"></div>
       <p class="salary-note" id="salary-sources"></p>
@@ -350,25 +351,26 @@
       }
 
       const weights = {
-        trait: 10,
-        problem_solving: 12,
-        communication: 8,
-        strength: 14,
-        weakness: 12,
-        hobby: 6,
-        hours: 5,
-        oncall: 5,
-        tech_domain: 14,
-        environment: 4,
-        daily_task: 7,
+        trait: 12,
+        problem_solving: 14,
+        communication: 9,
+        weakness: 14,
+        hobby: 7,
+        hours: 6,
+        oncall: 6,
+        tech_domain: 16,
+        environment: 5,
+        daily_task: 8,
         upskilling: 3
       };
       const factors = Object.keys(weights);
+      const selectedExperience = Array.isArray(p.experience_area) ? p.experience_area : [];
       const scoredPool = jobPool.map(job => {
         const signals = getRoleSignals(job);
         const matches = factors.filter(factor => (signals[factor] || []).includes(p[factor]));
         const score = matches.reduce((total, factor) => total + weights[factor], 0);
-        return { ...job, score, matches, roleId: job.id === "itauditor" ? "auditor" : job.id };
+        const experienceMatches = (signals.experience_area || []).filter(area => selectedExperience.includes(area));
+        return { ...job, score, matches, experienceMatches, roleId: job.id === "itauditor" ? "auditor" : job.id };
       });
 
       scoredPool.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
@@ -377,7 +379,7 @@
         throw new Error("Career matches could not be generated from the available role data.");
       }
 
-      document.getElementById("prop-match-score").innerText = `${topJob.score}/100 relative fit`;
+      document.getElementById("prop-match-score").innerText = `${topJob.score} / 100 preference points`;
       document.getElementById("prop-role-title").innerText = topJob.title;
       document.getElementById("prop-role-summary").innerText = `${topJob.category}. ${topJob.dailyTasks}`;
       document.getElementById("prop-role-salary").innerText = `${formatSalary(topJob.id)} monthly base salary · Singapore`;
@@ -389,14 +391,29 @@
 
       const matchedFactors = topJob.matches.map(factor => formatVal(factor));
       document.getElementById("prop-reasoning").innerText =
-        `Your strongest alignment is based on ${matchedFactors.length} of 12 selected preferences: ${matchedFactors.join(", ") || "no direct preference signals"}. The second suggestion is a nearby alternative. These matches show preference alignment only; they do not predict hiring outcomes or future performance.`;
+        `This role matched ${matchedFactors.length} of 11 weighted preference areas: ${matchedFactors.join(", ") || "no direct preference signals"}. Points are not a percentage or a validated career-fit score. Your twelfth answer records experience separately. Many roles exist in more than one sector, so industry preference is a setting to consider, not a limit on your options.`;
+
+      const experienceLabels = {
+        software: "software or testing",
+        data: "data or reporting",
+        infrastructure: "user, system, or network support",
+        cybersecurity: "security",
+        business: "business process, customer service, or compliance"
+      };
+      const topExperienceMatches = topJob.experienceMatches.map(area => experienceLabels[area]);
+      document.getElementById("prop-experience-summary").innerText =
+        selectedExperience.length === 0 || selectedExperience.includes("new_to_tech")
+          ? "You are starting fresh or did not select related experience. That does not reduce your preference score; use the role directory to explore possible starting points."
+          : topExperienceMatches.length
+            ? `Experience overlap to explore: ${topExperienceMatches.join(", ")}. This records exposure only; it does not confirm job readiness.`
+            : "Your selected experience does not directly overlap this role family. Related skills may still transfer; review the daily work before ruling it out.";
 
       document.getElementById("prop-daily-tasks").innerText = topJob.dailyTasks;
       document.getElementById("prop-work-env").innerText = topJob.workEnv;
       document.getElementById("prop-future-upside").innerHTML = topJob.futureUpside;
       document.getElementById("prop-cert-pathway").innerHTML = `<strong>Useful learning options to explore:</strong> ${topJob.cert}`;
 
-      // Render Factor Matrix
+      // Render preference matrix
       const tbody = document.getElementById("matrix-tbody");
       tbody.innerHTML = factors.map(factor => `
         <tr>
@@ -414,10 +431,11 @@
         card.innerHTML = `
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
             <span style="font-weight:800; font-size:0.95rem; color:var(--accent-blue);">${job.title}</span>
-            <span class="pool-card-score">${job.score}/100</span>
+            <span class="pool-card-score">${job.score} / 100 pts</span>
           </div>
           <div style="font-size:0.725rem; color:var(--accent-purple); font-weight:700; font-family:'JetBrains Mono',monospace; margin-bottom:8px;">${job.category}</div>
           <div style="font-size:0.775rem; color:var(--text-muted); line-height:1.4;">${job.dailyTasks}</div>
+          <div class="experience-match">${job.experienceMatches.length ? `Experience overlap: ${job.experienceMatches.map(area => experienceLabels[area]).join(", ")}` : selectedExperience.includes("new_to_tech") ? "New to related technical work is okay" : "No direct experience-area overlap selected"}</div>
           <div class="salary-value">${formatSalary(job.id)} / month</div>
           <div><a href="job.html#role-${job.roleId}">See progression and useful certifications →</a></div>
         `;
@@ -440,20 +458,28 @@
         software: software.includes(job.id),
         data: data.includes(job.id)
       };
+      const businessRoles = ["dataanalyst", "qaeng", "itsupport", "itauditor", "grc", "dpo", "ea", "solutionarch"];
       const inferred = {
         problem_solving: roleIds.security ? ["contain_sec"] : roleIds.infrastructure ? ["infra_failover"] : roleIds.governance ? ["process_gov"] : ["debug_code"],
         communication: roleIds.governance || ["dataanalyst", "solutionarch"].includes(job.id) ? ["stakeholder"] : ["collaborative", "deep_work"],
         hobby: roleIds.infrastructure ? ["homelab"] : roleIds.data ? ["investing_puzzles", "ai_automation"] : roleIds.governance ? ["writing_organizing"] : ["ai_automation"],
         oncall: ["soc", "blueteam", "redteam", "devops", "syseng", "infraeng"].includes(job.id) ? ["rotation", "incident_lead"] : ["no_oncall"],
         environment: roleIds.governance || ["soc", "iameng", "auditor"].includes(job.id) ? ["banking", "govtech"] : ["tech_scaleup", "govtech"],
-        upskilling: roleIds.security || roleIds.governance || roleIds.infrastructure ? ["formal_certs"] : ["self_taught", "formal_certs"]
+        upskilling: roleIds.security || roleIds.governance || roleIds.infrastructure ? ["formal_certs"] : ["self_taught", "formal_certs"],
+        experience_area: [
+          ...(roleIds.security ? ["cybersecurity"] : []),
+          ...(roleIds.infrastructure || job.id === "devops" ? ["infrastructure"] : []),
+          ...(roleIds.governance ? ["business"] : []),
+          ...(roleIds.software ? ["software"] : []),
+          ...(roleIds.data ? ["data"] : []),
+          ...(businessRoles.includes(job.id) ? ["business"] : [])
+        ]
       };
       const result = { ...inferred };
       Object.entries(job.tags).forEach(([key, values]) => {
         result[key] = [...new Set([...(result[key] || []), ...values])];
       });
       result.trait ||= roleIds.security ? ["guardian", "analytical"] : roleIds.governance ? ["organizer", "analytical"] : ["creative", "analytical"];
-      result.strength ||= roleIds.data ? ["data_math"] : roleIds.infrastructure ? ["infra_hardware"] : ["software_logic"];
       result.weakness ||= roleIds.software ? ["no_tickets", "no_ambiguity"] : ["no_coding", "no_tickets"];
       result.hours ||= ["fixed", "flexible"];
       result.tech_domain ||= roleIds.security ? ["cyber_sec"] : roleIds.data ? ["data_ai"] : roleIds.infrastructure ? ["cloud_infra"] : ["apps_web"];

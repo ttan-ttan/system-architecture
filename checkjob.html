@@ -29,7 +29,7 @@
     <div class="quiz-card">
       <div class="quiz-header">
         <div class="quiz-title">What kind of work would you enjoy?</div>
-        <div class="quiz-subtitle">Choose what sounds most like you. Your answers help compare 22 common Singapore tech paths, explain the trade-offs, and suggest two starting points.</div>
+        <div class="quiz-subtitle">Choose the kind of work you would like to try. Your answers compare 22 Singapore tech paths and suggest two starting points; this is a preference guide, not a test of your ability.</div>
         <div class="quiz-progress" role="status" aria-live="polite"><span id="answer-count">0</span> of 12 answered</div>
       </div>
 
@@ -101,26 +101,35 @@
         </div>
 
         <!-- SECTION 2 -->
-        <div class="section-divider">Section 2: Strengths, Weaknesses & Hobbies</div>
+        <div class="section-divider">Section 2: Experience, Preferences & Work Style</div>
 
         <div class="question-block">
-          <label class="question-label">4. Core Technical Strength:</label>
-          <div class="options-grid">
-            <div class="option-btn" onclick="selectOpt('strength', 'software_logic', this)">
-              <span>Software Algorithms & Object-Oriented Logic</span>
-              <span class="sub">Grasps complex code syntax, design patterns, and REST/gRPC API structures easily.</span>
+          <label class="question-label">4. What experience could you bring from work, study, or projects?</label>
+          <p class="experience-hint" id="experience-hint" role="status">Choose up to two. This shows areas you have tried; it does not lower your interest matches.</p>
+          <div class="options-grid" id="experience-options">
+            <div class="option-btn" data-value="software" onclick="toggleMultiOpt('experience_area', 'software', this)">
+              <span>Building or testing software</span>
+              <span class="sub">For example, writing scripts, maintaining a website, or checking an app before release.</span>
             </div>
-            <div class="option-btn" onclick="selectOpt('strength', 'infra_hardware', this)">
-              <span>Hardware, OS, Network & Server Intuition</span>
-              <span class="sub">Strong natural feel for Linux, firewalls, active directory, and storage hardware.</span>
+            <div class="option-btn" data-value="data" onclick="toggleMultiOpt('experience_area', 'data', this)">
+              <span>Working with data or reports</span>
+              <span class="sub">For example, using spreadsheets, preparing reports, or checking data quality.</span>
             </div>
-            <div class="option-btn" onclick="selectOpt('strength', 'data_math', this)">
-              <span>Data Modeling, SQL & Statistical Intuition</span>
-              <span class="sub">Spotted numbers patterns, query optimizations, and data trends effortlessly.</span>
+            <div class="option-btn" data-value="infrastructure" onclick="toggleMultiOpt('experience_area', 'infrastructure', this)">
+              <span>Supporting users, systems, or networks</span>
+              <span class="sub">For example, helping people with devices, accounts, connectivity, or system operations.</span>
             </div>
-            <div class="option-btn" onclick="selectOpt('strength', 'audit_detail', this)">
-              <span>Meticulous Rule Inspection & Audit Detail</span>
-              <span class="sub">Never misses an unmapped permission, compliance gap, or unencrypted data field.</span>
+            <div class="option-btn" data-value="cybersecurity" onclick="toggleMultiOpt('experience_area', 'cybersecurity', this)">
+              <span>Protecting accounts, devices, or information</span>
+              <span class="sub">For example, reviewing access, handling security controls, or following incident procedures.</span>
+            </div>
+            <div class="option-btn" data-value="business" onclick="toggleMultiOpt('experience_area', 'business', this)">
+              <span>Customer service, business processes, or compliance</span>
+              <span class="sub">For example, explaining requirements, documenting work, or helping teams follow rules.</span>
+            </div>
+            <div class="option-btn" data-value="new_to_tech" onclick="toggleMultiOpt('experience_area', 'new_to_tech', this)">
+              <span>I have not done related technical work yet</span>
+              <span class="sub">That is okay. Your interest matches still count; this guide will show paths to explore.</span>
             </div>
           </div>
         </div>
@@ -297,14 +306,45 @@
       });
       el.classList.add('selected');
       el.setAttribute("aria-pressed", "true");
+      updateAnswerCount();
+    }
+
+    function toggleMultiOpt(key, val, el) {
+      const selected = new Set(userAnswers[key] || []);
+      if (selected.has(val)) {
+        selected.delete(val);
+      } else if (val === "new_to_tech") {
+        selected.clear();
+        selected.add(val);
+      } else {
+        selected.delete("new_to_tech");
+        if (selected.size === 2) {
+          document.getElementById("experience-hint").textContent = "Choose no more than two areas.";
+          return;
+        }
+        selected.add(val);
+      }
+
+      userAnswers[key] = [...selected];
+      document.querySelectorAll("#experience-options .option-btn").forEach(option => {
+        const isSelected = selected.has(option.dataset.value);
+        option.classList.toggle("selected", isSelected);
+        option.setAttribute("aria-pressed", String(isSelected));
+      });
+      document.getElementById("experience-hint").textContent = "Choose up to two. This shows areas you have tried; it does not lower your interest matches.";
+      if (selected.size === 0) delete userAnswers[key];
+      updateAnswerCount();
+    }
+
+    function updateAnswerCount() {
       document.getElementById("answer-count").textContent = Object.keys(userAnswers).length;
     }
 
     function submitDiagnostic(e) {
       e.preventDefault();
-      const requiredKeys = ['trait', 'problem_solving', 'communication', 'strength', 'weakness', 'hobby', 'hours', 'oncall', 'tech_domain', 'environment', 'daily_task', 'upskilling'];
+      const requiredKeys = ['trait', 'problem_solving', 'communication', 'experience_area', 'weakness', 'hobby', 'hours', 'oncall', 'tech_domain', 'environment', 'daily_task', 'upskilling'];
       
-      const missing = requiredKeys.filter(k => !userAnswers[k]);
+      const missing = requiredKeys.filter(k => Array.isArray(userAnswers[k]) ? userAnswers[k].length === 0 : !userAnswers[k]);
       if (missing.length > 0) {
         alert(`Please answer the remaining ${missing.length} question${missing.length === 1 ? "" : "s"} to see your matches.`);
         return;

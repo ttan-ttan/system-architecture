@@ -166,7 +166,15 @@
   <div class="roles-section">
     <div class="roles-header">
       <span>Explore 22 Singapore tech career paths</span>
-      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Select a role to explore what it does, monthly pay, and possible IC or management growth</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Color marks the role family. Select a role for typical starting points, example IC or leadership routes, and optional learning ideas.</span>
+    </div>
+    <div class="role-family-legend" aria-label="Career families">
+      <span class="family-infrastructure">Infrastructure</span>
+      <span class="family-product">Product & quality</span>
+      <span class="family-data">Data & AI</span>
+      <span class="family-security">Cybersecurity</span>
+      <span class="family-governance">Governance</span>
+      <span class="family-support">IT support</span>
     </div>
 
     <div class="roles-grid" id="roles-grid">
@@ -431,9 +439,11 @@
             name: "Data Architecture Track (IC)",
             type: "ic",
             steps: [
-              { role: "Junior Data Engineer", certs: { req: ["DP-900 / Azure Data Fundamentals"], opt: ["Python Cert"] } },
+              { role: "Junior Data Engineer", certs: { req: ["DP-900 / Azure Data Fundamentals"], opt: ["AWS Cloud Practitioner"] } },
+              { role: "Data Engineer", certs: { req: [], opt: ["Databricks Data Engineer Associate", "SnowPro Core"] } },
               { role: "Senior Data Engineer", certs: { req: ["Databricks Certified Data Engineer"], opt: ["SnowPro Core"] } },
-              { role: "Principal Data Architect", certs: { req: ["SnowPro Advanced Architect"], opt: ["AWS Data Analytics Specialty"] } }
+              { role: "Lead / Staff Data Engineer", certs: { req: [], opt: ["Cloud data platform architecture learning"] } },
+              { role: "Principal Data Architect", certs: { req: ["SnowPro Advanced Architect"], opt: ["AWS Certified Solutions Architect - Professional"] } }
             ]
           },
           {
@@ -893,6 +903,36 @@
 
     let currentIndustry = "all";
     let activeRole = null;
+    const roleFamilyById = {
+      syseng: "infrastructure",
+      infraeng: "infrastructure",
+      neteng: "infrastructure",
+      devops: "infrastructure",
+      backend: "product",
+      fullstack: "product",
+      qaeng: "product",
+      dataeng: "data",
+      dataanalyst: "data",
+      datascientist: "data",
+      mleng: "data",
+      seceng: "security",
+      soc: "security",
+      blueteam: "security",
+      redteam: "security",
+      iameng: "security",
+      grc: "governance",
+      auditor: "governance",
+      dpo: "governance",
+      ea: "governance",
+      solutionarch: "governance",
+      itsupport: "support"
+    };
+
+    function entryGuidance(roleTitle) {
+      return /\b(junior|associate|graduate|trainee|apprentice|l1|level 1|support|analyst|technician)\b/i.test(roleTitle)
+        ? "Potential entry route"
+        : "Related experience often expected";
+    }
 
     function init() {
       renderRoles();
@@ -909,7 +949,7 @@
       rolesData.forEach(role => {
         const salary = window.sgSalaryBands[role.id];
         const card = document.createElement("div");
-        card.className = "role-card";
+        card.className = `role-card role-family-${roleFamilyById[role.id] || "support"}`;
         card.id = `role-${role.id}`;
         card.onclick = () => selectRole(role.id);
         card.tabIndex = 0;
@@ -926,6 +966,7 @@
           <div>
             <div class="role-title">${role.title}</div>
             <div class="role-team">${role.team}</div>
+            <div class="role-entry-label">${entryGuidance(role.tracks.find(track => track.type === "ic")?.steps[0]?.role || role.title)}</div>
             <div class="role-resp">${role.resp}</div>
             <div class="role-salary">${formatSalary(salary)} <span>monthly base, SGD</span></div>
           </div>
@@ -985,14 +1026,20 @@
             <span class="track-badge ${trackClass}">${track.name}</span>
             <div class="path-timeline">
         `;
-        track.steps.forEach(step => {
-          let reqCertsPills = step.certs.req.map(c => `<span class="cert-pill cert-req">Useful: ${c}</span>`).join("");
-          let optCertsPills = step.certs.opt.map(c => `<span class="cert-pill cert-opt">Also useful: ${c}</span>`).join("");
+        track.steps.forEach((step, index) => {
+          const learningOptions = [...new Set([...step.certs.req, ...step.certs.opt])];
+          const learningHtml = learningOptions.length
+            ? `<div class="cert-suggestions"><strong>Optional learning:</strong> ${learningOptions.map(cert => `<span class="cert-pill">${cert}</span>`).join("")}</div>`
+            : `<div class="cert-suggestions">No specific certificate listed; practical experience and projects can also help.</div>`;
+          const stageLabel = index === 0
+            ? entryGuidance(step.role)
+            : `Progression stage ${index + 1}`;
 
           tracksHtml += `
             <div class="path-node">
               <div style="font-weight:700; color:var(--text-main); font-size:0.875rem;">${step.role}</div>
-              <div style="margin-top:4px;">${reqCertsPills} ${optCertsPills}</div>
+              <span class="path-stage-label">${stageLabel}</span>
+              ${learningHtml}
             </div>
           `;
         });
@@ -1004,8 +1051,9 @@
         <p><strong>Primary Role Overview:</strong> ${role.resp}</p>
         <p class="role-salary-detail"><strong>Indicative monthly base:</strong> ${formatSalary(salary)} SGD <span>Ranges vary by experience, employer, and variable pay.</span></p>
         <p style="margin-top:6px; color:var(--accent-amber);"><strong>Singapore Regulatory Context:</strong> ${role.sgContext}</p>
-        <p class="cert-note">Certificates below are examples for learning and progression. Most tech roles do not require one specific certificate by law; check the actual job listing and employer requirements.</p>
+        <p class="cert-note">Career titles and order vary by employer; these are possible routes, not guaranteed promotions. Certificates are optional learning ideas, not standard entry requirements. Check current job listings before paying for training.</p>
         ${tracksHtml}
+        ${role.id === "dataeng" ? `<div class="detail-section"><strong>Related path:</strong> Data Analyst / BI Specialist is a parallel starting route focused more on reports, business questions and dashboards than on building data pipelines. <a href="job.html#role-dataanalyst">Explore that path</a>.</div>` : ""}
       `);
     }
 
